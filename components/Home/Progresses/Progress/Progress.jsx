@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import Colors from '../../../consts/Colors'
+import Colors from '../../../../consts/Colors'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -24,8 +24,8 @@ export default function Progress() {
                             </View>
                             <Text style={{ fontSize: 18 }}>{` `}</Text>
                             <View style={styles.flexRow}>
-                                <MaterialCommunityIcons name="chevron-double-right" size={18} color={Colors.red400} />
-                                <Text style={{ fontSize: 12, color: Colors.red400 }}>Pages: 81-120</Text>
+                                <MaterialCommunityIcons name="chevron-double-right" size={18} color={Colors.yellow800} />
+                                <Text style={{ fontSize: 12, color: Colors.yellow800 }}>Pages: 81-120</Text>
                             </View>
                         </View>
                         <View style={styles.flexRow}>

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { Entypo } from '@expo/vector-icons';
-import Colors from '../../consts/Colors';
+import Colors from '../../../consts/Colors';
 
 export default function ProgressesTitle({ title, count }) {
     return (

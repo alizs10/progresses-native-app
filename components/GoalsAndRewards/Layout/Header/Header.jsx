@@ -1,9 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import Colors from '../../../consts/Colors'
-import { Ionicons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import Colors from '../../../../consts/Colors'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Header() {
     return (
@@ -11,13 +9,13 @@ export default function Header() {
             <View style={styles.header}>
                 <View style={styles.flexRow}>
                     <View>
-                        <Ionicons name="menu" size={28} color="white" />
+                        <MaterialCommunityIcons name="keyboard-backspace" size={24} color="white" />
                     </View>
-                    <Text style={styles.title}>Progresses</Text>
+                    <Text style={styles.title}>Goals & Rewards </Text>
                 </View>
-                <View style={styles.flexRow}>
-                    <Feather name="target" size={24} color={Colors.yellow200} />
-                    <AntDesign name="user" size={24} color="white" />
+                <View style={styles.goalsCount}>
+                    <MaterialCommunityIcons name="star" size={18} color={Colors.gray700} />
+                    <Text style={styles.titleHighlight}>3</Text>
                 </View>
             </View>
         </View>
@@ -48,5 +46,21 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: 'white'
-    }
+    },
+    goalsCount: {
+        backgroundColor: Colors.yellow400,
+        flexDirection: 'row',
+        gap: 4,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 15,
+        justifyContent: "center",
+        alignItems: 'center',
+    },
+    titleHighlight: {
+        color: Colors.gray700,
+        fontSize: 14,
+        fontWeight: 'bold',
+
+    },
 })

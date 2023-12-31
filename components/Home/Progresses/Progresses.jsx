@@ -25,7 +25,7 @@ export default function Progresses() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingVertical: 5,
+        paddingVertical: 10,
         paddingHorizontal: 20
     },
     flexSpaceBetween: {
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
         paddingRight: 10
     },
     progressesContainer: {
-        paddingVertical: 8,
         gap: 8
     }
 })

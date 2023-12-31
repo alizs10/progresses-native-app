@@ -1,6 +1,6 @@
 import { View, StyleSheet } from 'react-native'
 import React from 'react'
-import Colors from '../../../consts/Colors'
+import Colors from '../../../../consts/Colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function BottomBar() {
@@ -56,8 +56,5 @@ const styles = StyleSheet.create({
         height: 45,
         elevation: 2
     },
-    progressesContainer: {
-        paddingVertical: 10,
-        gap: 8
-    }
+
 })

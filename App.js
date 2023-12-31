@@ -1,10 +1,11 @@
 import { StyleSheet, StatusBar, Platform, View, Dimensions } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
+import GoalsScreen from './screens/GoalsScreen';
 
 export default function App() {
 
 
-  let screen = <HomeScreen />;
+  let screen = <GoalsScreen />;
 
 
   return (
@@ -18,6 +19,6 @@ export default function App() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    paddingTop: (Platform.OS === 'android' && Dimensions.get('window').width > 380) ? StatusBar.currentHeight : 0
+    // paddingTop: (Platform.OS === 'android' && Dimensions.get('window').width > 380) ? StatusBar.currentHeight : 0
   },
 });
