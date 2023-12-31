@@ -12,30 +12,30 @@ export default function Progress() {
             <View style={styles.bgProceed}></View>
             <View style={styles.topContainer}>
                 <Text style={styles.title}>Read 1948</Text>
-                <MaterialIcons name="push-pin" size={24} color={Colors.gray700} />
+                <MaterialIcons name="push-pin" size={22} color={Colors.gray700} />
             </View>
             <View>
                 <View style={styles.bottomContainer}>
                     <View style={styles.detailsContainer}>
                         <View style={styles.flexRow}>
                             <View style={styles.flexRow}>
-                                <Ionicons name="checkmark-done" size={24} color={Colors.green600} />
-                                <Text style={{ color: Colors.green600 }}>step 9</Text>
+                                <Ionicons name="checkmark-done" size={18} color={Colors.green600} />
+                                <Text style={{ fontSize: 12, color: Colors.green600 }}>Pages: 50-80</Text>
                             </View>
                             <Text style={{ fontSize: 18 }}>{` `}</Text>
                             <View style={styles.flexRow}>
-                                <MaterialCommunityIcons name="chevron-double-right" size={24} color={Colors.red400} />
-                                <Text style={{ color: Colors.red400 }}>step 10</Text>
+                                <MaterialCommunityIcons name="chevron-double-right" size={18} color={Colors.red400} />
+                                <Text style={{ fontSize: 12, color: Colors.red400 }}>Pages: 81-120</Text>
                             </View>
                         </View>
                         <View style={styles.flexRow}>
-                            <MaterialCommunityIcons name="clock-time-ten-outline" size={20} color={Colors.gray600} />
-                            <Text style={{ color: Colors.gray600 }}>1 day left</Text>
+                            <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={Colors.gray600} />
+                            <Text style={{ fontSize: 12, color: Colors.gray600 }}>1 day left</Text>
                         </View>
                     </View>
                     <View style={styles.checkButton}>
-                        <Ionicons name="checkmark" size={24} color={Colors.green600} />
-                        {/* <Text style={{ color: Colors.gray700, fontSize: 12 }}>Check</Text> */}
+                        {/* <Ionicons name="checkmark" size={24} color={Colors.green600} /> */}
+                        <Text style={{ color: Colors.gray600, fontSize: 12 }}>3/4</Text>
                     </View>
 
                 </View>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     bottomContainer: {
-        marginTop: 12,
+        marginTop: 8,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end'
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         columnGap: 2,
-        backgroundColor: Colors.green50,
+        backgroundColor: Colors.gray300,
         paddingVertical: 4,
         paddingHorizontal: 8,
         borderRadius: 100,

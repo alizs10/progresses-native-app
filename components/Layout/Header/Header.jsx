@@ -26,20 +26,18 @@ export default function Header() {
 
 const styles = StyleSheet.create({
     container: {
-        height: 100,
-        padding: 20,
-
+        paddingHorizontal: 20,
+        paddingVertical: 12,
     },
     header: {
         backgroundColor: Colors.gray700,
         borderRadius: 50,
         paddingHorizontal: 20,
-        paddingVertical: 8,
-        flex: 1,
+        paddingVertical: 12,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        elevation: 8
+        elevation: 2
     },
     flexRow: {
         alignItems: 'center',
