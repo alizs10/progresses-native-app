@@ -12,6 +12,7 @@ export default Colors = {
     yellow100: "#fff6cc",
     yellow200: "#fff056",
     yellow400: "#ffd400",
+    yellow500: "#ffb700",
     yellow800: "#ff7b00",
 
     // red
@@ -21,5 +22,9 @@ export default Colors = {
     // green
     green50: "#EEFFF1",
     green500: "#52b788",
-    green600: "#40916c"
+    green600: "#40916c",
+
+    // violet
+    violet600: "#5a189a",
+    violet800: "#3c096c",
 }
