@@ -3,6 +3,8 @@ import React from 'react'
 import ProgressesTitle from './ProgressesTitle'
 import Progress from './Progress/Progress'
 import { Ionicons } from '@expo/vector-icons';
+import Record from './Record/Record';
+import RecordManual from './RecordManual/RecordManual';
 
 export default function Progresses() {
     return (
@@ -16,6 +18,8 @@ export default function Progresses() {
 
             <ScrollView style={styles.progressesContainer}>
                 <Progress />
+                <Record />
+                <RecordManual />
             </ScrollView>
 
         </View>

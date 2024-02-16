@@ -15,7 +15,8 @@ export default function Labels() {
                 contentContainerStyle={styles.scrollView}
             >
 
-                <Label />
+                <Label name={"All"} />
+                <Label name={"Records"} />
 
             </ScrollView>
         </View>

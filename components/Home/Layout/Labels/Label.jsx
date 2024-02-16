@@ -2,10 +2,10 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import Colors from '../../../../consts/Colors'
 
-export default function Label() {
+export default function Label({ name }) {
     return (
         <View style={styles.container}>
-            <Text style={styles.labelText}>All</Text>
+            <Text style={styles.labelText}>{name}</Text>
         </View>
     )
 }

@@ -5,7 +5,7 @@ import GoalsScreen from './screens/GoalsScreen';
 export default function App() {
 
 
-  let screen = <GoalsScreen />;
+  let screen = <HomeScreen />;
 
 
   return (
