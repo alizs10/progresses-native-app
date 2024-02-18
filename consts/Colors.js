@@ -27,4 +27,7 @@ export default Colors = {
     // violet
     violet600: "#5a189a",
     violet800: "#3c096c",
+
+    // blue
+    blue500: "#0077b6"
 }
