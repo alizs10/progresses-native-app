@@ -42,21 +42,30 @@ export default function RecordManual() {
                     <View style={styles.flexRow}>
                         <Text style={{ fontSize: 24, color: Colors.green600 }}>125</Text>
                     </View>
+                    <View style={styles.flexRow}>
+                        <LineChart
+                            data={data}
+                            width={50}
+                            height={30}
+                            withHorizontalLabels={false}
+                            withVerticalLabels={false}
+                            chartConfig={chartConfig}
+                            withDots={false}
+                            withInnerLines={false}
+                            withOuterLines={false}
+                            withShadow={false}
+                            bezier
+                            style={{ paddingRight: 0, paddingTop: 1 }}
+                        />
 
-                    <LineChart
-                        data={data}
-                        width={50}
-                        height={30}
-                        withHorizontalLabels={false}
-                        withVerticalLabels={false}
-                        chartConfig={chartConfig}
-                        withDots={false}
-                        withInnerLines={false}
-                        withOuterLines={false}
-                        withShadow={false}
-                        bezier
-                        style={{ paddingRight: 0, paddingTop: 1 }}
-                    />
+                        <View style={styles.labelTag}>
+                            <Text style={{ color: Colors.gray600, fontSize: 12 }}>Work</Text>
+                        </View>
+                        <View style={styles.importanceTag}>
+                            <Text style={{ color: 'white', fontSize: 12 }}>M</Text>
+                        </View>
+
+                    </View>
 
                 </View>
 
@@ -170,6 +179,26 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         columnGap: 2,
         backgroundColor: Colors.gray300,
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 100,
+        alignItems: 'center',
+        elevation: 1
+    },
+    labelTag: {
+        textAlign: 'center',
+        alignSelf: 'flex-start',
+        backgroundColor: Colors.gray300,
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 100,
+        alignItems: 'center',
+        elevation: 1
+    },
+    importanceTag: {
+        textAlign: 'center',
+        alignSelf: 'flex-start',
+        backgroundColor: Colors.green500,
         paddingVertical: 4,
         paddingHorizontal: 8,
         borderRadius: 100,

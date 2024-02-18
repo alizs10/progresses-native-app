@@ -12,8 +12,8 @@ export default function Progresses() {
 
 
             <View style={styles.flexSpaceBetween}>
-                <ProgressesTitle title={'All Progresses'} count={12} />
-                <Ionicons name="grid-outline" size={16} color="white" />
+                <ProgressesTitle title={'All'} count={3} />
+                <Ionicons name="grid-outline" size={18} color="white" />
             </View>
 
             <ScrollView style={styles.progressesContainer}>

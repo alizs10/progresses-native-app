@@ -1,6 +1,8 @@
 import { StyleSheet, StatusBar, Platform, View, Dimensions } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import GoalsScreen from './screens/GoalsScreen';
+import NewProgressScreen from './screens/NewProgressScreen';
+import NewRecordScreen from './screens/NewRecordScreen';
 
 export default function App() {
 

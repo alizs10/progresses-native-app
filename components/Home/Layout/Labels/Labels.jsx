@@ -16,7 +16,6 @@ export default function Labels() {
             >
 
                 <Label name={"All"} />
-                <Label name={"Records"} />
 
             </ScrollView>
         </View>

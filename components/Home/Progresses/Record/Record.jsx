@@ -14,24 +14,34 @@ export default function Record() {
                 </View>
                 <MaterialIcons name="push-pin" size={22} color={Colors.gray700} />
             </View>
-            <View>
-                <View style={styles.bottomContainer}>
-                    <View style={styles.detailsContainer}>
+
+            <View style={styles.bottomContainer}>
+                <View style={styles.detailsContainer}>
+                    <View style={styles.flexBetween}>
                         <View style={styles.flexRow}>
                             <Text style={{ fontSize: 24, color: Colors.green600 }}>11</Text>
                         </View>
-
                         <View style={styles.flexRow}>
-                            <View style={styles.flexRow}>
-                                <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={Colors.gray600} />
-                                <Text style={{ fontSize: 12, color: Colors.gray600 }}>last update: today</Text>
+                            <View style={styles.labelTag}>
+                                <Text style={{ color: Colors.gray600, fontSize: 12 }}>Work</Text>
+                            </View>
+                            <View style={styles.importanceTag}>
+                                <Text style={{ color: 'white', fontSize: 12 }}>M</Text>
                             </View>
 
                         </View>
 
+
                     </View>
-                    <View style={styles.checkButton}>
-                        <MaterialCommunityIcons name="plus" size={24} color={Colors.green600} />
+                    <View style={styles.flexBetween}>
+
+                        <View style={[styles.flexRow, { alignSelf: 'flex-end' }]}>
+                            <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={Colors.gray600} />
+                            <Text style={{ fontSize: 12, color: Colors.gray600 }}>last update: today</Text>
+                        </View>
+                        <View style={styles.checkButton}>
+                            <MaterialCommunityIcons name="plus" size={24} color={Colors.green600} />
+                        </View>
                     </View>
 
                 </View>
@@ -65,11 +75,9 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         marginTop: 8,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end'
     },
     detailsContainer: {
+        width: '100%',
         gap: 8
     },
     bgProceed: {
@@ -84,6 +92,12 @@ const styles = StyleSheet.create({
     flexRow: {
         alignItems: 'center',
         flexDirection: 'row',
+        columnGap: 4
+    },
+    flexBetween: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         columnGap: 4
     },
     stepsContainer: {
@@ -107,6 +121,26 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         columnGap: 2,
         backgroundColor: Colors.gray300,
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 100,
+        alignItems: 'center',
+        elevation: 1
+    },
+    labelTag: {
+        textAlign: 'center',
+        alignSelf: 'flex-start',
+        backgroundColor: Colors.gray300,
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 100,
+        alignItems: 'center',
+        elevation: 1
+    },
+    importanceTag: {
+        textAlign: 'center',
+        alignSelf: 'flex-start',
+        backgroundColor: Colors.green500,
         paddingVertical: 4,
         paddingHorizontal: 8,
         borderRadius: 100,

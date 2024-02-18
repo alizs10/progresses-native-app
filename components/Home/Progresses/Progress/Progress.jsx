@@ -28,15 +28,27 @@ export default function Progress() {
                                 <Text style={{ fontSize: 12, color: Colors.yellow800 }}>Pages: 81-120</Text>
                             </View>
                         </View>
-                        <View style={styles.flexRow}>
-                            <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={Colors.gray600} />
-                            <Text style={{ fontSize: 12, color: Colors.gray600 }}>1 day left</Text>
+
+                        <View style={styles.flexBetween}>
+                            <View style={styles.flexRow}>
+                                <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={Colors.gray600} />
+                                <Text style={{ fontSize: 12, color: Colors.gray600 }}>1 day left</Text>
+                            </View>
+                            <View style={styles.flexRow}>
+                                <View style={styles.stepsTag}>
+                                    <Text style={{ color: Colors.gray600, fontSize: 12 }}>3/4</Text>
+                                </View>
+                                <View style={styles.labelTag}>
+                                    <Text style={{ color: Colors.gray600, fontSize: 12 }}>Work</Text>
+                                </View>
+                                <View style={styles.importanceTag}>
+                                    <Text style={{ color: 'white', fontSize: 12 }}>M</Text>
+                                </View>
+                            </View>
+
                         </View>
                     </View>
-                    <View style={styles.checkButton}>
-                        {/* <Ionicons name="checkmark" size={24} color={Colors.green600} /> */}
-                        <Text style={{ color: Colors.gray600, fontSize: 12 }}>3/4</Text>
-                    </View>
+
 
                 </View>
                 <View style={styles.stepsContainer}>
@@ -79,7 +91,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     detailsContainer: {
-        gap: 8
+        width: '100%',
+        gap: 8,
     },
     bgProceed: {
         position: 'absolute',
@@ -93,6 +106,12 @@ const styles = StyleSheet.create({
     flexRow: {
         alignItems: 'center',
         flexDirection: 'row',
+        columnGap: 4
+    },
+    flexBetween: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         columnGap: 4
     },
     stepsContainer: {
@@ -110,12 +129,30 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         elevation: 1
     },
-    checkButton: {
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        columnGap: 2,
+    stepsTag: {
+        textAlign: 'center',
+        alignSelf: 'flex-start',
         backgroundColor: Colors.gray300,
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 100,
+        alignItems: 'center',
+        elevation: 1
+    },
+    labelTag: {
+        textAlign: 'center',
+        alignSelf: 'flex-start',
+        backgroundColor: Colors.gray300,
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 100,
+        alignItems: 'center',
+        elevation: 1
+    },
+    importanceTag: {
+        textAlign: 'center',
+        alignSelf: 'flex-start',
+        backgroundColor: Colors.green500,
         paddingVertical: 4,
         paddingHorizontal: 8,
         borderRadius: 100,

@@ -7,7 +7,7 @@ export default function ProgressesTitle({ title, count }) {
     return (
         <View style={styles.flexRow}>
             <Entypo name="dot-single" size={24} color="white" />
-            <Text style={styles.title}>{title} <Text style={styles.titleHighlight}>{count}</Text></Text>
+            <Text style={styles.title}>{title}   <Text style={styles.titleHighlight}>{count}</Text></Text>
         </View>
     )
 }
@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
     flexRow: {
         alignItems: 'center',
         flexDirection: 'row',
-        columnGap: 4
+        columnGap: 2
     },
 })
