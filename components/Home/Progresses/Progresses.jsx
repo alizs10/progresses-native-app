@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Record from './Record/Record';
 import RecordManual from './RecordManual/RecordManual';
 import MiniProgress from './MiniProgress/MiniProgress';
+import MiniRecord from './MiniRecord/MiniRecord';
+import MiniRecordManual from './MiniRecordManual/MiniRecordManual';
 
 export default function Progresses() {
     return (
@@ -19,8 +21,8 @@ export default function Progresses() {
 
             <ScrollView>
                 <View style={styles.progressesContainer}>
-                    <MiniProgress />
-                    <MiniProgress />
+                    <MiniRecordManual />
+                    <MiniRecordManual />
                 </View>
                 {/* <Progress />
                 <Record />
