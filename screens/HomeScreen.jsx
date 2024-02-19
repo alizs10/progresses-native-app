@@ -13,7 +13,7 @@ export default function HomeScreen() {
             <Labels />
             <Progresses />
             <BottomBar />
-            <Menu />
+            {/* <Menu /> */}
         </View>
     )
 }

@@ -5,6 +5,7 @@ import Progress from './Progress/Progress'
 import { Ionicons } from '@expo/vector-icons';
 import Record from './Record/Record';
 import RecordManual from './RecordManual/RecordManual';
+import MiniProgress from './MiniProgress/MiniProgress';
 
 export default function Progresses() {
     return (
@@ -16,10 +17,14 @@ export default function Progresses() {
                 <Ionicons name="grid-outline" size={18} color="white" />
             </View>
 
-            <ScrollView style={styles.progressesContainer}>
-                <Progress />
+            <ScrollView>
+                <View style={styles.progressesContainer}>
+                    <MiniProgress />
+                    <MiniProgress />
+                </View>
+                {/* <Progress />
                 <Record />
-                <RecordManual />
+                <RecordManual /> */}
             </ScrollView>
 
         </View>
@@ -39,6 +44,10 @@ const styles = StyleSheet.create({
         paddingRight: 10
     },
     progressesContainer: {
-        gap: 8
+        gap: 8,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: '100%',
+        marginTop: 12
     }
 })

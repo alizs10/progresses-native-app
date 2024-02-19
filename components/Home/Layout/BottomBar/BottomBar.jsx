@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import React from 'react'
 import Colors from '../../../../consts/Colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -9,10 +9,33 @@ export default function BottomBar() {
             <View style={styles.bottomBar}>
 
                 <View style={styles.listBar}>
-                    <MaterialCommunityIcons name="home-outline" size={28} color={Colors.green500} />
-                    <MaterialCommunityIcons name="progress-check" size={28} color={Colors.gray300} />
-                    <MaterialCommunityIcons name="progress-clock" size={28} color={Colors.gray300} />
-                    <MaterialCommunityIcons name="star-shooting-outline" size={28} color={Colors.gray300} />
+                    <View style={styles.itemContainer}>
+                        <MaterialCommunityIcons name="home-outline" size={28} color={Colors.green500} />
+                        {/* <View style={styles.itemCountContainer}>
+                            <Text style={styles.itemCountText}>10</Text>
+                        </View> */}
+                    </View>
+                    <View style={styles.itemContainer}>
+                        <MaterialCommunityIcons name="progress-check" size={28} color={Colors.gray300} />
+
+                        <View style={styles.itemCountContainer}>
+                            <Text style={styles.itemCountText}>33</Text>
+                        </View>
+                    </View>
+                    <View style={styles.itemContainer}>
+                        <MaterialCommunityIcons name="progress-clock" size={28} color={Colors.gray300} />
+                        <View style={styles.itemCountContainer}>
+                            <Text style={styles.itemCountText}>2</Text>
+                        </View>
+                    </View>
+                    <View style={styles.itemContainer}>
+                        <MaterialCommunityIcons name="star-shooting-outline" size={28} color={Colors.gray300} />
+                        <View style={styles.itemCountContainer}>
+                            <Text style={styles.itemCountText}>8</Text>
+                        </View>
+                    </View>
+
+
                 </View>
                 <View style={styles.plusButton}>
                     <MaterialCommunityIcons name="plus" size={24} color='white' />
@@ -57,5 +80,22 @@ const styles = StyleSheet.create({
         height: 55,
         elevation: 1
     },
-
+    itemContainer: {
+        position: 'relative'
+    },
+    itemCountContainer: {
+        position: 'absolute',
+        bottom: -6,
+        right: -5,
+        width: 16,
+        height: 16,
+        borderRadius: 10,
+        backgroundColor: Colors.gray300,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    itemCountText: {
+        fontSize: 10,
+        color: Colors.green600
+    },
 })
