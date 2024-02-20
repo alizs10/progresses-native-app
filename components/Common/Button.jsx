@@ -2,11 +2,12 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Colors from '../../consts/Colors'
 
-export default function Button({ text, bgColor = Colors.green600, textColor = 'white' }) {
+export default function Button({ text, icon = null, bgColor = Colors.green600, textColor = 'white', textSize = 20 }) {
     return (
         <Pressable>
             <View style={[styles.container, { backgroundColor: bgColor }]}>
-                <Text style={[styles.text, { color: textColor }]}>{text}</Text>
+                {icon && icon}
+                <Text style={[styles.text, { color: textColor, fontSize: textSize }]}>{text}</Text>
             </View>
         </Pressable>
     )
@@ -17,7 +18,11 @@ const styles = StyleSheet.create({
         width: "100%",
         borderRadius: 18,
         backgroundColor: Colors.green600,
-        paddingVertical: 10,
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        gap: 4,
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     text: {
         fontSize: 20,

@@ -2,11 +2,15 @@ import { View, StyleSheet, Text } from 'react-native'
 import React from 'react'
 import Colors from '../../../../consts/Colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import DataTypePopup from './DataTypePopup';
 
 export default function BottomBar() {
     return (
         <View style={styles.container}>
             <View style={styles.bottomBar}>
+
+                <DataTypePopup />
+
 
                 <View style={styles.listBar}>
                     <View style={styles.itemContainer}>
@@ -57,7 +61,8 @@ const styles = StyleSheet.create({
     },
     bottomBar: {
         flexDirection: 'row',
-        gap: 8
+        gap: 8,
+        position: 'relative'
     },
     listBar: {
         backgroundColor: Colors.gray600,
