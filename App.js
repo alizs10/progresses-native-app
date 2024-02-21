@@ -8,7 +8,7 @@ import ProfileScreen from './screens/ProfileScreen';
 export default function App() {
 
 
-  let screen = <ProfileScreen />;
+  let screen = <HomeScreen />;
 
 
   return (

@@ -5,41 +5,41 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function Progress() {
+export default function Progress({ theme }) {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
 
-            <View style={styles.bgProceed}></View>
+            <View style={[styles.bgProceed, { backgroundColor: theme.progressBgFill }]}></View>
             <View style={styles.topContainer}>
-                <Text style={styles.title}>Read 1948</Text>
-                <MaterialIcons name="push-pin" size={22} color={Colors.gray700} />
+                <Text style={[styles.title, { color: theme.title }]}>Read 1948</Text>
+                <MaterialIcons name="push-pin" size={22} color={theme.title} />
             </View>
             <View>
                 <View style={styles.bottomContainer}>
                     <View style={styles.detailsContainer}>
                         <View style={styles.flexRow}>
                             <View style={styles.flexRow}>
-                                <Ionicons name="checkmark-done" size={18} color={Colors.green600} />
-                                <Text style={{ fontSize: 12, color: Colors.green600 }}>Pages: 50-80</Text>
+                                <Ionicons name="checkmark-done" size={18} color={theme.stepForwardIcon} />
+                                <Text style={{ fontSize: 12, color: theme.stepForwardText }}>Pages: 50-80</Text>
                             </View>
                             <Text style={{ fontSize: 18 }}>{` `}</Text>
                             <View style={styles.flexRow}>
-                                <MaterialCommunityIcons name="chevron-double-right" size={18} color={Colors.yellow800} />
-                                <Text style={{ fontSize: 12, color: Colors.yellow800 }}>Pages: 81-120</Text>
+                                <MaterialCommunityIcons name="chevron-double-right" size={18} color={theme.stepBackwardIcon} />
+                                <Text style={{ fontSize: 12, color: theme.stepBackwardText }}>Pages: 81-120</Text>
                             </View>
                         </View>
 
                         <View style={styles.flexBetween}>
                             <View style={styles.flexRow}>
-                                <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={Colors.gray600} />
-                                <Text style={{ fontSize: 12, color: Colors.gray600 }}>1 day left</Text>
+                                <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={theme.time} />
+                                <Text style={{ fontSize: 12, color: theme.time }}>1 day left</Text>
                             </View>
                             <View style={styles.flexRow}>
-                                <View style={styles.stepsTag}>
-                                    <Text style={{ color: Colors.gray600, fontSize: 12 }}>3/4</Text>
+                                <View style={[styles.stepsTag, { backgroundColor: theme.labelBg }]}>
+                                    <Text style={{ color: theme.labelText, fontSize: 12 }}>3/4</Text>
                                 </View>
-                                <View style={styles.labelTag}>
-                                    <Text style={{ color: Colors.gray600, fontSize: 12 }}>Work</Text>
+                                <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
+                                    <Text style={{ color: theme.labelText, fontSize: 12 }}>Work</Text>
                                 </View>
                                 <View style={styles.importanceTag}>
                                     <Text style={{ color: 'white', fontSize: 12 }}>M</Text>
@@ -52,10 +52,11 @@ export default function Progress() {
 
                 </View>
                 <View style={styles.stepsContainer}>
-                    <View style={styles.stepRect}></View>
-                    <View style={styles.stepRect}></View>
-                    <View style={styles.stepRect}></View>
-                    <View style={[styles.stepRect, { backgroundColor: Colors.gray400 }]}></View>
+                    <View style={[styles.stepRect, { backgroundColor: theme.stepsRectBgFill }]}></View>
+                    <View style={[styles.stepRect, { backgroundColor: theme.stepsRectBgFill }]}></View>
+                    {/* <View style={styles.stepRect}></View> */}
+                    <View style={[styles.stepRect, { backgroundColor: theme.stepsRectBg }]}></View>
+                    <View style={[styles.stepRect, { backgroundColor: theme.stepsRectBg }]}></View>
                 </View>
             </View>
         </View>
@@ -64,13 +65,11 @@ export default function Progress() {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 16,
+        width: '100%',
         paddingHorizontal: 20,
         paddingVertical: 14,
         borderWidth: 3,
-        borderColor: 'white',
         borderRadius: 25,
-        backgroundColor: Colors.gray500,
         zIndex: 1,
         overflow: 'hidden'
     },
@@ -81,7 +80,6 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        color: Colors.gray700,
         fontWeight: 'bold',
     },
     bottomContainer: {
@@ -100,7 +98,6 @@ const styles = StyleSheet.create({
         left: 0,
         bottom: 0,
         right: '25%',
-        backgroundColor: 'white',
         zIndex: 0
     },
     flexRow: {
@@ -125,14 +122,12 @@ const styles = StyleSheet.create({
     stepRect: {
         width: '24%',
         height: 4,
-        backgroundColor: Colors.green600,
         borderRadius: 10,
         elevation: 1
     },
     stepsTag: {
         textAlign: 'center',
         alignSelf: 'flex-start',
-        backgroundColor: Colors.gray300,
         paddingVertical: 4,
         paddingHorizontal: 8,
         borderRadius: 100,
@@ -142,7 +137,6 @@ const styles = StyleSheet.create({
     labelTag: {
         textAlign: 'center',
         alignSelf: 'flex-start',
-        backgroundColor: Colors.gray300,
         paddingVertical: 4,
         paddingHorizontal: 8,
         borderRadius: 100,
