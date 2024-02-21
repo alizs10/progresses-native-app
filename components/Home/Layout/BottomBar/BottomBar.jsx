@@ -9,7 +9,7 @@ export default function BottomBar() {
         <View style={styles.container}>
             <View style={styles.bottomBar}>
 
-                <DataTypePopup />
+                {/* <DataTypePopup /> */}
 
 
                 <View style={styles.listBar}>

@@ -3,11 +3,12 @@ import HomeScreen from './screens/HomeScreen';
 import GoalsScreen from './screens/GoalsScreen';
 import NewProgressScreen from './screens/NewProgressScreen';
 import NewRecordScreen from './screens/NewRecordScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 export default function App() {
 
 
-  let screen = <HomeScreen />;
+  let screen = <ProfileScreen />;
 
 
   return (
