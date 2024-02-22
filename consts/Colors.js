@@ -21,7 +21,7 @@ export default Colors = {
     yellow600: "#ffe747",
     yellow700: "#ffe433",
     yellow800: "#ffdd1f",
-    yellow900: "#dbb42c",
+    yellow900: "#edc531",
 
     // red
     red100: "#ffccd5",

@@ -6,6 +6,104 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Progress({ theme }) {
+
+
+    const progressesThemes = {
+        white: {
+            border: 'white',
+            progressBg: Colors.gray300,
+            progressBgFill: 'white',
+            title: Colors.gray700,
+            stepForwardIcon: Colors.green600,
+            stepBackwardIcon: Colors.red500,
+            stepForwardText: Colors.gray700,
+            stepBackwardText: Colors.gray700,
+            time: Colors.gray700,
+            labelBg: 'white',
+            labelText: Colors.gray600,
+            stepsRectBg: Colors.gray400,
+            stepsRectBgFill: Colors.green600,
+        },
+        violet: {
+            border: Colors.violet800,
+            progressBg: Colors.violet900,
+            progressBgFill: Colors.violet800,
+            title: 'white',
+            stepForwardIcon: Colors.green500,
+            stepBackwardIcon: Colors.red500,
+            stepForwardText: 'white',
+            stepBackwardText: 'white',
+            time: 'white',
+            labelBg: Colors.violet800,
+            labelText: 'white',
+            stepsRectBg: Colors.violet200,
+            stepsRectBgFill: Colors.green500,
+        },
+        blue: {
+            border: Colors.blue800,
+            progressBg: Colors.blue900,
+            progressBgFill: Colors.blue800,
+            title: 'white',
+            stepForwardIcon: Colors.green500,
+            stepBackwardIcon: Colors.red500,
+            stepForwardText: 'white',
+            stepBackwardText: 'white',
+            time: 'white',
+            labelBg: Colors.blue800,
+            labelText: 'white',
+            stepsRectBg: Colors.blue200,
+            stepsRectBgFill: Colors.green500,
+        },
+        yellow: {
+            border: Colors.yellow700,
+            progressBg: Colors.yellow900,
+            progressBgFill: Colors.yellow700,
+            title: Colors.gray800,
+            stepForwardIcon: Colors.green500,
+            stepBackwardIcon: Colors.red500,
+            stepForwardText: Colors.gray800,
+            stepBackwardText: Colors.gray800,
+            time: Colors.gray800,
+            labelBg: Colors.yellow700,
+            labelText: Colors.gray800,
+            stepsRectBg: Colors.yellow50,
+            stepsRectBgFill: Colors.green500,
+        },
+        turquoise: {
+            border: Colors.turquoise700,
+            progressBg: Colors.turquoise900,
+            progressBgFill: Colors.turquoise700,
+            title: 'white',
+            stepForwardIcon: Colors.green300,
+            stepBackwardIcon: Colors.red500,
+            stepForwardText: 'white',
+            stepBackwardText: 'white',
+            time: 'white',
+            labelBg: Colors.turquoise700,
+            labelText: 'white',
+            stepsRectBg: Colors.gray200,
+            stepsRectBgFill: Colors.green400,
+        },
+        red: {
+            border: Colors.red700,
+            progressBg: Colors.red900,
+            progressBgFill: Colors.red700,
+            title: 'white',
+            stepForwardIcon: Colors.green500,
+            stepBackwardIcon: Colors.red500,
+            stepForwardText: 'white',
+            stepBackwardText: 'white',
+            time: 'white',
+            labelBg: Colors.red700,
+            labelText: 'white',
+            stepsRectBg: Colors.gray200,
+            stepsRectBgFill: Colors.green500,
+        },
+    }
+
+    theme = progressesThemes[theme]
+
+
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
 
@@ -66,6 +164,7 @@ export default function Progress({ theme }) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        marginVertical: 4,
         paddingHorizontal: 20,
         paddingVertical: 14,
         borderWidth: 3,
