@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function MiniProgress({ theme }) {
+export default function MiniProgress({ data }) {
 
     const progressesThemes = {
         white: {
@@ -18,8 +18,8 @@ export default function MiniProgress({ theme }) {
             stepForwardText: Colors.gray700,
             stepBackwardText: Colors.gray700,
             time: Colors.gray700,
-            labelBg: 'white',
-            labelText: Colors.gray600,
+            labelBg: Colors.gray300,
+            labelText: Colors.gray800,
             stepsRectBg: Colors.gray400,
             stepsRectBgFill: Colors.green600,
         },
@@ -100,11 +100,12 @@ export default function MiniProgress({ theme }) {
         },
     }
 
-    theme = progressesThemes[theme]
+    let theme = progressesThemes[data.theme]
+
 
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
+        <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
 
             <View style={styles.topContainer}>
                 <Text style={[styles.title, { color: theme.title }]}>Read 1948</Text>

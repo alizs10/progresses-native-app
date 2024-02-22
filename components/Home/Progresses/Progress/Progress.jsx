@@ -5,8 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function Progress({ theme }) {
-
+export default function Progress({ data }) {
 
     const progressesThemes = {
         white: {
@@ -101,8 +100,7 @@ export default function Progress({ theme }) {
         },
     }
 
-    theme = progressesThemes[theme]
-
+    let theme = progressesThemes[data.theme]
 
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>

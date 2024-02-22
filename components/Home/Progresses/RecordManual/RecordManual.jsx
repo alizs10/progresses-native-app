@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
 
-export default function RecordManual({ theme }) {
+export default function RecordManual({ data }) {
 
     const themes = {
         white: {
@@ -100,7 +100,8 @@ export default function RecordManual({ theme }) {
         },
     }
 
-    theme = themes[theme]
+    let theme = themes[data.theme]
+
 
 
 
@@ -112,7 +113,7 @@ export default function RecordManual({ theme }) {
         barPercentage: 0.5,
         useShadowColorFromDataset: false // optional
     };
-    const data = {
+    const chartData = {
         labels: ["1", "2", "3", "4", "5", "6", "7"],
         datasets: [
             {
@@ -142,7 +143,7 @@ export default function RecordManual({ theme }) {
                     </View>
                     <View style={styles.flexRow}>
                         <LineChart
-                            data={data}
+                            data={chartData}
                             width={50}
                             height={30}
                             withHorizontalLabels={false}
@@ -156,11 +157,12 @@ export default function RecordManual({ theme }) {
                             style={{ paddingRight: 0, paddingTop: 1 }}
                         />
 
-                        <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                            <Text style={{ color: theme.labelText, fontSize: 12 }}>Work</Text>
-                        </View>
-                        <View style={styles.importanceTag}>
-                            <Text style={{ color: 'white', fontSize: 12 }}>M</Text>
+                        <View style={styles.flexRow}>
+
+                            <TextInput style={[styles.recordNumberInput, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]} defaultValue='5' keyboardType='number-pad' maxLength={4} />
+                            <View style={[styles.checkButton, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]}>
+                                <MaterialCommunityIcons name="plus" size={24} color={theme.plusBtnText} />
+                            </View>
                         </View>
 
                     </View>
@@ -181,10 +183,13 @@ export default function RecordManual({ theme }) {
                     </View>
 
                     <View style={styles.flexRow}>
-                        <TextInput style={[styles.recordNumberInput, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]} defaultValue='5' keyboardType='number-pad' maxLength={4} />
-                        <View style={[styles.checkButton, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]}>
-                            <MaterialCommunityIcons name="plus" size={24} color={theme.plusBtnText} />
+                        <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
+                            <Text style={{ color: theme.labelText, fontSize: 12 }}>Work</Text>
                         </View>
+                        <View style={styles.importanceTag}>
+                            <Text style={{ color: 'white', fontSize: 12 }}>M</Text>
+                        </View>
+
                     </View>
                 </View>
 

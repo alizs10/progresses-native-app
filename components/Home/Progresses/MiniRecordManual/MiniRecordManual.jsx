@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
 
-export default function MiniRecordManual({ theme }) {
+export default function MiniRecordManual({ data }) {
 
     const themes = {
         white: {
@@ -100,7 +100,8 @@ export default function MiniRecordManual({ theme }) {
         },
     }
 
-    theme = themes[theme]
+    let theme = themes[data.theme]
+
 
     const chartConfig = {
         backgroundGradientFromOpacity: 0,
@@ -110,7 +111,7 @@ export default function MiniRecordManual({ theme }) {
         barPercentage: 0.5,
         useShadowColorFromDataset: false // optional
     };
-    const data = {
+    const chartData = {
         labels: ["1", "2", "3", "4", "5", "6", "7"],
         datasets: [
             {
@@ -141,7 +142,7 @@ export default function MiniRecordManual({ theme }) {
                         </View>
 
                         <LineChart
-                            data={data}
+                            data={chartData}
                             width={40}
                             height={20}
                             withHorizontalLabels={false}

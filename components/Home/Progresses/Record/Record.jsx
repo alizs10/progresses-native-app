@@ -4,7 +4,7 @@ import Colors from '../../../../consts/Colors'
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function Record({ theme }) {
+export default function Record({ data }) {
 
     const themes = {
         white: {
@@ -99,7 +99,7 @@ export default function Record({ theme }) {
         },
     }
 
-    theme = themes[theme]
+    let theme = themes[data.theme]
 
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
