@@ -1,49 +1,91 @@
-import { View, StyleSheet, Text } from 'react-native'
-import React from 'react'
+import { View, StyleSheet, Text, Pressable } from 'react-native'
+import { useState } from 'react'
 import Colors from '../../../../consts/Colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DataTypePopup from './DataTypePopup';
+import { useNavigation } from '@react-navigation/native';
 
-export default function BottomBar() {
+export default function BottomBar({ state, descriptors, navigation }) {
+
+    const [createOptionsVis, setCreateOptionsVis] = useState(false);
+
+    function toggleCreateOptionsVis() {
+        setCreateOptionsVis(prevState => !prevState);
+    }
+
+    const stackNavigation = useNavigation();
+
+    function handlePressCreate(screen) {
+        stackNavigation.navigate(screen);
+        setCreateOptionsVis(false);
+    }
+
+    function handlePress(keyName) {
+        const routes = state.routes;
+        const route = routes.find(route => route.name === keyName);
+
+        navigation.navigate(route.name);
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.bottomBar}>
 
-                {/* <DataTypePopup /> */}
-
-
                 <View style={styles.listBar}>
-                    <View style={styles.itemContainer}>
-                        <MaterialCommunityIcons name="home-outline" size={28} color={Colors.green500} />
-                        {/* <View style={styles.itemCountContainer}>
+
+                    <Pressable onPress={() => handlePress('Home')}>
+                        <View style={styles.itemContainer}>
+                            <MaterialCommunityIcons name="home-outline" size={30} color={state.index === 0 ? Colors.green500 : Colors.gray300} />
+                            {/* <View style={styles.itemCountContainer}>
                             <Text style={styles.itemCountText}>10</Text>
                         </View> */}
-                    </View>
-                    <View style={styles.itemContainer}>
-                        <MaterialCommunityIcons name="progress-check" size={28} color={Colors.gray300} />
+                        </View>
+                    </Pressable>
+                    <Pressable onPress={() => handlePress('FinishedProgresses')}>
+                        <View style={styles.itemContainer}>
+                            <MaterialCommunityIcons name="progress-check" size={30} color={state.index === 1 ? Colors.green500 : Colors.gray300} />
 
-                        <View style={styles.itemCountContainer}>
-                            <Text style={styles.itemCountText}>33</Text>
+                            <View style={styles.itemCountContainer}>
+                                <Text style={styles.itemCountText}>33</Text>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.itemContainer}>
-                        <MaterialCommunityIcons name="progress-clock" size={28} color={Colors.gray300} />
-                        <View style={styles.itemCountContainer}>
-                            <Text style={styles.itemCountText}>2</Text>
+                    </Pressable>
+                    <Pressable onPress={() => handlePress('UnfinishedProgresses')}>
+                        <View style={styles.itemContainer}>
+                            <MaterialCommunityIcons name="progress-clock" size={30} color={state.index === 2 ? Colors.green500 : Colors.gray300} />
+                            <View style={styles.itemCountContainer}>
+                                <Text style={styles.itemCountText}>2</Text>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.itemContainer}>
-                        <MaterialCommunityIcons name="star-shooting-outline" size={28} color={Colors.gray300} />
-                        <View style={styles.itemCountContainer}>
-                            <Text style={styles.itemCountText}>8</Text>
+                    </Pressable>
+                    <Pressable onPress={() => handlePress('Records')}>
+                        <View style={styles.itemContainer}>
+                            <MaterialCommunityIcons name="star-shooting-outline" size={30} color={state.index === 3 ? Colors.green500 : Colors.gray300} />
+                            <View style={styles.itemCountContainer}>
+                                <Text style={styles.itemCountText}>8</Text>
+                            </View>
                         </View>
-                    </View>
+                    </Pressable>
 
 
                 </View>
-                <View style={styles.plusButton}>
-                    <MaterialCommunityIcons name="plus" size={24} color='white' />
-                </View>
+
+
+                {createOptionsVis ? (
+
+                    <View style={[styles.plusButton, { backgroundColor: Colors.red500 }]}>
+                        <MaterialCommunityIcons name={'close'} size={24} color='white' />
+                    </View>
+
+                ) : (
+                    <Pressable onPress={toggleCreateOptionsVis}>
+                        <View style={[styles.plusButton]}>
+                            <MaterialCommunityIcons name={'plus'} size={24} color='white' />
+                        </View>
+                    </Pressable>
+                )}
+
+                {createOptionsVis && <DataTypePopup handlePress={handlePressCreate} handleClose={toggleCreateOptionsVis} />}
             </View>
         </View>
     )
@@ -53,7 +95,6 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         bottom: 20,
-        height: 55,
         alignSelf: 'center',
         marginHorizontal: 'auto',
         justifyContent: 'center',
@@ -62,17 +103,18 @@ const styles = StyleSheet.create({
     bottomBar: {
         flexDirection: 'row',
         gap: 8,
-        position: 'relative'
+        position: 'relative',
+        // backgroundColor: 'blue'
     },
     listBar: {
         backgroundColor: Colors.gray600,
         flexDirection: 'row',
-        gap: 14,
-        paddingHorizontal: 14,
-        paddingVertical: 10,
+        gap: 18,
+        paddingHorizontal: 18,
+        paddingVertical: 12,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 23,
+        borderRadius: 25,
         elevation: 1
     },
     plusButton: {
@@ -86,7 +128,7 @@ const styles = StyleSheet.create({
         elevation: 1
     },
     itemContainer: {
-        position: 'relative'
+        position: 'relative',
     },
     itemCountContainer: {
         position: 'absolute',
@@ -102,5 +144,5 @@ const styles = StyleSheet.create({
     itemCountText: {
         fontSize: 10,
         color: Colors.green600
-    },
+    }
 })

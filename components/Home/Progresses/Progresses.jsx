@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList, Pressable } from 'react-native'
+import { View, StyleSheet, FlatList, Pressable, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import ProgressesTitle from './ProgressesTitle'
 import { Ionicons } from '@expo/vector-icons';
@@ -106,9 +106,11 @@ export default function Progresses() {
             <FlatList data={fakeData} numColumns={dataViewMode === 0 ? 1 : 2}
                 key={dataViewMode === 0 ? 1 : 2}
                 columnWrapperStyle={dataViewMode === 0 ? null : styles.progressesRowWrapper}
+                contentContainerStyle={{ paddingBottom: 100 }}
+                showsVerticalScrollIndicator={false}
                 keyExtractor={(item => item.title)}
                 renderItem={({ index, item }) => showDataComp(item)}
-            ></FlatList>
+            />
 
 
 
@@ -130,6 +132,6 @@ const styles = StyleSheet.create({
         paddingRight: 10
     },
     progressesRowWrapper: {
-        gap: 8
+        gap: 8,
     }
 })

@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         gap: 25,
-        marginTop: 50
+        marginTop: 10
     },
     inputContainer: {
         position: 'relative',

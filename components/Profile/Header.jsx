@@ -13,7 +13,6 @@ export default function Header() {
 
 const styles = StyleSheet.create({
     header: {
-
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10

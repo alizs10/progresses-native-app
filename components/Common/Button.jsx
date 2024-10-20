@@ -2,9 +2,9 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Colors from '../../consts/Colors'
 
-export default function Button({ text, icon = null, bgColor = Colors.green600, textColor = 'white', textSize = 20 }) {
+export default function Button({ text, icon = null, bgColor = Colors.green600, textColor = 'white', textSize = 20, onPress }) {
     return (
-        <Pressable>
+        <Pressable onPress={onPress}>
             <View style={[styles.container, { backgroundColor: bgColor }]}>
                 {icon && icon}
                 <Text style={[styles.text, { color: textColor, fontSize: textSize }]}>{text}</Text>
