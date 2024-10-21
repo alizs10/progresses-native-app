@@ -80,17 +80,17 @@ export default function Menu() {
 const styles = StyleSheet.create({
 
     container: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        width: '85%',
+        // position: 'absolute',
+        // top: 0,
+        // left: 0,
+        // bottom: 0,
+        // width: '85%',
+        flex: 1,
         backgroundColor: Colors.gray800,
         zIndex: 300,
         elevation: 3,
         borderTopRightRadius: 15,
         borderBottomRightRadius: 15,
-
     },
     flexRow: {
         flexDirection: 'row',

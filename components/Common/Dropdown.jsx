@@ -27,11 +27,13 @@ const styles = StyleSheet.create({
         position: 'relative',
         borderWidth: 2,
         borderColor: Colors.gray300,
-        borderRadius: 15,
+        borderRadius: 25,
         flex: 1,
         paddingHorizontal: 18,
         paddingVertical: 10,
-
+        height: 60,
+        // alignItems: 'center',
+        justifyContent: 'center',
     },
     dropdownContainer: {
         flexDirection: 'row',
@@ -46,8 +48,9 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 2,
         borderColor: Colors.gray300,
-        borderRadius: 15,
+        borderRadius: 25,
         width: '100%',
+
         paddingHorizontal: 18,
         paddingVertical: 10,
         fontSize: 18,

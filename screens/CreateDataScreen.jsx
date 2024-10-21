@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
-import Inputs from '../components/NewProgress/Inputs'
+import Inputs from '../components/CreateData/Inputs'
 
-export default function NewProgressScreen() {
+export default function CreateDataScreen() {
     return (
         <View style={styles.container}>
             <Inputs />

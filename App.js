@@ -1,10 +1,10 @@
+// Only import react-native-gesture-handler on native platforms
+import 'react-native-gesture-handler';
+
 import { StyleSheet, StatusBar, Platform, View, Dimensions, Text } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import GoalsScreen from './screens/GoalsScreen';
-import NewProgressScreen from './screens/NewProgressScreen';
-import NewRecordScreen from './screens/NewRecordScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomBar from './components/Home/Layout/BottomBar/BottomBar';
 
 
@@ -12,9 +12,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { EventProvider } from 'react-native-outside-press';
+import CreateDataScreen from './screens/CreateDataScreen';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import Menu from './components/Home/Menu/Menu';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 function MyTabs() {
 
@@ -47,27 +51,49 @@ function MyTabs() {
   )
 }
 
+function MyStack() {
+
+  return (
+    <View style={styles.root}>
+      <Stack.Navigator
+        initialRouteName="HomeWithTabs"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#343a40',
+          },
+          headerTintColor: '#fff',
+          headerShadowVisible: false,
+        }}
+
+      >
+        <Stack.Screen name="HomeWithTabs" component={MyTabs} options={{ headerShown: false }} />
+        <Stack.Screen name="CreateData" component={CreateDataScreen} options={{ title: 'Create New Data' }} />
+        <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' }} />
+        <Stack.Screen name="Goals" component={GoalsScreen} options={{ title: 'Goals' }} />
+        {/* <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Settings" component={Settings} /> */}
+      </Stack.Navigator>
+    </View>
+  )
+}
+
 export default function App() {
 
   return (
     <EventProvider>
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="HomeWithTabs"
+        <Drawer.Navigator
           screenOptions={{
-            headerStyle: {
-              backgroundColor: '#343a40',
-            },
-            headerTintColor: '#fff',
-            headerShadowVisible: false
+            headerShown: false,
+            drawerStyle: {
+              backgroundColor: 'transparent',
+            }
           }}
+          drawerContent={(props) => <Menu {...props} />}
         >
-          <Stack.Screen name="HomeWithTabs" component={MyTabs} options={{ headerShown: false }} />
-          <Stack.Screen name="NewRecord" component={NewRecordScreen} options={{ title: 'New Record' }} />
-          <Stack.Screen name="NewProgress" component={NewProgressScreen} options={{ title: 'New Progress' }} />
-          {/* <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="Settings" component={Settings} /> */}
-        </Stack.Navigator>
+          <Drawer.Screen name="HomeWithDrawer" component={MyStack} />
+          {/* <Drawer.Screen name="Article" component={Article} /> */}
+        </Drawer.Navigator>
       </NavigationContainer>
       <StatusBar backgroundColor={'transparent'} barStyle='tra' />
     </EventProvider>
@@ -78,6 +104,7 @@ export default function App() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: '#343a40',
     // paddingTop: (Platform.OS === 'android' && Dimensions.get('window').width > 380) ? StatusBar.currentHeight : 0
   },
 });

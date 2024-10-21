@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Colors from '../../consts/Colors'
 import Dropdown from '../Common/Dropdown';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ToggleSwitch from '../Common/form-inputs/ToggleSwitch';
 
 export default function Inputs() {
     const [isEnabled, setIsEnabled] = useState(false);
@@ -11,6 +12,9 @@ export default function Inputs() {
 
     return (
         <View style={styles.container}>
+
+            <ToggleSwitch />
+
             <View style={styles.inputContainer}>
                 <TextInput value='Read 1948 book' style={styles.input} />
                 <View style={styles.labelContainer}>
@@ -73,17 +77,18 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         position: 'relative',
+        // backgroundColor: 'red',
     },
     input: {
         borderWidth: 2,
         borderColor: Colors.gray300,
-        borderRadius: 15,
+        borderRadius: 25,
         width: '100%',
-        paddingHorizontal: 18,
-        paddingVertical: 10,
+        height: 60,
+        paddingHorizontal: 25,
         fontSize: 16,
         color: 'white',
-
+        // backgroundColor: 'blue'
     },
     labelContainer: {
         position: 'absolute',
@@ -112,7 +117,7 @@ const styles = StyleSheet.create({
     theme: {
         width: 50,
         height: 30,
-        borderRadius: 15,
+        borderRadius: 25,
         borderWidth: 2,
         borderColor: Colors.green600,
         backgroundColor: Colors.green500,

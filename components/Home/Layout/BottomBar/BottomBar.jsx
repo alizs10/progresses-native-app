@@ -1,23 +1,14 @@
 import { View, StyleSheet, Text, Pressable } from 'react-native'
-import { useState } from 'react'
 import Colors from '../../../../consts/Colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import DataTypePopup from './DataTypePopup';
 import { useNavigation } from '@react-navigation/native';
 
 export default function BottomBar({ state, descriptors, navigation }) {
 
-    const [createOptionsVis, setCreateOptionsVis] = useState(false);
-
-    function toggleCreateOptionsVis() {
-        setCreateOptionsVis(prevState => !prevState);
-    }
-
     const stackNavigation = useNavigation();
 
-    function handlePressCreate(screen) {
-        stackNavigation.navigate(screen);
-        setCreateOptionsVis(false);
+    function handlePressPlusButton() {
+        stackNavigation.navigate('CreateData');
     }
 
     function handlePress(keyName) {
@@ -70,22 +61,12 @@ export default function BottomBar({ state, descriptors, navigation }) {
 
                 </View>
 
-
-                {createOptionsVis ? (
-
-                    <View style={[styles.plusButton, { backgroundColor: Colors.red500 }]}>
-                        <MaterialCommunityIcons name={'close'} size={24} color='white' />
+                <Pressable onPress={handlePressPlusButton}>
+                    <View style={[styles.plusButton]}>
+                        <MaterialCommunityIcons name={'plus'} size={24} color='white' />
                     </View>
+                </Pressable>
 
-                ) : (
-                    <Pressable onPress={toggleCreateOptionsVis}>
-                        <View style={[styles.plusButton]}>
-                            <MaterialCommunityIcons name={'plus'} size={24} color='white' />
-                        </View>
-                    </Pressable>
-                )}
-
-                {createOptionsVis && <DataTypePopup handlePress={handlePressCreate} handleClose={toggleCreateOptionsVis} />}
             </View>
         </View>
     )

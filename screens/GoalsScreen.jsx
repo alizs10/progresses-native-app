@@ -8,7 +8,7 @@ import Rewards from '../components/GoalsAndRewards/Rewards/Rewards'
 export default function GoalsScreen() {
     return (
         <View style={styles.container}>
-            <Header />
+            {/* <Header /> */}
             <Goals />
             <Rewards />
             <BottomBar />
@@ -19,6 +19,7 @@ export default function GoalsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#343a40'
 
     }
 })
