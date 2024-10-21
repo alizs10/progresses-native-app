@@ -1,23 +1,34 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Colors from '../../../consts/Colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Menu() {
+
+    const navigation = useNavigation()
+
+    function goToScreen(screen) {
+        navigation.navigate(screen)
+    }
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Progress App <Text style={{ fontSize: 8 }}>by @alizs10</Text></Text>
 
-            <View style={styles.menu}>
-                <View style={styles.li}>
+            <Pressable onPress={() => goToScreen('HomeWithDrawer')}>
+                <View style={styles.menu}>
+                    <View style={styles.li}>
 
-                    <MaterialCommunityIcons name="progress-clock" size={28} color='white' />
-                    <Text style={styles.label}>Progresses</Text>
+                        <MaterialCommunityIcons name="progress-clock" size={28} color='white' />
+                        <Text style={styles.label}>Progresses</Text>
 
+                    </View>
                 </View>
-            </View>
+            </Pressable>
 
             <View style={styles.menu}>
                 <Text style={styles.menuTitle}>Priorities</Text>
@@ -64,14 +75,18 @@ export default function Menu() {
                     <Text style={styles.label}>Trash</Text>
                 </View>
 
-                <View style={styles.li}>
-                    <Ionicons name="settings-outline" size={26} color="white" />
-                    <Text style={styles.label}>Settings</Text>
-                </View>
-                <View style={styles.li}>
-                    <MaterialCommunityIcons name="information-outline" size={26} color="white" />
-                    <Text style={styles.label}>About</Text>
-                </View>
+                <Pressable onPress={() => goToScreen('Settings')}>
+                    <View style={styles.li}>
+                        <Ionicons name="settings-outline" size={26} color="white" />
+                        <Text style={styles.label}>Settings</Text>
+                    </View>
+                </Pressable>
+                <Pressable onPress={() => goToScreen('About')}>
+                    <View style={styles.li}>
+                        <MaterialCommunityIcons name="information-outline" size={26} color="white" />
+                        <Text style={styles.label}>About</Text>
+                    </View>
+                </Pressable>
             </View>
         </View>
     )
