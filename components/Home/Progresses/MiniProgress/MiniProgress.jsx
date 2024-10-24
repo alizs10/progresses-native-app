@@ -22,6 +22,9 @@ export default function MiniProgress({ data }) {
             labelText: Colors.gray800,
             stepsRectBg: Colors.gray400,
             stepsRectBgFill: Colors.green600,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         violet: {
             border: Colors.violet800,
@@ -37,6 +40,9 @@ export default function MiniProgress({ data }) {
             labelText: 'white',
             stepsRectBg: Colors.violet200,
             stepsRectBgFill: Colors.green500,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         blue: {
             border: Colors.blue800,
@@ -52,6 +58,9 @@ export default function MiniProgress({ data }) {
             labelText: 'white',
             stepsRectBg: Colors.blue200,
             stepsRectBgFill: Colors.green500,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         yellow: {
             border: Colors.yellow700,
@@ -67,6 +76,9 @@ export default function MiniProgress({ data }) {
             labelText: Colors.gray800,
             stepsRectBg: Colors.yellow50,
             stepsRectBgFill: Colors.green500,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         turquoise: {
             border: Colors.turquoise700,
@@ -82,6 +94,9 @@ export default function MiniProgress({ data }) {
             labelText: 'white',
             stepsRectBg: Colors.gray200,
             stepsRectBgFill: Colors.green400,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         red: {
             border: Colors.red700,
@@ -97,55 +112,71 @@ export default function MiniProgress({ data }) {
             labelText: 'white',
             stepsRectBg: Colors.gray200,
             stepsRectBgFill: Colors.green500,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
     }
 
     let theme = progressesThemes[data.theme]
 
-
+    let steps = data.steps;
+    let completedSteps = data.steps.filter(step => step.isCompleted)
+    let unCompletedSteps = data.steps.filter(step => !step.isCompleted)
 
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
 
             <View style={styles.topContainer}>
-                <Text style={[styles.title, { color: theme.title }]}>Read 1948</Text>
-                <MaterialIcons name="push-pin" size={18} color={theme.title} />
+                <Text style={[styles.title, { color: theme.title }]}>{data.name}</Text>
+                {data.isPinned && (
+                    <MaterialIcons name="push-pin" size={18} color={theme.title} />
+                )}
             </View>
 
             <View style={styles.bottomContainer}>
 
                 <View style={{ width: '100%' }}>
-                    <View style={styles.flexRow}>
-                        <Ionicons name="checkmark-done" size={14} color={theme.stepForwardIcon} />
-                        <Text style={{ fontSize: 10, color: theme.stepForwardText }}>Pages: 50-80</Text>
-                    </View>
-                    <View style={styles.flexRow}>
-                        <MaterialCommunityIcons name="chevron-double-right" size={14} color={theme.stepBackwardIcon} />
-                        <Text style={{ fontSize: 10, color: theme.stepBackwardText }}>Pages: 81-120</Text>
-                    </View>
+
+                    {completedSteps.length > 0 && (
+                        <View style={styles.flexRow}>
+                            <Ionicons name="checkmark-done" size={14} color={theme.stepForwardIcon} />
+                            <Text style={{ fontSize: 10, color: theme.stepForwardText }}>
+                                {completedSteps[completedSteps.length - 1].name === '' ? 'Step ' + completedSteps[completedSteps.length - 1].index : completedSteps[completedSteps.length - 1].name}
+                            </Text>
+                        </View>
+                    )}
+                    {unCompletedSteps.length > 0 && (
+                        <View style={styles.flexRow}>
+                            <MaterialCommunityIcons name="chevron-double-right" size={14} color={theme.stepBackwardIcon} />
+                            <Text style={{ fontSize: 10, color: theme.stepBackwardText }}>
+                                {unCompletedSteps[0].name === '' ? 'Step ' + unCompletedSteps[0].index : unCompletedSteps[0].name}
+                            </Text>
+                        </View>
+                    )}
 
                     <View style={[styles.flexBetween, { marginTop: 6 }]}>
 
                         <View style={styles.flexColumn}>
                             <View style={styles.flexRow}>
                                 <MaterialCommunityIcons name="clock-time-ten-outline" size={14} color={theme.time} />
-                                <Text style={{ fontSize: 10, color: theme.time }}>1 day left</Text>
+                                <Text style={{ fontSize: 10, color: theme.time }}>{data.deadline ? '1 day left' : 'Not Set'}</Text>
                             </View>
                             <View style={styles.flexRow}>
-                                <View style={styles.importanceTag}>
-                                    <Text style={{ color: 'white', fontSize: 10 }}>M</Text>
+                                <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
+                                    <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
                                 </View>
                                 <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                                    <Text style={{ color: theme.labelText, fontSize: 10 }}>Work</Text>
+                                    <Text style={{ color: theme.labelText, fontSize: 10 }}>{data.label.name}</Text>
                                 </View>
                             </View>
                         </View>
                         <View>
                             <View style={[styles.circularProgressContainer, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
-                                <View style={[styles.circularProgressFill, { backgroundColor: theme.progressBgFill }]}></View>
-                                <Text style={[styles.circularProgressText, { color: theme.labelText }]}>75</Text>
+                                <View style={[styles.circularProgressFill, { backgroundColor: theme.progressBgFill, height: completedSteps.length / steps.length * 100 + '%' }]}></View>
+                                <Text style={[styles.circularProgressText, { color: theme.labelText }]}>{Math.floor((completedSteps.length / steps.length) * 100)}</Text>
                             </View>
-                            <Text style={[styles.stepsCount, { color: theme.labelText }]}>3/4</Text>
+                            <Text style={[styles.stepsCount, { color: theme.labelText }]}>{completedSteps.length}/{steps.length}</Text>
                         </View>
                     </View>
 

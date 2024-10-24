@@ -11,6 +11,8 @@ import MiniRecord from './MiniRecord/MiniRecord';
 import RecordManual from './RecordManual/RecordManual';
 import MiniRecordManual from './MiniRecordManual/MiniRecordManual';
 
+import { useProgressStore } from '../../../store/progress-store'
+
 export default function Progresses() {
 
     // 0 -> List, 1-> Grid
@@ -19,6 +21,8 @@ export default function Progresses() {
     function toggleDataViewMode() {
         setDataViewMode(prevState => prevState === 0 ? 1 : 0)
     }
+
+    const progresses = useProgressStore((state) => state.progresses)
 
     const fakeData = [
         {
@@ -103,12 +107,12 @@ export default function Progresses() {
                 </Pressable>
             </View>
 
-            <FlatList data={fakeData} numColumns={dataViewMode === 0 ? 1 : 2}
+            <FlatList data={progresses} numColumns={dataViewMode === 0 ? 1 : 2}
                 key={dataViewMode === 0 ? 1 : 2}
                 columnWrapperStyle={dataViewMode === 0 ? null : styles.progressesRowWrapper}
                 contentContainerStyle={{ paddingBottom: 100 }}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={(item => item.title)}
+                keyExtractor={(item => item.id)}
                 renderItem={({ index, item }) => showDataComp(item)}
             />
 

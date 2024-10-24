@@ -22,6 +22,9 @@ export default function Progress({ data }) {
             labelText: Colors.gray600,
             stepsRectBg: Colors.gray400,
             stepsRectBgFill: Colors.green600,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         violet: {
             border: Colors.violet800,
@@ -37,6 +40,9 @@ export default function Progress({ data }) {
             labelText: 'white',
             stepsRectBg: Colors.violet200,
             stepsRectBgFill: Colors.green500,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         blue: {
             border: Colors.blue800,
@@ -52,6 +58,9 @@ export default function Progress({ data }) {
             labelText: 'white',
             stepsRectBg: Colors.blue200,
             stepsRectBgFill: Colors.green500,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         yellow: {
             border: Colors.yellow700,
@@ -67,6 +76,9 @@ export default function Progress({ data }) {
             labelText: Colors.gray800,
             stepsRectBg: Colors.yellow50,
             stepsRectBgFill: Colors.green500,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         turquoise: {
             border: Colors.turquoise700,
@@ -82,6 +94,9 @@ export default function Progress({ data }) {
             labelText: 'white',
             stepsRectBg: Colors.gray200,
             stepsRectBgFill: Colors.green400,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         red: {
             border: Colors.red700,
@@ -97,62 +112,84 @@ export default function Progress({ data }) {
             labelText: 'white',
             stepsRectBg: Colors.gray200,
             stepsRectBgFill: Colors.green500,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
     }
 
     let theme = progressesThemes[data.theme]
 
+    let steps = data.steps;
+    let completedSteps = data.steps.filter(step => step.isCompleted)
+    let unCompletedSteps = data.steps.filter(step => !step.isCompleted)
+
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
 
-            <View style={[styles.bgProceed, { backgroundColor: theme.progressBgFill }]}></View>
-            <View style={styles.topContainer}>
-                <Text style={[styles.title, { color: theme.title }]}>Read 1948</Text>
-                <MaterialIcons name="push-pin" size={22} color={theme.title} />
-            </View>
-            <View>
-                <View style={styles.bottomContainer}>
-                    <View style={styles.detailsContainer}>
-                        <View style={styles.flexRow}>
-                            <View style={styles.flexRow}>
-                                <Ionicons name="checkmark-done" size={18} color={theme.stepForwardIcon} />
-                                <Text style={{ fontSize: 12, color: theme.stepForwardText }}>Pages: 50-80</Text>
-                            </View>
-                            <Text style={{ fontSize: 18 }}>{` `}</Text>
-                            <View style={styles.flexRow}>
-                                <MaterialCommunityIcons name="chevron-double-right" size={18} color={theme.stepBackwardIcon} />
-                                <Text style={{ fontSize: 12, color: theme.stepBackwardText }}>Pages: 81-120</Text>
-                            </View>
-                        </View>
+            <View style={[styles.bgProceed, { backgroundColor: theme.progressBgFill, width: (completedSteps.length / steps.length) * 100 + '%' }]}></View>
 
-                        <View style={styles.flexBetween}>
-                            <View style={styles.flexRow}>
-                                <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={theme.time} />
-                                <Text style={{ fontSize: 12, color: theme.time }}>1 day left</Text>
-                            </View>
-                            <View style={styles.flexRow}>
-                                <View style={[styles.stepsTag, { backgroundColor: theme.labelBg }]}>
-                                    <Text style={{ color: theme.labelText, fontSize: 12 }}>3/4</Text>
-                                </View>
-                                <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                                    <Text style={{ color: theme.labelText, fontSize: 12 }}>Work</Text>
-                                </View>
-                                <View style={styles.importanceTag}>
-                                    <Text style={{ color: 'white', fontSize: 12 }}>M</Text>
-                                </View>
-                            </View>
-
-                        </View>
-                    </View>
+            <View style={styles.innerContainer}>
 
 
+                <View style={styles.topContainer}>
+                    <Text style={[styles.title, { color: theme.title }]}>{data.name}</Text>
+                    {data.isPinned && (
+                        <MaterialIcons name="push-pin" size={22} color={theme.title} />
+                    )}
                 </View>
-                <View style={styles.stepsContainer}>
-                    <View style={[styles.stepRect, { backgroundColor: theme.stepsRectBgFill }]}></View>
-                    <View style={[styles.stepRect, { backgroundColor: theme.stepsRectBgFill }]}></View>
-                    {/* <View style={styles.stepRect}></View> */}
-                    <View style={[styles.stepRect, { backgroundColor: theme.stepsRectBg }]}></View>
-                    <View style={[styles.stepRect, { backgroundColor: theme.stepsRectBg }]}></View>
+                <View>
+                    <View style={styles.bottomContainer}>
+                        <View style={styles.detailsContainer}>
+                            <View style={[styles.flexRow, { columnGap: 10 }]}>
+                                {completedSteps.length > 0 && (
+                                    <View style={styles.flexRow}>
+                                        <Ionicons name="checkmark-done" size={18} color={theme.stepForwardIcon} />
+                                        <Text style={{ fontSize: 12, color: theme.stepForwardText }}>
+                                            {completedSteps[completedSteps.length - 1].name === '' ? 'Step ' + completedSteps[completedSteps.length - 1].index : completedSteps[completedSteps.length - 1].name}
+                                        </Text>
+                                    </View>
+                                )}
+                                {unCompletedSteps.length > 0 && (
+                                    <View style={styles.flexRow}>
+                                        <MaterialCommunityIcons name="chevron-double-right" size={18} color={theme.stepBackwardIcon} />
+                                        <Text style={{ fontSize: 12, color: theme.stepBackwardText }}>
+                                            {unCompletedSteps[0].name === '' ? 'Step ' + unCompletedSteps[0].index : unCompletedSteps[0].name}
+                                        </Text>
+                                    </View>
+                                )}
+                            </View>
+
+                            <View style={styles.flexBetween}>
+                                <View style={styles.flexRow}>
+                                    <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={theme.time} />
+                                    <Text style={{ fontSize: 12, color: theme.time }}>{data.deadline ? '1 day left' : 'Not Set'}</Text>
+
+                                </View>
+                                <View style={styles.flexRow}>
+                                    <View style={[styles.stepsTag, { backgroundColor: theme.labelBg }]}>
+                                        <Text style={{ color: theme.labelText, fontSize: 12 }}>{completedSteps.length}/{steps.length}</Text>
+                                    </View>
+                                    <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
+                                        <Text style={{ color: theme.labelText, fontSize: 12 }}>{data.label.name}</Text>
+                                    </View>
+                                    <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
+                                        <Text style={{ color: 'white', fontSize: 12 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
+                                    </View>
+                                </View>
+
+                            </View>
+                        </View>
+
+
+                    </View>
+                    <View style={styles.stepsContainer}>
+
+                        {data.steps.map((step, index) => (
+                            <View key={step.id} style={[styles.stepRect, { backgroundColor: step.isCompleted ? theme.stepsRectBgFill : theme.stepsRectBg, width: 100 / data.steps.length - 1 + '%' }]}></View>
+                        ))}
+
+                    </View>
                 </View>
             </View>
         </View>
@@ -163,12 +200,16 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         marginVertical: 4,
-        paddingHorizontal: 20,
-        paddingVertical: 14,
+
         borderWidth: 3,
         borderRadius: 25,
         zIndex: 1,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        position: 'relative'
+    },
+    innerContainer: {
+        paddingHorizontal: 20,
+        paddingVertical: 14,
     },
     topContainer: {
         flexDirection: 'row',
@@ -183,7 +224,7 @@ const styles = StyleSheet.create({
         marginTop: 8,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
     },
     detailsContainer: {
         width: '100%',
@@ -194,8 +235,8 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         bottom: 0,
-        right: '25%',
-        zIndex: 0
+        right: 0,
+        zIndex: 0,
     },
     flexRow: {
         alignItems: 'center',
