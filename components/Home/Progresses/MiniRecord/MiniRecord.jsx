@@ -137,26 +137,21 @@ export default function MiniRecord({ data }) {
 
                 <View style={styles.flexColumn}>
 
-                    <View style={[styles.flexBetween, { alignItems: 'flex-end' }]}>
-                        <Text style={{ fontSize: 24, color: theme.recordNumber }}>{data.value}</Text>
+                    <Text style={{ fontSize: 22, color: theme.recordNumber }}>{data.value}</Text>
 
-                        <View style={styles.flexRow}>
-                            <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                                <Text style={{ color: theme.labelText, fontSize: 10 }}>{data.label.name}</Text>
-                            </View>
-                            <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
-                                <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
-                            </View>
+                    <View style={styles.flexRow}>
+                        <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
+                            <Text style={{ color: theme.labelText, fontSize: 10 }}>{data.label.name}</Text>
                         </View>
-
+                        <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
+                            <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
+                        </View>
                     </View>
-
-
 
                 </View>
             </View>
 
-            <View style={[styles.flexColumn, { marginTop: 'auto' }]}>
+            <View style={[styles.flexColumn, { marginTop: 'auto', gap: 4 }]}>
 
                 <View style={styles.flexRow}>
                     <MaterialCommunityIcons name="clock-time-ten-outline" size={14} color={theme.time} />
@@ -197,7 +192,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     bottomContainer: {
-        marginTop: 8,
+        marginTop: 4,
     },
 
     flexRow: {
@@ -207,7 +202,7 @@ const styles = StyleSheet.create({
     },
     flexColumn: {
         flexDirection: 'column',
-        gap: 8,
+        gap: 4,
     },
     flexBetween: {
         alignItems: 'center',

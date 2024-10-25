@@ -4,6 +4,7 @@ import Colors from '../../../../consts/Colors'
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
+import moment from 'moment';
 
 export default function RecordManual({ data }) {
 
@@ -21,7 +22,10 @@ export default function RecordManual({ data }) {
             labelBg: Colors.gray300,
             labelText: Colors.gray700,
             plusBtnBg: Colors.gray300,
-            plusBtnText: Colors.gray800
+            plusBtnText: Colors.gray800,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         violet: {
             border: Colors.violet900,
@@ -36,7 +40,10 @@ export default function RecordManual({ data }) {
             labelBg: Colors.violet800,
             labelText: 'white',
             plusBtnBg: Colors.violet800,
-            plusBtnText: 'white'
+            plusBtnText: 'white',
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         blue: {
             border: Colors.blue900,
@@ -51,7 +58,10 @@ export default function RecordManual({ data }) {
             labelBg: Colors.blue800,
             labelText: 'white',
             plusBtnBg: Colors.blue800,
-            plusBtnText: 'white'
+            plusBtnText: 'white',
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         yellow: {
             border: Colors.yellow400,
@@ -66,7 +76,10 @@ export default function RecordManual({ data }) {
             labelBg: Colors.yellow700,
             labelText: Colors.gray800,
             plusBtnBg: Colors.yellow700,
-            plusBtnText: Colors.gray800
+            plusBtnText: Colors.gray800,
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         turquoise: {
             border: Colors.turquoise900,
@@ -81,7 +94,10 @@ export default function RecordManual({ data }) {
             labelBg: Colors.turquoise700,
             labelText: 'white',
             plusBtnBg: Colors.turquoise700,
-            plusBtnText: 'white'
+            plusBtnText: 'white',
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
         red: {
             border: Colors.red600,
@@ -96,7 +112,10 @@ export default function RecordManual({ data }) {
             labelBg: Colors.red700,
             labelText: 'white',
             plusBtnBg: Colors.red700,
-            plusBtnText: 'white'
+            plusBtnText: 'white',
+            highImportanceBg: Colors.red600,
+            mediumImportanceBg: Colors.blue500,
+            lowImportanceBg: Colors.green500,
         },
     }
 
@@ -114,10 +133,10 @@ export default function RecordManual({ data }) {
         useShadowColorFromDataset: false // optional
     };
     const chartData = {
-        labels: ["1", "2", "3", "4", "5", "6", "7"],
+        labels: data.valueHistory.map(item => item.toString()), // optional,
         datasets: [
             {
-                data: [10, 5, 15, 20, 30, 20, 25],
+                data: data.valueHistory,
                 strokeWidth: 1.8 // optional
             }
         ],
@@ -128,10 +147,12 @@ export default function RecordManual({ data }) {
             <View style={styles.topContainer}>
                 <View style={styles.flexRow}>
                     <MaterialCommunityIcons name="star-shooting" size={22} color={theme.title} />
-                    <Text style={[styles.title, { color: theme.title }]}>Pages read</Text>
+                    <Text style={[styles.title, { color: theme.title }]}>{data.name}</Text>
 
                 </View>
-                <MaterialIcons name="push-pin" size={22} color={theme.title} />
+                {data.isPinned && (
+                    <MaterialIcons name="push-pin" size={22} color={theme.title} />
+                )}
             </View>
 
 
@@ -139,7 +160,7 @@ export default function RecordManual({ data }) {
 
                 <View style={styles.flexBetween}>
                     <View style={styles.flexRow}>
-                        <Text style={{ fontSize: 24, color: theme.recordNumber }}>125</Text>
+                        <Text style={{ fontSize: 24, color: theme.recordNumber }}>{data.value}</Text>
                     </View>
                     <View style={styles.flexRow}>
                         <LineChart
@@ -159,7 +180,7 @@ export default function RecordManual({ data }) {
 
                         <View style={styles.flexRow}>
 
-                            <TextInput style={[styles.recordNumberInput, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]} defaultValue='5' keyboardType='number-pad' maxLength={4} />
+                            <TextInput style={[styles.recordNumberInput, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]} defaultValue={data.step.toString()} keyboardType='number-pad' maxLength={4} />
                             <View style={[styles.checkButton, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]}>
                                 <MaterialCommunityIcons name="plus" size={24} color={theme.plusBtnText} />
                             </View>
@@ -170,24 +191,18 @@ export default function RecordManual({ data }) {
                 </View>
 
                 <View style={[styles.flexBetween, { alignItems: 'flex-end', marginTop: 8 }]}>
-                    <View style={styles.detailsContainer}>
 
-                        <View style={styles.flexRow}>
-                            <View style={styles.flexRow}>
-                                <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={theme.time} />
-                                <Text style={{ fontSize: 12, color: theme.time }}>last update: today</Text>
-                            </View>
-
-                        </View>
-
+                    <View style={[styles.flexRow, { alignSelf: 'flex-end' }]}>
+                        <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={theme.time} />
+                        <Text style={{ fontSize: 12, color: theme.time }}>Last update: {moment(data.updatedAt).fromNow(true)}</Text>
                     </View>
 
                     <View style={styles.flexRow}>
                         <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                            <Text style={{ color: theme.labelText, fontSize: 12 }}>Work</Text>
+                            <Text style={{ color: theme.labelText, fontSize: 12 }}>{data.label.name}</Text>
                         </View>
-                        <View style={styles.importanceTag}>
-                            <Text style={{ color: 'white', fontSize: 12 }}>M</Text>
+                        <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
+                            <Text style={{ color: 'white', fontSize: 12 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
                         </View>
 
                     </View>
