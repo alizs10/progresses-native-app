@@ -1,8 +1,12 @@
 import Label from "./models/Label";
 import Progress from "./models/Progress";
 import ProgressStep from "./models/ProgressStep";
+import Record from "./models/Record";
 
 export const DATA = [
+
+    new Record('Days Without Smoking', 5, true, new Label('Daily'), null, 'red', 1),
+
     new Progress('Read 1948', true, new Label('Books'), null, 'yellow', 0, [
         new ProgressStep('', false, 1),
         new ProgressStep('', false, 2),
@@ -36,6 +40,5 @@ export const DATA = [
         new ProgressStep('', false, 6),
         new ProgressStep('', false, 7),
     ]),
-
 ]
 

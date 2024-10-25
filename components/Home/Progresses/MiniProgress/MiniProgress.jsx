@@ -134,71 +134,70 @@ export default function MiniProgress({ data }) {
                 )}
             </View>
 
-            <View style={styles.bottomContainer}>
+            <View style={[styles.flexColumn, { marginTop: 10, gap: 2 }]}>
 
-                <View style={{ width: '100%' }}>
-
-                    {completedSteps.length > 0 && (
-                        <View style={styles.flexRow}>
-                            <Ionicons name="checkmark-done" size={14} color={theme.stepForwardIcon} />
-                            <Text style={{ fontSize: 10, color: theme.stepForwardText }}>
-                                {completedSteps[completedSteps.length - 1].name === '' ? 'Step ' + completedSteps[completedSteps.length - 1].index : completedSteps[completedSteps.length - 1].name}
-                            </Text>
-                        </View>
-                    )}
-                    {unCompletedSteps.length > 0 && (
-                        <View style={styles.flexRow}>
-                            <MaterialCommunityIcons name="chevron-double-right" size={14} color={theme.stepBackwardIcon} />
-                            <Text style={{ fontSize: 10, color: theme.stepBackwardText }}>
-                                {unCompletedSteps[0].name === '' ? 'Step ' + unCompletedSteps[0].index : unCompletedSteps[0].name}
-                            </Text>
-                        </View>
-                    )}
-
-                    <View style={[styles.flexBetween, { marginTop: 6 }]}>
-
-                        <View style={styles.flexColumn}>
-                            <View style={styles.flexRow}>
-                                <MaterialCommunityIcons name="clock-time-ten-outline" size={14} color={theme.time} />
-                                <Text style={{ fontSize: 10, color: theme.time }}>{data.deadline ? '1 day left' : 'Not Set'}</Text>
-                            </View>
-                            <View style={styles.flexRow}>
-                                <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
-                                    <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
-                                </View>
-                                <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                                    <Text style={{ color: theme.labelText, fontSize: 10 }}>{data.label.name}</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View>
-                            <View style={[styles.circularProgressContainer, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
-                                <View style={[styles.circularProgressFill, { backgroundColor: theme.progressBgFill, height: completedSteps.length / steps.length * 100 + '%' }]}></View>
-                                <Text style={[styles.circularProgressText, { color: theme.labelText }]}>{Math.floor((completedSteps.length / steps.length) * 100)}</Text>
-                            </View>
-                            <Text style={[styles.stepsCount, { color: theme.labelText }]}>{completedSteps.length}/{steps.length}</Text>
-                        </View>
+                {completedSteps.length > 0 && (
+                    <View style={styles.flexRow}>
+                        <Ionicons name="checkmark-done" size={14} color={theme.stepForwardIcon} />
+                        <Text style={{ fontSize: 10, color: theme.stepForwardText }}>
+                            {completedSteps[completedSteps.length - 1].name === '' ? 'Step ' + completedSteps[completedSteps.length - 1].index : completedSteps[completedSteps.length - 1].name}
+                        </Text>
                     </View>
+                )}
+                {unCompletedSteps.length > 0 && (
+                    <View style={styles.flexRow}>
+                        <MaterialCommunityIcons name="chevron-double-right" size={14} color={theme.stepBackwardIcon} />
+                        <Text style={{ fontSize: 10, color: theme.stepBackwardText }}>
+                            {unCompletedSteps[0].name === '' ? 'Step ' + unCompletedSteps[0].index : unCompletedSteps[0].name}
+                        </Text>
+                    </View>
+                )}
 
-
-
+                <View style={[styles.flexRow, { alignItems: 'flex-start', marginTop: 6 }]}>
+                    <MaterialCommunityIcons name="clock-time-ten-outline" size={14} color={theme.time} />
+                    <View>
+                        <Text style={{ fontSize: 10, color: theme.time }}>Deadline {data.deadline ? '1 day left' : 'not set'}</Text>
+                    </View>
                 </View>
 
             </View>
-        </View>
+
+            <View style={[styles.flexBetween, { marginTop: 'auto' }]}>
+
+                <View style={[styles.flexRow, { alignSelf: 'flex-end' }]}>
+                    <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
+                        <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
+                    </View>
+                    <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
+                        <Text style={{ color: theme.labelText, fontSize: 10 }}>{data.label.name}</Text>
+                    </View>
+
+                </View>
+                <View>
+                    <View style={[styles.circularProgressContainer, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
+                        <View style={[styles.circularProgressFill, { backgroundColor: theme.progressBgFill, height: completedSteps.length / steps.length * 100 + '%' }]}></View>
+                        <Text style={[styles.circularProgressText, { color: theme.labelText }]}>{Math.floor((completedSteps.length / steps.length) * 100)}</Text>
+                    </View>
+                    <Text style={[styles.stepsCount, { color: theme.labelText }]}>{completedSteps.length}/{steps.length}</Text>
+                </View>
+            </View>
+
+        </View >
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         width: (Dimensions.get('window').width - 48) / 2,
+        aspectRatio: 1,
         marginVertical: 4,
         padding: 10,
         borderWidth: 2,
         borderColor: Colors.gray600,
         borderRadius: 15,
         backgroundColor: Colors.gray300,
-        elevation: 1
+        elevation: 1,
+        height: '100%'
     },
     topContainer: {
         flexDirection: 'row',
@@ -288,5 +287,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 10,
         color: Colors.gray800
-    }
+    },
+    stepsTag: {
+        textAlign: 'center',
+        alignSelf: 'flex-start',
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 100,
+        alignItems: 'center',
+        elevation: 1
+    },
 })
