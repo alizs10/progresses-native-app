@@ -191,7 +191,7 @@ export default function MiniRecordManual({ data }) {
             <View style={[styles.flexColumn, { marginTop: 'auto', gap: 4 }]}>
 
                 <View style={styles.flexRow}>
-                    <MaterialCommunityIcons name="clock-time-ten-outline" size={14} color={theme.time} />
+                    <MaterialCommunityIcons name="update" size={14} color={theme.time} />
                     <Text style={{ fontSize: 10, color: theme.time }}>{moment(data.updatedAt).fromNow()}</Text>
                 </View>
                 <View style={[styles.checkButton, { backgroundColor: theme.plusBtnBg }]}>

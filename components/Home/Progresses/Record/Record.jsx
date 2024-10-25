@@ -146,7 +146,7 @@ export default function Record({ data }) {
                     <View style={styles.flexBetween}>
 
                         <View style={[styles.flexRow, { alignSelf: 'flex-end' }]}>
-                            <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={theme.time} />
+                            <MaterialCommunityIcons name="update" size={16} color={theme.time} />
                             <Text style={{ fontSize: 12, color: theme.time }}>Last update: {moment(data.updatedAt).fromNow(true)}</Text>
                         </View>
 
