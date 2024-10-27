@@ -194,7 +194,7 @@ export default function RecordManual({ data }) {
 
                     <View style={[styles.flexRow, { alignSelf: 'flex-end' }]}>
                         <MaterialCommunityIcons name="update" size={16} color={theme.time} />
-                        <Text style={{ fontSize: 12, color: theme.time }}>Last update: {moment(data.updatedAt).fromNow(true)}</Text>
+                        <Text style={{ fontSize: 12, color: theme.time }}>Last update {moment(data.updatedAt).fromNow()}</Text>
                     </View>
 
                     <View style={styles.flexRow}>
