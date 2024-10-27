@@ -1,22 +1,28 @@
-import { View, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
-import Label from './Label'
+import { View, StyleSheet, ScrollView } from 'react-native';
+import React from 'react';
+import Label from './Label';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useLabelStore } from '../../../../store/label-store';
 
 export default function Labels() {
+
+    const labels = useLabelStore((state) => state.labels)
+
     return (
         <View style={styles.container}>
-            <View style={styles.plusButton}>
-                <MaterialCommunityIcons name="plus" size={20} color='white' />
-            </View>
+
             <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.scrollView}
+                decelerationRate={'fast'}
             >
 
-                <Label name={"All"} />
+                <Label key={'all'} name={'All'} labelId={0} />
 
+                {labels.map(label => (
+                    <Label key={label.id} name={label.name} labelId={label.id} />
+                ))}
             </ScrollView>
         </View>
     )

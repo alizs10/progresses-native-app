@@ -1,12 +1,17 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import Colors from '../../../../consts/Colors'
+import { useAppStore } from '../../../../store/app-store'
 
-export default function Label({ name }) {
+export default function Label({ labelId, name }) {
+
+    const isActive = useAppStore((state) => state.activeLabel === labelId)
+
+
     return (
-        <View style={styles.container}>
+        <Pressable style={[styles.container, isActive ? { backgroundColor: Colors.green600 } : {}]} onPress={() => useAppStore.setState({ activeLabel: labelId })}>
             <Text style={styles.labelText}>{name}</Text>
-        </View>
+        </Pressable>
     )
 }
 

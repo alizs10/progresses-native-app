@@ -44,3 +44,15 @@ export const DATA = [
     ]),
 ]
 
+export const LABELS = [
+    new Label('Daily'),
+    new Label('Books'),
+    new Label('Work'),
+    new Label('Health'),
+    new Label('Finance'),
+    new Label('Sports'),
+    new Label('Travel'),
+    new Label('Hobbies'),
+    new Label('Family'),
+    new Label('Friends'),
+]
