@@ -1,14 +1,50 @@
-import { StyleSheet, Switch, Text, TextInput, View } from 'react-native'
+import { Pressable, StyleSheet, Switch, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import Colors from '../../consts/Colors'
-import Dropdown from '../Common/Dropdown';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Dropdown from '../Common/dropdown/Dropdown';
 import ToggleSwitch from '../Common/form-inputs/ToggleSwitch';
+import ColorPicker from '../NewRecord/popups/ColorPicker';
+import ThemeInput from '../Common/form-inputs/ThemeInput';
+import { useLabelStore } from '../../store/label-store';
+import { useAppStore } from '../../store/app-store';
 
 export default function Inputs() {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    const initialDataState = {
+        title: '',
+        label: null,
+        importance: 1,
+        steps: [],
+        theme: 1,
+        // isPinned: false,
+        // isStep: false,
+    }
+
+    const [newData, setNewData] = useState(initialDataState);
+
+    function onThemeChange(theme) {
+        setNewData({ ...newData, theme });
+    }
+
+    const [isThemePickerVis, setIsThemePickerVis] = useState(false)
+
+    function toggleThemePicker() {
+        setIsThemePickerVis(prevState => !prevState)
+    }
+
+    const labels = useLabelStore((state) => state.labels)
+    const selectedLabelName = labels.find(label => label.id === newData.label)?.name
+    function onSelectLabel(labelId) {
+        setNewData(prevState => ({ ...prevState, label: labelId }))
+    }
+
+    const importanceLevels = useAppStore((state) => state.importanceLevels)
+    const selectedImportanceName = importanceLevels.find(imp => imp.id === newData.importance)?.name
+    function onSelectImportance(impId) {
+        setNewData(prevState => ({ ...prevState, importance: impId }))
+    }
 
     return (
         <View style={styles.container}>
@@ -23,8 +59,20 @@ export default function Inputs() {
             </View>
 
             <View style={{ flexDirection: 'row', gap: 10 }}>
-                <Dropdown label={'Label'} />
-                <Dropdown label={'Importance'} />
+                <Dropdown
+                    label={'Label'}
+                    options={labels.map(label => ({ id: label.id, value: label.name }))}
+                    onSelect={onSelectLabel}
+                    value={newData.label}
+                    valueInText={selectedLabelName}
+                />
+                <Dropdown
+                    label={'Importance'}
+                    options={importanceLevels.map(imp => ({ id: imp.id, value: imp.name }))}
+                    onSelect={onSelectImportance}
+                    value={newData.importance}
+                    valueInText={selectedImportanceName}
+                />
             </View>
             <View style={styles.inputContainer}>
                 <TextInput value='4' keyboardType='number-pad' style={styles.input} />
@@ -33,13 +81,7 @@ export default function Inputs() {
                 </View>
             </View>
 
-            <View style={styles.switchContainer}>
-                <Text style={styles.switchLabel}>Theme</Text>
-
-                <View style={styles.theme}>
-                    <MaterialCommunityIcons name="palette-outline" size={16} color="white" />
-                </View>
-            </View>
+            <ThemeInput selectedTheme={newData.theme} toggleThemePicker={toggleThemePicker} />
 
             <View>
                 <View style={styles.switchContainer}>
@@ -64,6 +106,10 @@ export default function Inputs() {
                     />
                 </View>
             </View>
+
+            {isThemePickerVis && (
+                <ColorPicker value={newData.theme} onChange={onThemeChange} onClose={toggleThemePicker} />
+            )}
         </View>
     )
 }
@@ -73,7 +119,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         gap: 25,
-        marginTop: 10
+        marginTop: 10,
+        position: 'relative',
     },
     inputContainer: {
         position: 'relative',

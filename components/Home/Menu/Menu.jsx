@@ -68,7 +68,7 @@ export default function Menu() {
 
                 <View style={styles.li}>
                     <MaterialCommunityIcons name="label-outline" size={26} color="white" />
-                    <Text style={styles.label}>Tags</Text>
+                    <Text style={styles.label}>Labels</Text>
                 </View>
                 <View style={styles.li}>
                     <MaterialCommunityIcons name="trash-can-outline" size={26} color="white" />

@@ -7,4 +7,22 @@ export const useAppStore = create((set) => ({
     activeLabel: 0,
     selectLabel: (labelId) => set(() => ({ activeLabel: labelId })),
 
+    importanceLevels: [
+        {
+            id: 0,
+            name: 'Low',
+            value: 0
+        },
+        {
+            id: 1,
+            name: 'Medium',
+            value: 1
+        },
+        {
+            id: 2,
+            name: 'High',
+            value: 2
+        },
+    ]
+
 }))

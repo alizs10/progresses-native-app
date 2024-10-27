@@ -1,8 +1,9 @@
 import { StyleSheet, Switch, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import Colors from '../../consts/Colors'
-import Dropdown from '../Common/Dropdown';
+import Dropdown from '../Common/dropdown/Dropdown';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ImportancePicker from './popups/ColorPicker';
 
 export default function Inputs() {
     const [isEnabled, setIsEnabled] = useState(false);
@@ -14,7 +15,7 @@ export default function Inputs() {
             <View style={styles.inputContainer}>
                 <TextInput value='Read 1948 book' style={styles.input} />
                 <View style={styles.labelContainer}>
-                    <Text style={styles.label}>Title</Text>
+                    <Text style={styles.label}>hello</Text>
                 </View>
             </View>
 
@@ -44,6 +45,8 @@ export default function Inputs() {
                 </View>
 
             </View>
+
+            <ImportancePicker />
         </View>
     )
 }

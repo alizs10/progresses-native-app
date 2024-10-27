@@ -132,6 +132,7 @@ export default function Record({ data }) {
 
             <View style={styles.bottomContainer}>
                 <View style={styles.detailsContainer}>
+
                     <View style={styles.flexBetween}>
                         <View style={styles.flexRow}>
                             <Text style={{ fontSize: 24, color: theme.recordNumber }}>{data.value}</Text>
@@ -140,11 +141,9 @@ export default function Record({ data }) {
                         <View style={[styles.checkButton, { backgroundColor: theme.plusBtnBg }]}>
                             <MaterialCommunityIcons name="plus" size={24} color={theme.plusBtnText} />
                         </View>
-
-
                     </View>
-                    <View style={styles.flexBetween}>
 
+                    <View style={styles.flexBetween}>
                         <View style={[styles.flexRow, { alignSelf: 'flex-end' }]}>
                             <MaterialCommunityIcons name="update" size={16} color={theme.time} />
                             <Text style={{ fontSize: 12, color: theme.time }}>Last update {moment(data.updatedAt).fromNow()}</Text>
@@ -157,9 +156,7 @@ export default function Record({ data }) {
                             <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
                                 <Text style={{ color: 'white', fontSize: 12 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
                             </View>
-
                         </View>
-
                     </View>
 
                 </View>
