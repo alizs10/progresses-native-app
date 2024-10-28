@@ -66,7 +66,6 @@ export default function ThemeInput({ toggleThemePicker, selectedTheme }) {
         }
     }
 
-    console.log(themeColors[getThemeName(selectedTheme)].bg)
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Theme</Text>
