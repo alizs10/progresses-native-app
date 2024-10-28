@@ -23,6 +23,7 @@ export default function Progresses() {
     }
 
     const progresses = useProgressStore((state) => state.progresses)
+    progresses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     const fakeData = [
         {
