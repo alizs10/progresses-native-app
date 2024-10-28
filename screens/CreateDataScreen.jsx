@@ -2,11 +2,14 @@ import { Dimensions, ScrollView, StyleSheet, View } from 'react-native'
 import React from 'react'
 import Inputs from '../components/CreateData/Inputs'
 const screenHeight = Dimensions.get('window').height
-export default function CreateDataScreen() {
+
+export default function CreateDataScreen({ navigation }) {
+
+
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <Inputs />
+                <Inputs navigation={navigation} />
                 {/* <View style={styles.test}></View> */}
             </ScrollView>
         </View>

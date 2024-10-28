@@ -4,6 +4,7 @@ import Colors from '../../../../consts/Colors'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useLabelStore } from '../../../../store/label-store';
 
 export default function Progress({ data }) {
 
@@ -119,10 +120,12 @@ export default function Progress({ data }) {
     }
 
     let theme = progressesThemes[data.theme]
-
     let steps = data.steps;
     let completedSteps = data.steps.filter(step => step.isCompleted)
     let unCompletedSteps = data.steps.filter(step => !step.isCompleted)
+
+    const labels = useLabelStore(state => state.labels)
+    let label = labels.find(label => label.id === data.label)
 
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
@@ -163,7 +166,7 @@ export default function Progress({ data }) {
                             <View style={styles.flexBetween}>
                                 <View style={styles.flexRow}>
                                     <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={theme.time} />
-                                    <Text style={{ fontSize: 12, color: theme.time }}>{data.deadline ? '1 day left' : 'Not Set'}</Text>
+                                    <Text style={{ fontSize: 12, color: theme.time }}>{data.hasDeadline ? '1 day left' : 'Not Set'}</Text>
 
                                 </View>
                                 <View style={styles.flexRow}>
@@ -171,7 +174,7 @@ export default function Progress({ data }) {
                                         <Text style={{ color: theme.labelText, fontSize: 12 }}>{completedSteps.length}/{steps.length}</Text>
                                     </View>
                                     <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                                        <Text style={{ color: theme.labelText, fontSize: 12 }}>{data.label.name}</Text>
+                                        <Text style={{ color: theme.labelText, fontSize: 12 }}>{label?.name ?? 'All'}</Text>
                                     </View>
                                     <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
                                         <Text style={{ color: 'white', fontSize: 12 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>

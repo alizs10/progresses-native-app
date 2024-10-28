@@ -16,33 +16,33 @@ export default function ColorPicker({ value, onChange, onClose }) {
             </View>
 
             <View style={styles.colorsContainer}>
-                <Pressable onPress={() => onChange(1)} style={[styles.color, { backgroundColor: 'white' }]}>
-                    {value === 1 && (
+                <Pressable onPress={() => onChange('white')} style={[styles.color, { backgroundColor: 'white' }]}>
+                    {value === 'white' && (
                         <Feather name="check" size={24} color="black" />
                     )}
                 </Pressable>
-                <Pressable onPress={() => onChange(2)} style={[styles.color, { backgroundColor: Colors.yellow700 }]}>
-                    {value === 2 && (
+                <Pressable onPress={() => onChange('yellow')} style={[styles.color, { backgroundColor: Colors.yellow700 }]}>
+                    {value === 'yellow' && (
                         <Feather name="check" size={24} color="black" />
                     )}
                 </Pressable>
-                <Pressable onPress={() => onChange(3)} style={[styles.color, { backgroundColor: Colors.red700 }]}>
-                    {value === 3 && (
+                <Pressable onPress={() => onChange('red')} style={[styles.color, { backgroundColor: Colors.red700 }]}>
+                    {value === 'red' && (
                         <Feather name="check" size={24} color="white" />
                     )}
                 </Pressable>
-                <Pressable onPress={() => onChange(4)} style={[styles.color, { backgroundColor: Colors.violet800 }]}>
-                    {value === 4 && (
+                <Pressable onPress={() => onChange('violet')} style={[styles.color, { backgroundColor: Colors.violet800 }]}>
+                    {value === 'violet' && (
                         <Feather name="check" size={24} color="white" />
                     )}
                 </Pressable>
-                <Pressable onPress={() => onChange(5)} style={[styles.color, { backgroundColor: Colors.turquoise700 }]}>
-                    {value === 5 && (
+                <Pressable onPress={() => onChange('turquoise')} style={[styles.color, { backgroundColor: Colors.turquoise700 }]}>
+                    {value === 'turquoise' && (
                         <Feather name="check" size={24} color="white" />
                     )}
                 </Pressable>
-                <Pressable onPress={() => onChange(6)} style={[styles.color, { backgroundColor: Colors.blue800 }]}>
-                    {value === 6 && (
+                <Pressable onPress={() => onChange('blue')} style={[styles.color, { backgroundColor: Colors.blue800 }]}>
+                    {value === 'blue' && (
                         <Feather name="check" size={24} color="white" />
                     )}
                 </Pressable>

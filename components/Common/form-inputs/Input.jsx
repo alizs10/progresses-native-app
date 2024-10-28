@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         left: 16,
-        width: 100,
+        // width: 200,
         height: 20,
         transform: [{ translateY: -10 }],
     },

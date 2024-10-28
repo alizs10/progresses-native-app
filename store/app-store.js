@@ -4,7 +4,7 @@ import { LABELS } from '../database/data'
 export const useAppStore = create((set) => ({
 
     // labels: [],
-    activeLabel: 0,
+    activeLabel: 0, // 0 means all
     selectLabel: (labelId) => set(() => ({ activeLabel: labelId })),
 
     importanceLevels: [

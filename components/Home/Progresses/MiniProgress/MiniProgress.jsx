@@ -4,6 +4,7 @@ import Colors from '../../../../consts/Colors'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useLabelStore } from '../../../../store/label-store';
 
 export default function MiniProgress({ data }) {
 
@@ -124,6 +125,10 @@ export default function MiniProgress({ data }) {
     let completedSteps = data.steps.filter(step => step.isCompleted)
     let unCompletedSteps = data.steps.filter(step => !step.isCompleted)
 
+
+    const labels = useLabelStore(state => state.labels)
+    let label = labels.find(label => label.id === data.label)
+
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
 
@@ -156,7 +161,7 @@ export default function MiniProgress({ data }) {
                 <View style={[styles.flexRow, { alignItems: 'flex-start', marginTop: 6 }]}>
                     <MaterialCommunityIcons name="clock-time-ten-outline" size={14} color={theme.time} />
                     <View>
-                        <Text style={{ fontSize: 10, color: theme.time }}>Deadline {data.deadline ? '1 day left' : 'not set'}</Text>
+                        <Text style={{ fontSize: 10, color: theme.time }}>Deadline {data.hasDeadline ? '1 day left' : 'Not Set'}</Text>
                     </View>
                 </View>
 
@@ -169,7 +174,7 @@ export default function MiniProgress({ data }) {
                         <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
                     </View>
                     <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                        <Text style={{ color: theme.labelText, fontSize: 10 }}>{data.label.name}</Text>
+                        <Text style={{ color: theme.labelText, fontSize: 10 }}>{label?.name ?? 'All'}</Text>
                     </View>
 
                 </View>

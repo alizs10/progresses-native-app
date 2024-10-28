@@ -1,5 +1,5 @@
 import { StyleSheet, Switch, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import Colors from '../../consts/Colors'
 import Dropdown from '../Common/dropdown/Dropdown';
 import ToggleSwitch from '../Common/form-inputs/ToggleSwitch';
@@ -11,25 +11,56 @@ import DatePicker from '../Common/form-inputs/DatePicker';
 import DynamicTextInputs from '../Common/form-inputs/DynamicTextInputs';
 import CounterInput from '../Common/form-inputs/CounterInput';
 import Input from '../Common/form-inputs/Input';
+import CreateNewDataButton from '../Common/header/CreateNewDataButton';
+import { zValidate } from '../../helpers/validation-helper';
+import { progressSchema } from '../../database/validations/progress-validation';
+import { useProgressStore } from '../../store/progress-store';
+import Progress from '../../database/models/Progress';
+import ProgressStep from '../../database/models/ProgressStep';
 
 
 
-export default function Inputs() {
+export default function Inputs({ navigation }) {
+
+    useLayoutEffect(() => {
+
+        console.log("mounted")
+
+        navigation.setOptions({
+            headerRight: () => (
+                <CreateNewDataButton onPress={handleCreateNewData} />
+            )
+        })
+
+    }, [navigation]);
+
+    const { addProgress } = useProgressStore(state => state)
 
     const initialDataState = {
-        title: '',
-        label: null,
-        importance: 1,
+        name: '',
+        label: 0,
         isStepsDefined: false,
         steps: [],
-        theme: 1,
+        importance: 0,
+        theme: 'white',
         isDeadlineSet: false,
         deadline: new Date(Date.now()),
-        // isPinned: false,
-        // isStep: false,
+        isPinned: false,
     }
 
     const [newData, setNewData] = useState(initialDataState);
+
+
+
+    useEffect(() => {
+
+        navigation.setOptions({
+            headerRight: () => (
+                <CreateNewDataButton onPress={handleCreateNewData} />
+            )
+        })
+    }, [newData])
+
 
     function handleAddStep() {
         setNewData(prevState => ({
@@ -100,17 +131,34 @@ export default function Inputs() {
     }
 
 
+    function handleCreateNewData() {
+
+        // validate
+        // console.log(newData.steps.length)
+        const { hasError, errors } = zValidate(progressSchema, newData)
+
+
+        console.log(newData.label)
+        if (hasError) {
+            console.log(errors)
+            return
+        }
+
+        // console.log("passed")
+        addProgress(new Progress(newData.name, newData.isPinned, newData.label, newData.deadline, newData.theme, newData.importance, newData.steps.map((step, index) => (new ProgressStep(step.value, false, index + 1)))))
+        navigation.navigate('Home')
+    }
     return (
         <View style={styles.container}>
 
             <ToggleSwitch />
 
             <Input
-                value={newData.title}
-                label={'Title'}
-                onChangeText={val => setNewData(prevState => ({ ...prevState, title: val }))}
+                value={newData.name}
+                label={'Progress Name'}
+                onChange={val => setNewData(prevState => ({ ...prevState, name: val }))}
                 inputProps={{
-                    placeholder: 'Title',
+                    placeholder: 'Name here',
                     placeholderTextColor: Colors.gray300
                 }}
             />

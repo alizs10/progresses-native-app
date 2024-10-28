@@ -70,8 +70,8 @@ export default function ThemeInput({ toggleThemePicker, selectedTheme }) {
         <View style={styles.container}>
             <Text style={styles.label}>Theme</Text>
 
-            <Pressable onPress={toggleThemePicker} style={[styles.theme, { backgroundColor: themeColors[getThemeName(selectedTheme)].bg, borderColor: themeColors[getThemeName(selectedTheme)].border }]}>
-                <MaterialCommunityIcons name="palette-outline" size={16} color={themeColors[getThemeName(selectedTheme)].text} />
+            <Pressable onPress={toggleThemePicker} style={[styles.theme, { backgroundColor: themeColors[selectedTheme].bg, borderColor: themeColors[selectedTheme].border }]}>
+                <MaterialCommunityIcons name="palette-outline" size={16} color={themeColors[selectedTheme].text} />
             </Pressable>
         </View>
     )
