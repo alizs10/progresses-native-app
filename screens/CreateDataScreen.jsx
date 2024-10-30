@@ -10,7 +10,6 @@ export default function CreateDataScreen({ navigation }) {
         <View style={styles.container}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <Inputs navigation={navigation} />
-                {/* <View style={styles.test}></View> */}
             </ScrollView>
         </View>
     )
@@ -19,13 +18,8 @@ export default function CreateDataScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
         paddingHorizontal: 20,
         paddingVertical: 12,
         backgroundColor: '#343a40',
     },
-    test: {
-        height: 1000,
-        backgroundColor: 'red'
-    }
 })

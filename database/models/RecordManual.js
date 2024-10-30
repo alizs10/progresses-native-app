@@ -1,6 +1,6 @@
 class RecordManual {
 
-    constructor(name, value, valueHistory, step, isPinned, label, deadline, theme, importance) {
+    constructor(name, value, valueHistory, step, isPinned, label, theme, importance) {
         this.id = 'record-manual-' + Math.floor(Math.random() * 10000);
         this.name = name;
         this.value = value;
@@ -8,7 +8,6 @@ class RecordManual {
         this.step = step;
         this.isPinned = isPinned;
         this.label = label;
-        this.deadline = deadline;
         this.theme = theme;
         this.importance = importance;
         this.createdAt = Date.now();

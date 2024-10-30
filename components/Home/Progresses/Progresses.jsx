@@ -11,7 +11,7 @@ import MiniRecord from './MiniRecord/MiniRecord';
 import RecordManual from './RecordManual/RecordManual';
 import MiniRecordManual from './MiniRecordManual/MiniRecordManual';
 
-import { useProgressStore } from '../../../store/progress-store'
+import { useDataStore } from '../../../store/data-store';
 
 export default function Progresses() {
 
@@ -22,7 +22,7 @@ export default function Progresses() {
         setDataViewMode(prevState => prevState === 0 ? 1 : 0)
     }
 
-    const progresses = useProgressStore((state) => state.progresses)
+    const progresses = useDataStore((state) => state.data)
     progresses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     const fakeData = [

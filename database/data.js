@@ -6,8 +6,9 @@ import RecordManual from "./models/RecordManual";
 
 export const DATA = [
 
-    new RecordManual('Kilometers', 15, [1, 2, 3, 5, 8, 10, 5, 6, 0, 10, 15], 5, true, new Label('Daily'), null, 'violet', 1),
-    new Record('Days Without Smoking', 5, true, new Label('Daily'), null, 'red', 1),
+    new RecordManual('Kilometers', 15, [1, 2, 3, 5, 8, 10, 5, 6, 0, 10, 15], 5, true, new Label('Daily'), 'violet', 1),
+
+    new Record('Days Without Smoking', 5, true, new Label('Daily'), 'red', 1),
 
     new Progress('Read 1948', true, new Label('Books'), null, 'yellow', 0, [
         new ProgressStep('', false, 1),

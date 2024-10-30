@@ -4,6 +4,7 @@ import Colors from '../../../../consts/Colors'
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from 'moment';
+import { useLabelStore } from '../../../../store/label-store';
 
 export default function MiniRecord({ data }) {
 
@@ -121,6 +122,11 @@ export default function MiniRecord({ data }) {
     let theme = themes[data.theme]
 
 
+
+    const labels = useLabelStore(state => state.labels)
+    let label = labels.find(label => label.id === data.label)
+
+
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
             <View style={styles.topContainer}>
@@ -141,7 +147,7 @@ export default function MiniRecord({ data }) {
 
                     <View style={styles.flexRow}>
                         <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                            <Text style={{ color: theme.labelText, fontSize: 10 }}>{data.label.name}</Text>
+                            <Text style={{ color: theme.labelText, fontSize: 10 }}>{label?.name ?? 'All'}</Text>
                         </View>
                         <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
                             <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>

@@ -14,17 +14,18 @@ import Input from '../Common/form-inputs/Input';
 import CreateNewDataButton from '../Common/header/CreateNewDataButton';
 import { zValidate } from '../../helpers/validation-helper';
 import { progressSchema } from '../../database/validations/progress-validation';
-import { useProgressStore } from '../../store/progress-store';
+import { useDataStore } from '../../store/data-store';
 import Progress from '../../database/models/Progress';
 import ProgressStep from '../../database/models/ProgressStep';
+import Record from '../../database/models/Record';
+import RecordManual from '../../database/models/RecordManual';
+import { recordSchema } from '../../database/validations/record-validation';
 
 
 
 export default function Inputs({ navigation }) {
 
     useLayoutEffect(() => {
-
-        console.log("mounted")
 
         navigation.setOptions({
             headerRight: () => (
@@ -34,7 +35,7 @@ export default function Inputs({ navigation }) {
 
     }, [navigation]);
 
-    const { addProgress } = useProgressStore(state => state)
+    const { addData } = useDataStore(state => state)
 
     const initialDataState = {
         name: '',
@@ -46,6 +47,15 @@ export default function Inputs({ navigation }) {
         isDeadlineSet: false,
         deadline: new Date(Date.now()),
         isPinned: false,
+        defineManualStep: false,
+        manualStep: 1,
+    }
+
+    const [newDataType, setNewDataType] = useState('progress');
+
+    function changeDataType(value) {
+        setNewDataType(value)
+        setNewData(initialDataState)
     }
 
     const [newData, setNewData] = useState(initialDataState);
@@ -130,32 +140,51 @@ export default function Inputs({ navigation }) {
         setNewData(prevState => ({ ...prevState, importance: impId }))
     }
 
+    function handleManualStepSwitch() {
+        setNewData(prevState => ({ ...prevState, defineManualStep: !prevState['defineManualStep'] }))
+    }
+
+    function handleCountUpManualStep() {
+        setNewData(prevState => ({ ...prevState, manualStep: prevState['manualStep'] + 1 }))
+    }
+
+    function handleCountDownManualStep() {
+        setNewData(prevState => ({ ...prevState, manualStep: prevState['manualStep'] > 2 ? prevState['manualStep'] - 1 : 1 }))
+    }
 
     function handleCreateNewData() {
 
         // validate
         // console.log(newData.steps.length)
-        const { hasError, errors } = zValidate(progressSchema, newData)
 
+        let validationSchema = newDataType === 'progress' ? progressSchema : recordSchema;
 
-        console.log(newData.label)
+        const { hasError, errors } = zValidate(validationSchema, newData)
+
         if (hasError) {
             console.log(errors)
             return
         }
 
-        // console.log("passed")
-        addProgress(new Progress(newData.name, newData.isPinned, newData.label, newData.deadline, newData.theme, newData.importance, newData.steps.map((step, index) => (new ProgressStep(step.value, false, index + 1)))))
+        let newDataObj = newDataType === 'progress' ? new Progress(newData.name, newData.isPinned, newData.label, newData.deadline, newData.theme, newData.importance, newData.steps.map((step, index) => (new ProgressStep(step.value, false, index + 1)))) : !newData.defineManualStep ? new Record(newData.name, 0, newData.isPinned, newData.label, newData.theme, newData.importance) : new RecordManual(newData.name, 0, [0], newData.manualStep, newData.isPinned, newData.label, newData.theme, newData.importance)
+
+        console.log(newDataObj)
+
+        addData(newDataObj)
         navigation.navigate('Home')
     }
     return (
         <View style={styles.container}>
 
-            <ToggleSwitch />
+            <ToggleSwitch
+                value={newDataType}
+                onChange={changeDataType}
+                options={['progress', 'record']}
+            />
 
             <Input
                 value={newData.name}
-                label={'Progress Name'}
+                label={`${newDataType === 'progress' ? 'Progress' : 'Record'} name`}
                 onChange={val => setNewData(prevState => ({ ...prevState, name: val }))}
                 inputProps={{
                     placeholder: 'Name here',
@@ -179,29 +208,54 @@ export default function Inputs({ navigation }) {
                 />
             </View>
 
-
-            <CounterInput
-                label={'Steps'}
-                value={newData.steps.length}
-                onUp={handleCountUpStep}
-                onDown={handleCountDownStep}
-                disabled={newData.isStepsDefined}
-            />
+            {newDataType === 'progress' && (
+                <CounterInput
+                    label={'Steps'}
+                    value={newData.steps.length}
+                    onUp={handleCountUpStep}
+                    onDown={handleCountDownStep}
+                    disabled={newData.isStepsDefined}
+                />
+            )}
 
             <ThemeInput selectedTheme={newData.theme} toggleThemePicker={toggleThemePicker} />
 
             <View style={styles.flexColumn}>
-                <View style={styles.switchContainer}>
-                    <Text style={styles.switchLabel}>Set a deadline</Text>
-                    <Switch
-                        trackColor={{ false: 'white', true: Colors.green600 }}
-                        thumbColor={newData.isDeadlineSet ? Colors.green500 : Colors.gray300}
-                        onValueChange={handleDeadlineSwitch}
-                        value={newData.isDeadlineSet}
-                    />
-                </View>
 
-                {newData.isDeadlineSet && (
+                {newDataType === 'record' && (
+                    <View style={styles.switchContainer}>
+                        <Text style={styles.switchLabel}>Define Manual Step</Text>
+                        <Switch
+                            trackColor={{ false: 'white', true: Colors.green600 }}
+                            thumbColor={newData.defineManualStep ? Colors.green500 : Colors.gray300}
+                            onValueChange={handleManualStepSwitch}
+                            value={newData.defineManualStep}
+                        />
+                    </View>
+                )}
+
+                {newData.defineManualStep && newDataType === 'record' && (
+                    <CounterInput
+                        label={'Step'}
+                        value={newData.manualStep}
+                        onUp={handleCountUpManualStep}
+                        onDown={handleCountDownManualStep}
+                        disabled={false}
+                    />
+                )}
+
+                {newDataType === 'progress' && (
+                    <View style={styles.switchContainer}>
+                        <Text style={styles.switchLabel}>Set a deadline</Text>
+                        <Switch
+                            trackColor={{ false: 'white', true: Colors.green600 }}
+                            thumbColor={newData.isDeadlineSet ? Colors.green500 : Colors.gray300}
+                            onValueChange={handleDeadlineSwitch}
+                            value={newData.isDeadlineSet}
+                        />
+                    </View>
+                )}
+                {newDataType === 'progress' && newData.isDeadlineSet && (
                     <DatePicker
                         label={'Deadline'}
                         value={newData.deadline}
@@ -210,17 +264,19 @@ export default function Inputs({ navigation }) {
                     />
                 )}
 
-                <View style={styles.switchContainer}>
-                    <Text style={styles.switchLabel}>Define Steps</Text>
-                    <Switch
-                        trackColor={{ false: 'white', true: Colors.green600 }}
-                        thumbColor={newData.isStepsDefined ? Colors.green500 : Colors.gray300}
-                        onValueChange={toggleStepsSwitch}
-                        value={newData.isStepsDefined}
-                    />
-                </View>
+                {newDataType === 'progress' && (
+                    <View style={styles.switchContainer}>
+                        <Text style={styles.switchLabel}>Define Steps</Text>
+                        <Switch
+                            trackColor={{ false: 'white', true: Colors.green600 }}
+                            thumbColor={newData.isStepsDefined ? Colors.green500 : Colors.gray300}
+                            onValueChange={toggleStepsSwitch}
+                            value={newData.isStepsDefined}
+                        />
+                    </View>
+                )}
 
-                {newData.isStepsDefined && (
+                {newDataType === 'progress' && newData.isStepsDefined && (
                     <DynamicTextInputs
                         label={'Steps'}
                         onAddValue={handleAddStep}

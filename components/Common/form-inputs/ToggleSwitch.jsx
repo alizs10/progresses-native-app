@@ -2,30 +2,23 @@ import { useState } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import Colors from "../../../consts/Colors";
 
-export default function ToggleSwitch() {
-
-    const [value, setValue] = useState('progress')
-
-    function onChange(modeVal) {
-        setValue(modeVal)
-    }
-
+export default function ToggleSwitch({ value, options, onChange }) {
 
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
-                <Pressable style={styles.switchButtonOuterContainer} onPress={() => onChange('progress')}>
+                <Pressable style={styles.switchButtonOuterContainer} onPress={() => onChange(options[0])}>
                     <View style={styles.switchButtonContainer}>
-                        <Text style={[styles.switchButtonText, { color: value === 'progress' ? 'black' : 'white' }]}>Progress</Text>
+                        <Text style={[styles.switchButtonText, { color: value === options[0] ? 'black' : 'white' }]}>Progress</Text>
                     </View>
                 </Pressable>
-                <Pressable style={styles.switchButtonOuterContainer} onPress={() => onChange('record')}>
+                <Pressable style={styles.switchButtonOuterContainer} onPress={() => onChange(options[1])}>
                     <View style={styles.switchButtonContainer}>
                         <Text style={[styles.switchButtonText, { color: value === 'record' ? 'black' : 'white' }]}>Record</Text>
                     </View>
                 </Pressable>
 
-                <View style={[styles.active, { left: value === 'progress' ? 0 : "50%" }]}>
+                <View style={[styles.active, { left: value === options[0] ? 0 : "50%" }]}>
 
                 </View>
             </View>
