@@ -5,6 +5,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLabelStore } from '../../../../store/label-store';
+import { useDataStore } from '../../../../store/data-store';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import { swipeConfig } from '../../../../lib/rn-swipe-gestures';
 
 export default function MiniProgress({ data }) {
 
@@ -129,8 +132,24 @@ export default function MiniProgress({ data }) {
     const labels = useLabelStore(state => state.labels)
     let label = labels.find(label => label.id === data.label)
 
+    const { stepForward, stepBackward } = useDataStore(state => state)
+
+    function onSwipeRight() {
+        if (unCompletedSteps.length === 0) return
+        stepForward(data.id, unCompletedSteps[0].id)
+    }
+
+    function onSwipeLeft() {
+        if (completedSteps.length === 0) return
+        stepBackward(data.id, completedSteps[completedSteps.length - 1].id)
+    }
+
     return (
-        <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
+        <GestureRecognizer
+            config={swipeConfig}
+            onSwipeRight={onSwipeRight}
+            onSwipeLeft={onSwipeLeft}
+            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
 
             <View style={styles.topContainer}>
                 <Text style={[styles.title, { color: theme.title }]}>{data.name}</Text>
@@ -187,7 +206,7 @@ export default function MiniProgress({ data }) {
                 </View>
             </View>
 
-        </View >
+        </GestureRecognizer>
     )
 }
 

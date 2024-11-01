@@ -5,6 +5,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLabelStore } from '../../../../store/label-store';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import { useDataStore } from '../../../../store/data-store';
+import { swipeConfig } from '../../../../lib/rn-swipe-gestures';
 
 export default function Progress({ data }) {
 
@@ -127,8 +130,24 @@ export default function Progress({ data }) {
     const labels = useLabelStore(state => state.labels)
     let label = labels.find(label => label.id === data.label)
 
+    const { stepForward, stepBackward } = useDataStore(state => state)
+
+    function onSwipeRight() {
+        if (unCompletedSteps.length === 0) return
+        stepForward(data.id, unCompletedSteps[0].id)
+    }
+
+    function onSwipeLeft() {
+        if (completedSteps.length === 0) return
+        stepBackward(data.id, completedSteps[completedSteps.length - 1].id)
+    }
+
     return (
-        <View style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
+        <GestureRecognizer
+            config={swipeConfig}
+            onSwipeRight={(state) => onSwipeRight()}
+            onSwipeLeft={onSwipeLeft}
+            style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
 
             <View style={[styles.bgProceed, { backgroundColor: theme.progressBgFill, width: (completedSteps.length / steps.length) * 100 + '%' }]}></View>
 
@@ -195,7 +214,7 @@ export default function Progress({ data }) {
                     </View>
                 </View>
             </View>
-        </View>
+        </GestureRecognizer>
     )
 }
 
