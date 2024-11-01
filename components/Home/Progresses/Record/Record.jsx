@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import Colors from '../../../../consts/Colors'
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from 'moment';
 import { useLabelStore } from '../../../../store/label-store';
+import { useDataStore } from '../../../../store/data-store';
 
 export default function Record({ data }) {
 
@@ -124,6 +125,11 @@ export default function Record({ data }) {
     const labels = useLabelStore(state => state.labels)
     let label = labels.find(label => label.id === data.label)
 
+    const { addRecordValue } = useDataStore(state => state)
+
+    function handleAddValue() {
+        addRecordValue(data.id)
+    }
 
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
@@ -145,9 +151,11 @@ export default function Record({ data }) {
                             <Text style={{ fontSize: 24, color: theme.recordNumber }}>{data.value}</Text>
                         </View>
 
-                        <View style={[styles.checkButton, { backgroundColor: theme.plusBtnBg }]}>
+                        <Pressable
+                            onPress={handleAddValue}
+                            style={[styles.checkButton, { backgroundColor: theme.plusBtnBg }]}>
                             <MaterialCommunityIcons name="plus" size={24} color={theme.plusBtnText} />
-                        </View>
+                        </Pressable>
                     </View>
 
                     <View style={styles.flexBetween}>

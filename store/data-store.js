@@ -19,5 +19,20 @@ export const useDataStore = create((set) => ({
         const step = progress.steps.find(step => step.id === stepId)
         step.isCompleted = false
         return { data: [...state.data] }
-    })
+    }),
+
+    addRecordValue: (recordId) => set((state) => {
+        const record = state.data.find(record => record.id === recordId)
+        record.value = record.value + record.step;
+        record.updatedAt = Date.now()
+        return { data: [...state.data] }
+    }),
+
+    addManualRecordValue: (recordId) => set((state) => {
+        const record = state.data.find(record => record.id === recordId)
+        record.value = record.value + record.step;
+        record.valueHistory = [...record.valueHistory, record.value];
+        record.updatedAt = Date.now()
+        return { data: [...state.data] }
+    }),
 }))

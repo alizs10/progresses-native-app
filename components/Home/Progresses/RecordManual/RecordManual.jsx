@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Pressable } from 'react-native'
 import React from 'react'
 import Colors from '../../../../consts/Colors'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
 import moment from 'moment';
 import { useLabelStore } from '../../../../store/label-store';
+import { useDataStore } from '../../../../store/data-store';
 
 export default function RecordManual({ data }) {
 
@@ -147,6 +148,13 @@ export default function RecordManual({ data }) {
     let label = labels.find(label => label.id === data.label)
 
 
+    const { addManualRecordValue } = useDataStore(state => state)
+
+    function handleAddValue() {
+        addManualRecordValue(data.id)
+    }
+
+
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
             <View style={styles.topContainer}>
@@ -186,9 +194,11 @@ export default function RecordManual({ data }) {
                         <View style={styles.flexRow}>
 
                             <TextInput style={[styles.recordNumberInput, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]} defaultValue={data.step.toString()} keyboardType='number-pad' maxLength={4} />
-                            <View style={[styles.checkButton, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]}>
+                            <Pressable
+                                onPress={handleAddValue}
+                                style={[styles.checkButton, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]}>
                                 <MaterialCommunityIcons name="plus" size={24} color={theme.plusBtnText} />
-                            </View>
+                            </Pressable>
                         </View>
 
                     </View>

@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native'
 import React from 'react'
 import Colors from '../../../../consts/Colors'
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from 'moment';
 import { useLabelStore } from '../../../../store/label-store';
+import { useDataStore } from '../../../../store/data-store';
 
 export default function MiniRecord({ data }) {
 
@@ -127,6 +128,13 @@ export default function MiniRecord({ data }) {
     let label = labels.find(label => label.id === data.label)
 
 
+    const { addRecordValue } = useDataStore(state => state)
+
+    function handleAddValue() {
+        addRecordValue(data.id)
+    }
+
+
     return (
         <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
             <View style={styles.topContainer}>
@@ -166,9 +174,11 @@ export default function MiniRecord({ data }) {
                     </View>
                 </View>
 
-                <View style={[styles.checkButton, { backgroundColor: theme.plusBtnBg }]}>
+                <Pressable
+                    onPress={handleAddValue}
+                    style={[styles.checkButton, { backgroundColor: theme.plusBtnBg }]}>
                     <MaterialCommunityIcons name="plus" size={22} color={theme.plusBtnText} />
-                </View>
+                </Pressable>
             </View>
         </View >
     )
