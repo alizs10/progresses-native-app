@@ -26,7 +26,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
 
                     <Pressable onPress={() => handlePress('Home')}>
                         <View style={styles.itemContainer}>
-                            <MaterialCommunityIcons name="home-outline" size={30} color={state.index === 0 ? Colors.green500 : Colors.gray300} />
+                            <MaterialCommunityIcons name="home-outline" size={30} color={state.index === 0 ? Colors.green500 : Colors.gray400} />
                             {/* <View style={styles.itemCountContainer}>
                             <Text style={styles.itemCountText}>10</Text>
                         </View> */}
@@ -34,7 +34,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                     </Pressable>
                     <Pressable onPress={() => handlePress('FinishedProgresses')}>
                         <View style={styles.itemContainer}>
-                            <MaterialCommunityIcons name="progress-check" size={30} color={state.index === 1 ? Colors.green500 : Colors.gray300} />
+                            <MaterialCommunityIcons name="progress-check" size={30} color={state.index === 1 ? Colors.green500 : Colors.gray400} />
 
                             <View style={styles.itemCountContainer}>
                                 <Text style={styles.itemCountText}>33</Text>
@@ -43,7 +43,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                     </Pressable>
                     <Pressable onPress={() => handlePress('UnfinishedProgresses')}>
                         <View style={styles.itemContainer}>
-                            <MaterialCommunityIcons name="progress-clock" size={30} color={state.index === 2 ? Colors.green500 : Colors.gray300} />
+                            <MaterialCommunityIcons name="progress-clock" size={30} color={state.index === 2 ? Colors.green500 : Colors.gray400} />
                             <View style={styles.itemCountContainer}>
                                 <Text style={styles.itemCountText}>2</Text>
                             </View>
@@ -51,7 +51,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                     </Pressable>
                     <Pressable onPress={() => handlePress('Records')}>
                         <View style={styles.itemContainer}>
-                            <MaterialCommunityIcons name="star-shooting-outline" size={30} color={state.index === 3 ? Colors.green500 : Colors.gray300} />
+                            <MaterialCommunityIcons name="star-shooting-outline" size={30} color={state.index === 3 ? Colors.green500 : Colors.gray400} />
                             <View style={styles.itemCountContainer}>
                                 <Text style={styles.itemCountText}>8</Text>
                             </View>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         // backgroundColor: 'blue'
     },
     listBar: {
-        backgroundColor: Colors.gray600,
+        backgroundColor: Colors.gray900,
         flexDirection: 'row',
         gap: 18,
         paddingHorizontal: 18,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         width: 16,
         height: 16,
         borderRadius: 10,
-        backgroundColor: Colors.gray300,
+        backgroundColor: Colors.gray400,
         justifyContent: 'center',
         alignItems: 'center'
     },

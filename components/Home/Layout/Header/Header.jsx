@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
     },
     header: {
-        backgroundColor: Colors.gray700,
+        backgroundColor: Colors.gray900,
         borderRadius: 50,
         paddingHorizontal: 20,
         paddingVertical: 12,

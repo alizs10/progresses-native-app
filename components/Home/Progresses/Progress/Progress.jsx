@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import Colors from '../../../../consts/Colors'
 import { Ionicons } from '@expo/vector-icons';
@@ -8,13 +8,14 @@ import { useLabelStore } from '../../../../store/label-store';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useDataStore } from '../../../../store/data-store';
 import { swipeConfig } from '../../../../lib/rn-swipe-gestures';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Progress({ data }) {
 
     const progressesThemes = {
         white: {
             border: 'white',
-            progressBg: Colors.gray300,
+            progressBg: Colors.gray400,
             progressBgFill: 'white',
             title: Colors.gray700,
             stepForwardIcon: Colors.green600,
@@ -24,23 +25,23 @@ export default function Progress({ data }) {
             time: Colors.gray700,
             labelBg: 'white',
             labelText: Colors.gray600,
-            stepsRectBg: Colors.gray400,
+            stepsRectBg: Colors.gray600,
             stepsRectBgFill: Colors.green600,
             highImportanceBg: Colors.red600,
             mediumImportanceBg: Colors.blue500,
             lowImportanceBg: Colors.green500,
         },
         violet: {
-            border: Colors.violet800,
-            progressBg: Colors.violet900,
-            progressBgFill: Colors.violet800,
+            border: Colors.violet900,
+            progressBg: Colors.violet950,
+            progressBgFill: Colors.violet900,
             title: 'white',
             stepForwardIcon: Colors.green500,
             stepBackwardIcon: Colors.red500,
             stepForwardText: 'white',
             stepBackwardText: 'white',
             time: 'white',
-            labelBg: Colors.violet800,
+            labelBg: Colors.violet900,
             labelText: 'white',
             stepsRectBg: Colors.violet200,
             stepsRectBgFill: Colors.green500,
@@ -49,16 +50,16 @@ export default function Progress({ data }) {
             lowImportanceBg: Colors.green500,
         },
         blue: {
-            border: Colors.blue800,
-            progressBg: Colors.blue900,
-            progressBgFill: Colors.blue800,
+            border: Colors.blue900,
+            progressBg: Colors.blue950,
+            progressBgFill: Colors.blue900,
             title: 'white',
             stepForwardIcon: Colors.green500,
             stepBackwardIcon: Colors.red500,
             stepForwardText: 'white',
             stepBackwardText: 'white',
             time: 'white',
-            labelBg: Colors.blue800,
+            labelBg: Colors.blue900,
             labelText: 'white',
             stepsRectBg: Colors.blue200,
             stepsRectBgFill: Colors.green500,
@@ -67,34 +68,34 @@ export default function Progress({ data }) {
             lowImportanceBg: Colors.green500,
         },
         yellow: {
-            border: Colors.yellow700,
-            progressBg: Colors.yellow900,
-            progressBgFill: Colors.yellow700,
-            title: Colors.gray800,
+            border: Colors.yellow900,
+            progressBg: Colors.yellow950,
+            progressBgFill: Colors.yellow900,
+            title: 'white',
             stepForwardIcon: Colors.green500,
             stepBackwardIcon: Colors.red500,
-            stepForwardText: Colors.gray800,
-            stepBackwardText: Colors.gray800,
-            time: Colors.gray800,
-            labelBg: Colors.yellow700,
+            stepForwardText: 'white',
+            stepBackwardText: 'white',
+            time: 'white',
+            labelBg: Colors.yellow900,
             labelText: Colors.gray800,
-            stepsRectBg: Colors.yellow50,
+            stepsRectBg: Colors.gray200,
             stepsRectBgFill: Colors.green500,
             highImportanceBg: Colors.red600,
             mediumImportanceBg: Colors.blue500,
             lowImportanceBg: Colors.green500,
         },
         turquoise: {
-            border: Colors.turquoise700,
-            progressBg: Colors.turquoise900,
-            progressBgFill: Colors.turquoise700,
+            border: Colors.turquoise900,
+            progressBg: Colors.turquoise950,
+            progressBgFill: Colors.turquoise900,
             title: 'white',
             stepForwardIcon: Colors.green300,
             stepBackwardIcon: Colors.red500,
             stepForwardText: 'white',
             stepBackwardText: 'white',
             time: 'white',
-            labelBg: Colors.turquoise700,
+            labelBg: Colors.turquoise900,
             labelText: 'white',
             stepsRectBg: Colors.gray200,
             stepsRectBgFill: Colors.green400,
@@ -103,16 +104,16 @@ export default function Progress({ data }) {
             lowImportanceBg: Colors.green500,
         },
         red: {
-            border: Colors.red700,
-            progressBg: Colors.red900,
-            progressBgFill: Colors.red700,
+            border: Colors.red900,
+            progressBg: Colors.red950,
+            progressBgFill: Colors.red900,
             title: 'white',
             stepForwardIcon: Colors.green500,
             stepBackwardIcon: Colors.red500,
             stepForwardText: 'white',
             stepBackwardText: 'white',
             time: 'white',
-            labelBg: Colors.red700,
+            labelBg: Colors.red900,
             labelText: 'white',
             stepsRectBg: Colors.gray200,
             stepsRectBgFill: Colors.green500,
@@ -142,78 +143,82 @@ export default function Progress({ data }) {
         stepBackward(data.id, completedSteps[completedSteps.length - 1].id)
     }
 
+    const navigation = useNavigation()
+
     return (
         <GestureRecognizer
             config={swipeConfig}
             onSwipeRight={(state) => onSwipeRight()}
             onSwipeLeft={onSwipeLeft}
             style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
+            <Pressable onPress={() => navigation.navigate('ViewData', { data: data })}>
 
-            <View style={[styles.bgProceed, { backgroundColor: theme.progressBgFill, width: (completedSteps.length / steps.length) * 100 + '%' }]}></View>
+                <View style={[styles.bgProceed, { backgroundColor: theme.progressBgFill, width: (completedSteps.length / steps.length) * 100 + '%' }]}></View>
 
-            <View style={styles.innerContainer}>
+                <View style={styles.innerContainer}>
 
 
-                <View style={styles.topContainer}>
-                    <Text style={[styles.title, { color: theme.title }]}>{data.name}</Text>
-                    {data.isPinned && (
-                        <MaterialIcons name="push-pin" size={22} color={theme.title} />
-                    )}
-                </View>
-                <View>
-                    <View style={styles.bottomContainer}>
-                        <View style={styles.detailsContainer}>
-                            <View style={[styles.flexRow, { columnGap: 10 }]}>
-                                {completedSteps.length > 0 && (
-                                    <View style={styles.flexRow}>
-                                        <Ionicons name="checkmark-done" size={18} color={theme.stepForwardIcon} />
-                                        <Text style={{ fontSize: 12, color: theme.stepForwardText }}>
-                                            {completedSteps[completedSteps.length - 1].name === '' ? 'Step ' + completedSteps[completedSteps.length - 1].index : completedSteps[completedSteps.length - 1].name}
-                                        </Text>
-                                    </View>
-                                )}
-                                {unCompletedSteps.length > 0 && (
-                                    <View style={styles.flexRow}>
-                                        <MaterialCommunityIcons name="chevron-double-right" size={18} color={theme.stepBackwardIcon} />
-                                        <Text style={{ fontSize: 12, color: theme.stepBackwardText }}>
-                                            {unCompletedSteps[0].name === '' ? 'Step ' + unCompletedSteps[0].index : unCompletedSteps[0].name}
-                                        </Text>
-                                    </View>
-                                )}
-                            </View>
-
-                            <View style={styles.flexBetween}>
-                                <View style={styles.flexRow}>
-                                    <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={theme.time} />
-                                    <Text style={{ fontSize: 12, color: theme.time }}>{data.hasDeadline ? '1 day left' : 'Not Set'}</Text>
-
-                                </View>
-                                <View style={styles.flexRow}>
-                                    <View style={[styles.stepsTag, { backgroundColor: theme.labelBg }]}>
-                                        <Text style={{ color: theme.labelText, fontSize: 12 }}>{completedSteps.length}/{steps.length}</Text>
-                                    </View>
-                                    <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                                        <Text style={{ color: theme.labelText, fontSize: 12 }}>{label?.name ?? 'All'}</Text>
-                                    </View>
-                                    <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
-                                        <Text style={{ color: 'white', fontSize: 12 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
-                                    </View>
+                    <View style={styles.topContainer}>
+                        <Text style={[styles.title, { color: theme.title }]}>{data.name}</Text>
+                        {data.isPinned && (
+                            <MaterialIcons name="push-pin" size={22} color={theme.title} />
+                        )}
+                    </View>
+                    <View>
+                        <View style={styles.bottomContainer}>
+                            <View style={styles.detailsContainer}>
+                                <View style={[styles.flexRow, { columnGap: 10 }]}>
+                                    {completedSteps.length > 0 && (
+                                        <View style={styles.flexRow}>
+                                            <Ionicons name="checkmark-done" size={18} color={theme.stepForwardIcon} />
+                                            <Text style={{ fontSize: 12, color: theme.stepForwardText }}>
+                                                {completedSteps[completedSteps.length - 1].name === '' ? 'Step ' + completedSteps[completedSteps.length - 1].index : completedSteps[completedSteps.length - 1].name}
+                                            </Text>
+                                        </View>
+                                    )}
+                                    {unCompletedSteps.length > 0 && (
+                                        <View style={styles.flexRow}>
+                                            <MaterialCommunityIcons name="chevron-double-right" size={18} color={theme.stepBackwardIcon} />
+                                            <Text style={{ fontSize: 12, color: theme.stepBackwardText }}>
+                                                {unCompletedSteps[0].name === '' ? 'Step ' + unCompletedSteps[0].index : unCompletedSteps[0].name}
+                                            </Text>
+                                        </View>
+                                    )}
                                 </View>
 
+                                <View style={styles.flexBetween}>
+                                    <View style={styles.flexRow}>
+                                        <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={theme.time} />
+                                        <Text style={{ fontSize: 12, color: theme.time }}>{data.hasDeadline ? '1 day left' : 'Not Set'}</Text>
+
+                                    </View>
+                                    <View style={styles.flexRow}>
+                                        <View style={[styles.stepsTag, { backgroundColor: theme.labelBg }]}>
+                                            <Text style={{ color: theme.labelText, fontSize: 12 }}>{completedSteps.length}/{steps.length}</Text>
+                                        </View>
+                                        <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
+                                            <Text style={{ color: theme.labelText, fontSize: 12 }}>{label?.name ?? 'All'}</Text>
+                                        </View>
+                                        <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
+                                            <Text style={{ color: 'white', fontSize: 12 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
+                                        </View>
+                                    </View>
+
+                                </View>
                             </View>
+
+
                         </View>
+                        <View style={styles.stepsContainer}>
 
+                            {data.steps.map((step, index) => (
+                                <View key={step.id} style={[styles.stepRect, { backgroundColor: step.isCompleted ? theme.stepsRectBgFill : theme.stepsRectBg, width: 100 / data.steps.length - 1 + '%' }]}></View>
+                            ))}
 
-                    </View>
-                    <View style={styles.stepsContainer}>
-
-                        {data.steps.map((step, index) => (
-                            <View key={step.id} style={[styles.stepRect, { backgroundColor: step.isCompleted ? theme.stepsRectBgFill : theme.stepsRectBg, width: 100 / data.steps.length - 1 + '%' }]}></View>
-                        ))}
-
+                        </View>
                     </View>
                 </View>
-            </View>
+            </Pressable>
         </GestureRecognizer>
     )
 }

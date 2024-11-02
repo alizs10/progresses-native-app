@@ -2,12 +2,12 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Colors from '../../../consts/Colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-export default function CreateNewDataButton({ onPress }) {
+export default function EditDataButton({ onPress }) {
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
-            <MaterialCommunityIcons name="content-save" size={18} color={Colors.blue500} />
-            <Text style={styles.text}>Save</Text>
+            <MaterialCommunityIcons name="pencil" size={18} color={Colors.yellow900} />
+            <Text style={styles.text}>Edit</Text>
         </TouchableOpacity>
     )
 }
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        color: Colors.blue500,
+        color: Colors.yellow900,
         fontWeight: 'bold',
         textAlign: 'center'
     }

@@ -8,7 +8,7 @@ export default Colors = {
     gray500: '#adb5bd',
     gray600: '#6c757d',
     gray700: '#495057',
-    gray800: '#343a40',
+    gray800: '#0F1012',
     gray900: '#212529',
 
     // yellow
@@ -21,7 +21,8 @@ export default Colors = {
     yellow600: "#ffe747",
     yellow700: "#ffe433",
     yellow800: "#ffdd1f",
-    yellow900: "#edc531",
+    yellow900: "#EDC531",
+    yellow950: "#332306",
 
     // red
     red100: "#ffccd5",
@@ -33,6 +34,7 @@ export default Colors = {
     red700: "#a4133c",
     red800: "#800f2f",
     red900: "#590d22",
+    red950: "#2D0611",
 
     // green
     green50: "#EEFFF1",
@@ -52,6 +54,7 @@ export default Colors = {
     turquoise700: "#248277",
     turquoise800: "#14746f",
     turquoise900: "#036666",
+    turquoise950: "#011E1E",
 
     // violet
     violet100: "#dec9e9",
@@ -62,7 +65,8 @@ export default Colors = {
     violet600: "#9163cb",
     violet700: "#815ac0",
     violet800: "#7251b5",
-    violet900: "#590DA0",
+    violet900: "#350067",
+    violet950: "#1A0033",
 
     // blue
     blue50: "#e3f2fd",
@@ -75,4 +79,5 @@ export default Colors = {
     blue700: "#1976d2",
     blue800: "#1565c0",
     blue900: "#0d47a1",
+    blue950: "#020336",
 }

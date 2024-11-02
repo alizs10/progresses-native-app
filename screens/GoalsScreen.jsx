@@ -19,7 +19,7 @@ export default function GoalsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#343a40'
+        backgroundColor: '#0F1012'
 
     }
 })

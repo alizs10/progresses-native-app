@@ -13,12 +13,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { EventProvider } from 'react-native-outside-press';
 import CreateDataScreen from './screens/CreateDataScreen';
+import ViewDataScreen from './screens/ViewDataScreen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Menu from './components/Home/Menu/Menu';
 import SettingsScreen from './screens/SettingsScreen';
 import AboutScreen from './screens/AboutScreen';
-import Button from './components/Common/Button';
-import CreateNewDataButton from './components/Common/header/CreateNewDataButton';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,7 +32,7 @@ function MyTabs() {
       }}
       tabBar={props => <BottomBar {...props} />}
 
-      sceneContainerStyle={{ backgroundColor: '#343a40' }}
+      sceneContainerStyle={{ backgroundColor: '#0F1012' }}
     >
       <Tab.Screen
         name="Home"
@@ -63,7 +62,7 @@ function MyStack() {
         initialRouteName="HomeWithTabs"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#343a40',
+            backgroundColor: '#0F1012',
           },
           headerTintColor: '#fff',
           headerShadowVisible: false,
@@ -75,6 +74,11 @@ function MyStack() {
           name="CreateData"
           component={CreateDataScreen}
           options={{ title: 'Create New Data' }}
+        />
+        <Stack.Screen
+          name="ViewData"
+          component={ViewDataScreen}
+          options={{ title: 'View Data' }}
         />
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' }} />
         <Stack.Screen name="Goals" component={GoalsScreen} options={{ title: 'Goals' }} />
@@ -105,7 +109,7 @@ export default function App() {
           {/* <Drawer.Screen name="Article" component={Article} /> */}
         </Drawer.Navigator>
       </NavigationContainer>
-      <StatusBar backgroundColor={'transparent'} barStyle='tra' />
+      <StatusBar backgroundColor={'#0F1012'} barStyle="light-content" />
     </EventProvider>
 
   );
@@ -114,7 +118,7 @@ export default function App() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#343a40',
+    backgroundColor: '#0F1012',
     // paddingTop: (Platform.OS === 'android' && Dimensions.get('window').width > 380) ? StatusBar.currentHeight : 0
   },
 });
