@@ -123,7 +123,7 @@ export const ColorSchemes = {
                 text: 'white'
             },
             high: {
-                bg: Colors.red500,
+                bg: Colors.red600,
                 text: 'white'
             }
         }

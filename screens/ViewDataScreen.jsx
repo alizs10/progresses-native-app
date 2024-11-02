@@ -28,7 +28,9 @@ export default function CreateDataScreen({ route, navigation }) {
         <View style={[styles.container, { backgroundColor: ColorSchemes[data.theme].bg }]}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 
-                <Progress progress={data} />
+                {data.type === 0 ? <Progress progress={data} /> : data.type === 1 ? (<Text>Record</Text>) : (<Text>ManualRecord</Text>)}
+
+
 
             </ScrollView>
             <StatusBar backgroundColor={ColorSchemes[data?.theme].bg} barStyle={data.theme === 'white' ? 'dark-content' : 'light-content'} />

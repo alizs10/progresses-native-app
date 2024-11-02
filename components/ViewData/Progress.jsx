@@ -41,18 +41,24 @@ export default function Progress({ progress }) {
             <View style={[styles.processContainer, { backgroundColor: ColorSchemes[progress.theme].infoBoxBg }]}>
 
                 <View style={styles.flexRow}>
-                    <View style={styles.flexRow}>
-                        <Ionicons name="checkmark-done" size={18} color={ColorSchemes[progress.theme].success} />
-                        <Text style={{ fontSize: 12, color: ColorSchemes[progress.theme].textColor }}>
-                            {completedSteps[completedSteps.length - 1].name === '' ? 'Step ' + completedSteps[completedSteps.length - 1].index : completedSteps[completedSteps.length - 1].name}
-                        </Text>
-                    </View>
-                    <View style={styles.flexRow}>
-                        <MaterialCommunityIcons name="chevron-double-right" size={18} color={ColorSchemes[progress.theme].dangerous} />
-                        <Text style={{ fontSize: 12, color: ColorSchemes[progress.theme].textColor }}>
-                            {unCompletedSteps[0].name === '' ? 'Step ' + unCompletedSteps[0].index : unCompletedSteps[0].name}
-                        </Text>
-                    </View>
+                    {completedSteps.length > 0 && (
+
+                        <View style={styles.flexRow}>
+                            <Ionicons name="checkmark-done" size={18} color={ColorSchemes[progress.theme].success} />
+                            <Text style={{ fontSize: 12, color: ColorSchemes[progress.theme].textColor }}>
+                                {completedSteps[completedSteps.length - 1].name === '' ? 'Step ' + completedSteps[completedSteps.length - 1].index : completedSteps[completedSteps.length - 1].name}
+                            </Text>
+                        </View>
+                    )}
+                    {unCompletedSteps.length > 0 && (
+
+                        <View style={styles.flexRow}>
+                            <MaterialCommunityIcons name="chevron-double-right" size={18} color={ColorSchemes[progress.theme].dangerous} />
+                            <Text style={{ fontSize: 12, color: ColorSchemes[progress.theme].textColor }}>
+                                {unCompletedSteps[0].name === '' ? 'Step ' + unCompletedSteps[0].index : unCompletedSteps[0].name}
+                            </Text>
+                        </View>
+                    )}
                 </View>
                 <View style={styles.flexBetween}>
                     <View style={[styles.processBarContainer, { borderColor: ColorSchemes[progress.theme].bg }]}>

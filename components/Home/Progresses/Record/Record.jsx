@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from 'moment';
 import { useLabelStore } from '../../../../store/label-store';
 import { useDataStore } from '../../../../store/data-store';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Record({ data }) {
 
@@ -101,9 +102,9 @@ export default function Record({ data }) {
             lowImportanceBg: Colors.green500,
         },
         red: {
-            border: Colors.red600,
-            progressBg: Colors.red700,
-            progressBgFill: Colors.red600,
+            border: Colors.red900,
+            progressBg: Colors.red900,
+            progressBgFill: Colors.red900,
             title: 'white',
             recordNumber: Colors.red200,
             stepBackwardIcon: Colors.red500,
@@ -131,8 +132,12 @@ export default function Record({ data }) {
         addRecordValue(data.id)
     }
 
+    const navigation = useNavigation()
+
     return (
-        <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
+        <Pressable
+            onPress={() => navigation.navigate('ViewData', { data: data })}
+            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
             <View style={styles.topContainer}>
                 <View style={styles.flexRow}>
                     <MaterialCommunityIcons name="star-shooting" size={22} color={theme.title} />
@@ -177,7 +182,7 @@ export default function Record({ data }) {
                 </View>
 
             </View>
-        </View>
+        </Pressable>
     )
 }
 
