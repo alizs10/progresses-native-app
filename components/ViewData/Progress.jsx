@@ -30,8 +30,8 @@ export default function Progress({ progress }) {
                 <View style={[styles.labelContainer, { backgroundColor: ColorSchemes[progress.theme].infoBoxBg }]}>
                     <Text style={[styles.labelText, { color: ColorSchemes[progress.theme].textColor }]}>{label?.name ?? 'All'}</Text>
                 </View>
-                <View style={[styles.labelContainer, { backgroundColor: ColorSchemes[progress.theme].infoBoxBg }]}>
-                    <Text style={[styles.labelText, { color: ColorSchemes[progress.theme].textColor }]}>{importance.name}</Text>
+                <View style={[styles.labelContainer, { backgroundColor: ColorSchemes[progress.theme].importance[importance.name.toLowerCase()].bg }]}>
+                    <Text style={[styles.labelText, { color: ColorSchemes[progress.theme].importance[importance.name.toLowerCase()].text }]}>{importance.name}</Text>
                 </View>
             </View>
             <View style={[styles.deadlineContainer, { backgroundColor: ColorSchemes[progress.theme].infoBoxBg }]}>
@@ -68,7 +68,7 @@ export default function Progress({ progress }) {
                     <View style={[styles.stepsBoxContainer, { backgroundColor: ColorSchemes[progress.theme].bg }]}>
                         <Text style={[styles.stepsBoxText, { color: progress.theme === 'yellow' ? 'white' : ColorSchemes[progress.theme].textColor }]}>{`${completedSteps.length} of ${steps.length} steps is completed`}</Text>
                     </View>
-                    <Text style={[styles.stepsBoxText, { marginLeft: 'auto', color: ColorSchemes[progress.theme].textColor }]}>{steps.length - completedSteps.length} {`step${unCompletedSteps.length > 1 && 's'}`} left</Text>
+                    <Text style={[styles.stepsBoxText, { marginLeft: 'auto', color: ColorSchemes[progress.theme].textColor }]}>{steps.length - completedSteps.length} {`step${unCompletedSteps.length > 1 ? 's' : ''}`} left</Text>
                 </View>
             </View>
 
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     labelText: {
         fontSize: 16,
         color: 'white',
-        paddingVertical: 4,
-        paddingHorizontal: 8
+        paddingVertical: 10,
+        paddingHorizontal: 12
     },
     deadlineContainer: {
         // padding: 3,
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     deadlineText: {
         fontSize: 18,
         color: 'white',
-        paddingVertical: 8,
+        paddingVertical: 10,
     },
     stepsBoxContainer: {
         // flex: 1,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     stepsText: {
         fontSize: 18,
         color: 'white',
-        paddingVertical: 8,
+        paddingVertical: 10,
     },
     processContainer: {
         padding: 15,
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     processBarContainer: {
-        width: '84%',
+        width: '80%',
         height: 40,
         overflow: 'hidden',
         borderWidth: 2,
@@ -178,10 +178,10 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
     },
     percentageContainer: {
-        width: '12%',
+        width: 40,
         height: 40,
         backgroundColor: 'white',
-        borderRadius: 18,
+        borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
