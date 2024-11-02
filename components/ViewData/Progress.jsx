@@ -54,7 +54,7 @@ export default function Progress({ progress }) {
                         </Text>
                     </View>
                 </View>
-                <View style={styles.flexRow}>
+                <View style={styles.flexBetween}>
                     <View style={[styles.processBarContainer, { borderColor: ColorSchemes[progress.theme].bg }]}>
                         <View style={[styles.processBar, { width: proceedPercentage + '%', backgroundColor: ColorSchemes[progress.theme].bg }]}>
                         </View>
@@ -64,11 +64,11 @@ export default function Progress({ progress }) {
                     </View>
                 </View>
 
-                <View style={[styles.flexRow]}>
+                <View style={styles.flexRow}>
                     <View style={[styles.stepsBoxContainer, { backgroundColor: ColorSchemes[progress.theme].bg }]}>
-                        <Text style={[styles.stepsBoxText, { color: progress.theme === 'yellow' ? 'white' : ColorSchemes[progress.theme].textColor }]}>{completedSteps.length}/{steps.length} Done</Text>
+                        <Text style={[styles.stepsBoxText, { color: progress.theme === 'yellow' ? 'white' : ColorSchemes[progress.theme].textColor }]}>{`${completedSteps.length} of ${steps.length} steps is completed`}</Text>
                     </View>
-                    <Text style={[styles.stepsBoxText, { color: ColorSchemes[progress.theme].textColor }]}>{steps.length - completedSteps.length} left</Text>
+                    <Text style={[styles.stepsBoxText, { marginLeft: 'auto', color: ColorSchemes[progress.theme].textColor }]}>{steps.length - completedSteps.length} {`step${unCompletedSteps.length > 1 && 's'}`} left</Text>
                 </View>
             </View>
 
@@ -94,6 +94,10 @@ const styles = StyleSheet.create({
     flexRow: {
         flexDirection: 'row',
         gap: 8
+    },
+    flexBetween: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     title: {
         fontSize: 28,
@@ -152,7 +156,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
     },
     processContainer: {
-        padding: 8,
+        padding: 15,
         backgroundColor: 'white',
         borderRadius: 20,
         overflow: 'hidden',

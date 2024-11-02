@@ -14,7 +14,7 @@ export default function CreateDataScreen({ route, navigation }) {
             headerRight: () => (
                 <EditDataButton />
             ),
-
+            title: `View ${data.type === 0 ? 'Progress' : 'Record'}`,
             headerStyle: {
                 backgroundColor: ColorSchemes[data?.theme].bg,
             },
