@@ -3,6 +3,7 @@ import React, { useLayoutEffect } from 'react'
 import Progress from '../components/ViewData/Progress';
 import EditDataButton from '../components/Common/header/EditDataButton';
 import { ColorSchemes } from '../consts/ColorSchemes';
+import Record from '../components/ViewData/Record';
 
 export default function CreateDataScreen({ route, navigation }) {
 
@@ -28,7 +29,7 @@ export default function CreateDataScreen({ route, navigation }) {
         <View style={[styles.container, { backgroundColor: ColorSchemes[data.theme].bg }]}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 
-                {data.type === 0 ? <Progress progress={data} /> : data.type === 1 ? (<Text>Record</Text>) : (<Text>ManualRecord</Text>)}
+                {data.type === 0 ? <Progress progress={data} /> : data.type === 1 ? (<Record record={data} />) : (<Text>ManualRecord</Text>)}
 
 
 

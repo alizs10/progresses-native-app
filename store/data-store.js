@@ -28,6 +28,13 @@ export const useDataStore = create((set) => ({
         return { data: [...state.data] }
     }),
 
+    subRecordValue: (recordId) => set((state) => {
+        const record = state.data.find(record => record.id === recordId)
+        record.value = record.value === 0 ? 0 : record.value - record.step;
+        record.updatedAt = Date.now()
+        return { data: [...state.data] }
+    }),
+
     addManualRecordValue: (recordId) => set((state) => {
         const record = state.data.find(record => record.id === recordId)
         record.value = record.value + record.step;

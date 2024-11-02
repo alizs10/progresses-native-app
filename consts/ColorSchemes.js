@@ -10,11 +10,11 @@ export const ColorSchemes = {
         dangerous: Colors.red500,
         importance: {
             low: {
-                bg: Colors.green500,
+                bg: Colors.green600,
                 text: 'white'
             },
             medium: {
-                bg: Colors.blue500,
+                bg: Colors.blue800,
                 text: 'white'
             },
             high: {
@@ -31,7 +31,7 @@ export const ColorSchemes = {
         dangerous: Colors.red500,
         importance: {
             low: {
-                bg: Colors.green500,
+                bg: Colors.green600,
                 text: 'white'
             },
             medium: {
@@ -52,7 +52,7 @@ export const ColorSchemes = {
         dangerous: Colors.red500,
         importance: {
             low: {
-                bg: Colors.green500,
+                bg: Colors.green600,
                 text: 'white'
             },
             medium: {
@@ -73,7 +73,7 @@ export const ColorSchemes = {
         dangerous: Colors.red500,
         importance: {
             low: {
-                bg: Colors.green500,
+                bg: Colors.green600,
                 text: 'white'
             },
             medium: {
@@ -94,11 +94,11 @@ export const ColorSchemes = {
         dangerous: Colors.red500,
         importance: {
             low: {
-                bg: Colors.green500,
+                bg: Colors.green600,
                 text: 'white'
             },
             medium: {
-                bg: Colors.blue500,
+                bg: Colors.blue800,
                 text: 'white'
             },
             high: {
@@ -115,7 +115,7 @@ export const ColorSchemes = {
         dangerous: Colors.red500,
         importance: {
             low: {
-                bg: Colors.green500,
+                bg: Colors.green600,
                 text: 'white'
             },
             medium: {

@@ -6,6 +6,7 @@ import { useAppStore } from '../../store/app-store';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Timeline from '../Common/Timeline/Timeline';
+import moment from 'moment';
 
 export default function Progress({ progress }) {
 
@@ -87,6 +88,21 @@ export default function Progress({ progress }) {
 
             </View>
 
+
+            <View style={[styles.dateContainer, { backgroundColor: ColorSchemes[progress.theme].infoBoxBg }]}>
+                <Text style={[styles.dateText, { color: ColorSchemes[progress.theme].textColor }]}>
+                    Last update
+                </Text>
+                <Text style={[styles.dateText, { color: ColorSchemes[progress.theme].textColor }]}>{moment(progress.updatedAt).fromNow()}</Text>
+            </View>
+
+            <View style={[styles.dateContainer, { backgroundColor: ColorSchemes[progress.theme].infoBoxBg }]}>
+                <Text style={[styles.dateText, { color: ColorSchemes[progress.theme].textColor }]}>
+                    Created
+                </Text>
+                <Text style={[styles.dateText, { color: ColorSchemes[progress.theme].textColor }]}>{moment(progress.createdAt).fromNow()}</Text>
+            </View>
+
         </View>
     )
 }
@@ -135,6 +151,20 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: 'white',
         paddingVertical: 10,
+    },
+    dateContainer: {
+        // padding: 3,
+        borderRadius: 15,
+        backgroundColor: 'white',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    dateText: {
+        fontSize: 16,
+        color: 'white',
+        paddingVertical: 10,
+        paddingHorizontal: 12
     },
     stepsBoxContainer: {
         // flex: 1,
