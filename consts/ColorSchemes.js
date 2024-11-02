@@ -25,7 +25,7 @@ export const ColorSchemes = {
     },
     white: {
         bg: 'white',
-        infoBoxBg: 'white',
+        infoBoxBg: Colors.gray300,
         textColor: 'black',
         success: Colors.green500,
         dangerous: Colors.red500

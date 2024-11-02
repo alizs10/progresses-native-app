@@ -60,13 +60,13 @@ export default function Progress({ progress }) {
                         </View>
                     </View>
                     <View style={[styles.percentageContainer, { backgroundColor: ColorSchemes[progress.theme].bg }]}>
-                        <Text style={styles.processPercentage}>{proceedPercentage.toFixed(0)}%</Text>
+                        <Text style={[styles.processPercentage, { color: progress.theme === 'yellow' ? 'white' : ColorSchemes[progress.theme].textColor }]}>{proceedPercentage.toFixed(0)}%</Text>
                     </View>
                 </View>
 
                 <View style={[styles.flexRow]}>
                     <View style={[styles.stepsBoxContainer, { backgroundColor: ColorSchemes[progress.theme].bg }]}>
-                        <Text style={styles.stepsBoxText}>{completedSteps.length}/{steps.length} Done</Text>
+                        <Text style={[styles.stepsBoxText, { color: progress.theme === 'yellow' ? 'white' : ColorSchemes[progress.theme].textColor }]}>{completedSteps.length}/{steps.length} Done</Text>
                     </View>
                     <Text style={[styles.stepsBoxText, { color: ColorSchemes[progress.theme].textColor }]}>{steps.length - completedSteps.length} left</Text>
                 </View>
