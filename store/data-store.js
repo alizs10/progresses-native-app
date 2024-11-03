@@ -37,9 +37,33 @@ export const useDataStore = create((set) => ({
 
     addManualRecordValue: (recordId) => set((state) => {
         const record = state.data.find(record => record.id === recordId)
+
         record.value = record.value + record.step;
-        record.valueHistory = [...record.valueHistory, record.value];
+        record.valueHistory = [...record.valueHistory, { date: Date.now(), step: record.step }];
         record.updatedAt = Date.now()
         return { data: [...state.data] }
     }),
+
+    subManualRecordValue: (recordId) => set((state) => {
+        const record = state.data.find(record => record.id === recordId)
+        let subValue = record.valueHistory[record.valueHistory.length - 1].step
+        record.valueHistory.pop();
+        record.value = record.value - subValue;
+        record.updatedAt = Date.now()
+        return { data: [...state.data] }
+    }),
+
+    addManualRecordStep: (recordId) => set((state) => {
+        const record = state.data.find(record => record.id === recordId)
+        record.step++;
+
+        return { data: [...state.data] }
+    }),
+
+    subManualRecordStep: (recordId) => set((state) => {
+        const record = state.data.find(record => record.id === recordId)
+        record.step = record.step > 1 ? record.step - 1 : 0;
+
+        return { data: [...state.data] }
+    })
 }))

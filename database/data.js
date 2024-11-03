@@ -10,7 +10,16 @@ export const DATA = [
     new Record('Days 2', 5, true, new Label('Daily'), 'violet', 1),
     new Record('Days 3', 5, true, new Label('Daily'), 'white', 1),
 
-    new RecordManual('Kilometers', 15, [1, 2, 3, 5, 8, 10, 5, 6, 0, 10, 15], 5, true, new Label('Daily'), 'violet', 1),
+    new RecordManual('Kilometers', [
+        {
+            date: Date.now(),
+            step: 5
+        },
+        {
+            date: Date.now(),
+            step: 10
+        },
+    ], 5, true, new Label('Daily'), 'violet', 1),
 
     new Progress('BH', true, new Label('Daily'), null, 'violet', 2, [
         new ProgressStep('', false, 1),

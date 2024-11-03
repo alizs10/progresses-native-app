@@ -1,10 +1,10 @@
 class RecordManual {
 
-    constructor(name, value, valueHistory, step, isPinned, label, theme, importance) {
+    constructor(name, valueHistory, step, isPinned, label, theme, importance) {
         this.id = 'record-manual-' + Math.floor(Math.random() * 10000);
         this.name = name;
-        this.value = value;
         this.valueHistory = valueHistory;
+        this.value = valueHistory.reduce((prevValue, currentValue) => prevValue.step + currentValue.step);
         this.step = step;
         this.isPinned = isPinned;
         this.label = label;

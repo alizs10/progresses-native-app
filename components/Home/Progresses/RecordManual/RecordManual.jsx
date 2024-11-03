@@ -7,6 +7,7 @@ import { LineChart } from 'react-native-chart-kit';
 import moment from 'moment';
 import { useLabelStore } from '../../../../store/label-store';
 import { useDataStore } from '../../../../store/data-store';
+import { useNavigation } from '@react-navigation/native';
 
 export default function RecordManual({ data }) {
 
@@ -123,9 +124,6 @@ export default function RecordManual({ data }) {
 
     let theme = themes[data.theme]
 
-
-
-
     const chartConfig = {
         backgroundGradientFromOpacity: 0,
         backgroundGradientToOpacity: 0,
@@ -135,10 +133,10 @@ export default function RecordManual({ data }) {
         useShadowColorFromDataset: false // optional
     };
     const chartData = {
-        labels: data.valueHistory.map(item => item.toString()), // optional,
+        labels: data.valueHistory.map(hisVal => new Date(hisVal.date)), // optional,
         datasets: [
             {
-                data: data.valueHistory,
+                data: data.valueHistory.map(hisVal => hisVal.step),
                 strokeWidth: 1.8 // optional
             }
         ],
@@ -154,9 +152,13 @@ export default function RecordManual({ data }) {
         addManualRecordValue(data.id)
     }
 
+    const navigation = useNavigation()
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
+        <Pressable
+            onPress={() => navigation.navigate('ViewData', { data: data })}
+
+            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
             <View style={styles.topContainer}>
                 <View style={styles.flexRow}>
                     <MaterialCommunityIcons name="star-shooting" size={22} color={theme.title} />
@@ -225,7 +227,7 @@ export default function RecordManual({ data }) {
 
 
             </View>
-        </View>
+        </Pressable>
     )
 }
 
