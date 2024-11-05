@@ -22,7 +22,8 @@ export default function Progresses() {
         setDataViewMode(prevState => prevState === 0 ? 1 : 0)
     }
 
-    const progresses = useDataStore((state) => state.data)
+    let progresses = useDataStore((state) => state.data)
+    progresses = progresses.filter(prg => prg.deletedAt === null)
     progresses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     const fakeData = [

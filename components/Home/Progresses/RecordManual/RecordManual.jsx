@@ -8,6 +8,7 @@ import moment from 'moment';
 import { useLabelStore } from '../../../../store/label-store';
 import { useDataStore } from '../../../../store/data-store';
 import { useNavigation } from '@react-navigation/native';
+import { useAppStore } from '../../../../store/app-store';
 
 export default function RecordManual({ data }) {
 
@@ -154,11 +155,26 @@ export default function RecordManual({ data }) {
 
     const navigation = useNavigation()
 
+    const { selectedData, selectData, selectMode, unselectData } = useAppStore(state => state)
+
+    function handlePress() {
+        if (selectMode) {
+            selectedData.includes(data.id) ? unselectData(data) : selectData(data)
+            return
+        }
+        navigation.navigate('ViewData', { data: data })
+    }
+
+    function handleLongPress() {
+        if (selectMode) return
+        selectData(data)
+    }
+
     return (
         <Pressable
-            onPress={() => navigation.navigate('ViewData', { data: data })}
-
-            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
+            onPress={handlePress}
+            onLongPress={handleLongPress}
+            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: selectedData.includes(data.id) ? Colors.primary : theme.border, marginBottom: selectedData.includes(data.id) ? 8 : 4 }]}>
             <View style={styles.topContainer}>
                 <View style={styles.flexRow}>
                     <MaterialCommunityIcons name="star-shooting" size={22} color={theme.title} />

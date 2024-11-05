@@ -7,7 +7,6 @@ export const useDataStore = create((set) => ({
     data: DATA,
     addData: (progress) => set((state) => ({ data: [...state.data, progress] })),
 
-
     stepForward: (progressId, stepId) => set((state) => {
         const progress = state.data.find(progress => progress.id === progressId)
         const step = progress.steps.find(step => step.id === stepId)
@@ -65,5 +64,45 @@ export const useDataStore = create((set) => ({
         record.step = record.step > 1 ? record.step - 1 : 0;
 
         return { data: [...state.data] }
-    })
+    }),
+
+    groupPin: (dataList) => set((state) => {
+
+        for (let key in dataList) {
+
+            let id = dataList[key]
+            console.log(id)
+            let dataIndex = state.data.findIndex(d => d.id === id)
+            let pinData = state.data[dataIndex]
+            pinData.isPinned = true
+        }
+
+        return { data: [...state.data] }
+    }),
+    groupUnpin: (dataList) => set((state) => {
+
+        for (let key in dataList) {
+
+            let id = dataList[key]
+            let dataIndex = state.data.findIndex(d => d.id === id)
+            let pinData = state.data[dataIndex]
+            pinData.isPinned = false
+        }
+
+        return { data: [...state.data] }
+    }),
+
+    groupDelete: (dataList) => set((state) => {
+
+        for (let key in dataList) {
+
+            let id = dataList[key]
+            let dataIndex = state.data.findIndex(d => d.id === id)
+            let pinData = state.data[dataIndex]
+            pinData.deletedAt = Date.now()
+        }
+
+        return { data: [...state.data] }
+    }),
+
 }))

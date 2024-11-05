@@ -9,6 +9,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { useDataStore } from '../../../../store/data-store';
 import { swipeConfig } from '../../../../lib/rn-swipe-gestures';
 import { useNavigation } from '@react-navigation/native';
+import { useAppStore } from '../../../../store/app-store';
 
 export default function Progress({ data }) {
 
@@ -145,15 +146,33 @@ export default function Progress({ data }) {
 
     const navigation = useNavigation()
 
+
+    const { selectedData, selectData, selectMode, unselectData } = useAppStore(state => state)
+
+    function handlePress() {
+        if (selectMode) {
+            selectedData.includes(data.id) ? unselectData(data) : selectData(data)
+            return
+        }
+        navigation.navigate('ViewData', { data: data })
+    }
+
+    function handleLongPress() {
+        if (selectMode) return
+        selectData(data)
+    }
+
     return (
         <GestureRecognizer
             config={swipeConfig}
             onSwipeRight={(state) => onSwipeRight()}
             onSwipeLeft={onSwipeLeft}
-            style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
+            style={[styles.container, { backgroundColor: theme.progressBg, borderColor: selectedData.includes(data.id) ? Colors.primary : theme.border, marginBottom: selectedData.includes(data.id) ? 8 : 4 }]}>
             <Pressable
                 style={{ flex: 1 }}
-                onPress={() => navigation.navigate('ViewData', { data: data })}>
+                onPress={handlePress}
+                onLongPress={handleLongPress}
+            >
 
                 <View style={[styles.bgProceed, { backgroundColor: theme.progressBgFill, width: (completedSteps.length / steps.length) * 100 + '%' }]}></View>
 

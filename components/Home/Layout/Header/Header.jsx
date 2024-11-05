@@ -45,10 +45,12 @@ export default function Header() {
 
 const styles = StyleSheet.create({
     container: {
+        height: 80,
         paddingHorizontal: 20,
         paddingVertical: 12,
     },
     header: {
+        flex: 1,
         backgroundColor: Colors.gray900,
         borderRadius: 50,
         paddingHorizontal: 20,

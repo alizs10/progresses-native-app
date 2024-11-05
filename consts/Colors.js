@@ -80,4 +80,6 @@ export default Colors = {
     blue800: "#1565c0",
     blue900: "#0d47a1",
     blue950: "#020336",
+
+    primary: '#80ed99',
 }
