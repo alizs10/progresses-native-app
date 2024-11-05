@@ -22,7 +22,7 @@ export const DATA = [
     ], 5, true, new Label('Daily'), 'white', 0),
     new Record('Days 3', 5, false, new Label('Daily'), 'white', 1),
     new Record('Days 4', 15, true, new Label('Daily'), 'blue', 2),
-    new Record('Days 5', 25, true, new Label('Daily'), 'red', 3),
+    new Record('Days 5', 25, true, new Label('Daily'), 'red', 0),
     new Progress('BH', true, new Label('Daily'), null, 'white', 2, [
         new ProgressStep('', false, 1),
         new ProgressStep('', false, 2),

@@ -69,9 +69,13 @@ export default function SelectModeHeader() {
 
 const styles = StyleSheet.create({
     container: {
-        height: 80,
-        paddingHorizontal: 20,
-        paddingVertical: 12,
+        position: 'absolute',
+        top: 0,
+        right: 20,
+        left: 20,
+        height: 60,
+        marginTop: 40,
+        zIndex: 100,
     },
     header: {
         flex: 1,

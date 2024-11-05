@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList, Pressable, ScrollView } from 'react-native'
+import { View, StyleSheet, FlatList, Pressable, ScrollView, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import ProgressesTitle from './ProgressesTitle'
 import { Ionicons } from '@expo/vector-icons';
@@ -22,44 +22,15 @@ export default function Progresses() {
         setDataViewMode(prevState => prevState === 0 ? 1 : 0)
     }
 
-    let progresses = useDataStore((state) => state.data)
-    progresses = progresses.filter(prg => prg.deletedAt === null)
-    progresses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    let data = useDataStore((state) => state.data)
+    data = data.filter(prg => prg.deletedAt === null)
 
-    const fakeData = [
-        {
-            title: 'Test one',
-            theme: "white",
-            type: 0
-        },
-        {
-            title: 'Test two',
-            theme: "red",
-            type: 1
-        },
-        {
-            title: 'Test three',
-            theme: "turquoise",
-            type: 2
-        },
-        {
-            title: 'Test four',
-            theme: "blue",
-            type: 1
-        },
-        {
-            title: 'Test five',
-            theme: "violet",
-            type: 1
 
-        },
-        {
-            title: 'Test six',
-            theme: "yellow",
-            type: 1
-        },
+    let pinnedData = data.filter(d => d.isPinned)
+    let otherData = data.filter(d => !d.isPinned)
+    pinnedData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    otherData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-    ]
 
     function showDataComp(data) {
         // 0 => progress
@@ -93,13 +64,10 @@ export default function Progresses() {
 
     return (
         <View style={styles.container}>
-
-
             <View style={[styles.flexSpaceBetween, { marginBottom: 12 }]}>
-                <ProgressesTitle title={"All"} count={3} />
+                <ProgressesTitle title={"All"} count={data.length} />
                 <Pressable onPress={toggleDataViewMode}>
                     <View style={{ padding: 5 }}>
-
                         {dataViewMode === 0 ? (
                             <Ionicons name="grid-outline" size={18} color="white" />
                         ) : (
@@ -109,17 +77,31 @@ export default function Progresses() {
                 </Pressable>
             </View>
 
-            <FlatList data={progresses} numColumns={dataViewMode === 0 ? 1 : 2}
-                key={dataViewMode === 0 ? 1 : 2}
-                columnWrapperStyle={dataViewMode === 0 ? null : styles.progressesRowWrapper}
-                contentContainerStyle={{ paddingBottom: 100 }}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item => item.id)}
-                renderItem={({ index, item }) => showDataComp(item)}
-            />
+            {pinnedData.length > 0 && (
+                <SafeAreaView style={{ flex: 1 }}>
+                    <ProgressesTitle title={"Pinned"} count={pinnedData.length} />
+                    <FlatList data={pinnedData} numColumns={dataViewMode === 0 ? 1 : 2}
+                        key={'pinned-data-flat-list' + dataViewMode}
+                        scrollEnabled={false}
+                        columnWrapperStyle={dataViewMode === 0 ? null : styles.progressesRowWrapper}
+                        keyExtractor={(item => item.id)}
+                        renderItem={({ index, item }) => showDataComp(item)}
+                    />
+                </SafeAreaView>
+            )}
 
-
-
+            {otherData.length > 0 && (
+                <SafeAreaView style={{ flex: 1 }}>
+                    <ProgressesTitle title={"Other"} count={otherData.length} />
+                    <FlatList data={otherData} numColumns={dataViewMode === 0 ? 1 : 2}
+                        key={'other-data-flat-list' + dataViewMode}
+                        scrollEnabled={false}
+                        columnWrapperStyle={dataViewMode === 0 ? null : styles.progressesRowWrapper}
+                        keyExtractor={(item => item.id)}
+                        renderItem={({ index, item }) => showDataComp(item)}
+                    />
+                </SafeAreaView>
+            )}
 
         </View>
     )
@@ -130,6 +112,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: 10,
         paddingHorizontal: 20,
+        paddingBottom: 200
     },
     flexSpaceBetween: {
         flexDirection: 'row',

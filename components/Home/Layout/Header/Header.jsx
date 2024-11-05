@@ -6,7 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Header() {
+export default function Header({ scrollDir }) {
 
     const navigation = useNavigation();
 
@@ -20,7 +20,7 @@ export default function Header() {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container]}>
             <View style={styles.header}>
                 <View style={[styles.flexRow, { flex: 3 }]}>
                     <Pressable onPress={openDrawer}>
@@ -42,12 +42,16 @@ export default function Header() {
         </View>
     )
 }
-
+// , scrollDir === 'up' ? styles.stickyHeaderContainer : null
 const styles = StyleSheet.create({
     container: {
-        height: 80,
-        paddingHorizontal: 20,
-        paddingVertical: 12,
+        position: 'absolute',
+        top: 0,
+        right: 20,
+        left: 20,
+        height: 60,
+        marginTop: 40,
+        zIndex: 100,
     },
     header: {
         flex: 1,
@@ -59,6 +63,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         elevation: 2
+    },
+    stickyHeaderContainer: {
+        position: 'absolute',
+        top: 50,
+        left: 10,
+        right: 10
     },
     flexRow: {
         alignItems: 'center',

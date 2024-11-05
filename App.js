@@ -110,7 +110,12 @@ export default function App() {
           {/* <Drawer.Screen name="Article" component={Article} /> */}
         </Drawer.Navigator>
       </NavigationContainer>
-      <StatusBar backgroundColor={'#0F1012'} barStyle="light-content" />
+      <StatusBar
+        backgroundColor="transparent"
+        barStyle="light-content"
+        translucent={true}
+        animated={true}
+      />
     </EventProvider>
   );
 }

@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
         elevation: 3,
         borderTopRightRadius: 15,
         borderBottomRightRadius: 15,
+        marginTop: 40,
     },
     flexRow: {
         flexDirection: 'row',
