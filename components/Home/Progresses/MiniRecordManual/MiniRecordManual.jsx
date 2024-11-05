@@ -7,6 +7,7 @@ import { LineChart } from 'react-native-chart-kit';
 import moment from 'moment';
 import { useLabelStore } from '../../../../store/label-store';
 import { useDataStore } from '../../../../store/data-store';
+import { useNavigation } from '@react-navigation/native';
 
 export default function MiniRecordManual({ data }) {
 
@@ -152,9 +153,13 @@ export default function MiniRecordManual({ data }) {
         addManualRecordValue(data.id)
     }
 
+    const navigation = useNavigation()
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
+        <Pressable
+            onPress={() => navigation.navigate('ViewData', { data: data })}
+
+            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
 
             <View style={styles.topContainer}>
                 <View style={styles.flexRow}>
@@ -222,7 +227,7 @@ export default function MiniRecordManual({ data }) {
                 </Pressable>
             </View>
 
-        </View>
+        </Pressable>
     )
 }
 

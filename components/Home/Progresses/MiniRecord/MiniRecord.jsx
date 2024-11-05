@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from 'moment';
 import { useLabelStore } from '../../../../store/label-store';
 import { useDataStore } from '../../../../store/data-store';
+import { useNavigation } from '@react-navigation/native';
 
 export default function MiniRecord({ data }) {
 
@@ -134,9 +135,13 @@ export default function MiniRecord({ data }) {
         addRecordValue(data.id)
     }
 
+    const navigation = useNavigation()
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
+        <Pressable
+            onPress={() => navigation.navigate('ViewData', { data: data })}
+
+            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
             <View style={styles.topContainer}>
                 <View style={styles.flexRow}>
                     <MaterialCommunityIcons name="star-shooting" size={14} color={theme.title} />
@@ -180,7 +185,7 @@ export default function MiniRecord({ data }) {
                     <MaterialCommunityIcons name="plus" size={22} color={theme.plusBtnText} />
                 </Pressable>
             </View>
-        </View >
+        </Pressable>
     )
 }
 

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native'
 import React from 'react'
 import Colors from '../../../../consts/Colors'
 import { Ionicons } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import { useLabelStore } from '../../../../store/label-store';
 import { useDataStore } from '../../../../store/data-store';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { swipeConfig } from '../../../../lib/rn-swipe-gestures';
+import { useNavigation } from '@react-navigation/native';
 
 export default function MiniProgress({ data }) {
 
@@ -144,6 +145,8 @@ export default function MiniProgress({ data }) {
         stepBackward(data.id, completedSteps[completedSteps.length - 1].id)
     }
 
+    const navigation = useNavigation()
+
     return (
         <GestureRecognizer
             config={swipeConfig}
@@ -151,61 +154,64 @@ export default function MiniProgress({ data }) {
             onSwipeLeft={onSwipeLeft}
             style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
 
-            <View style={styles.topContainer}>
-                <Text style={[styles.title, { color: theme.title }]}>{data.name}</Text>
-                {data.isPinned && (
-                    <MaterialIcons name="push-pin" size={18} color={theme.title} />
-                )}
-            </View>
+            <Pressable onPress={() => navigation.navigate('ViewData', { data: data })}>
 
-            <View style={[styles.flexColumn, { marginTop: 10, gap: 2 }]}>
 
-                {completedSteps.length > 0 && (
-                    <View style={styles.flexRow}>
-                        <Ionicons name="checkmark-done" size={14} color={theme.stepForwardIcon} />
-                        <Text style={{ fontSize: 10, color: theme.stepForwardText }}>
-                            {completedSteps[completedSteps.length - 1].name === '' ? 'Step ' + completedSteps[completedSteps.length - 1].index : completedSteps[completedSteps.length - 1].name}
-                        </Text>
+                <View style={styles.topContainer}>
+                    <Text style={[styles.title, { color: theme.title }]}>{data.name}</Text>
+                    {data.isPinned && (
+                        <MaterialIcons name="push-pin" size={18} color={theme.title} />
+                    )}
+                </View>
+
+                <View style={[styles.flexColumn, { marginTop: 10, gap: 2 }]}>
+
+                    {completedSteps.length > 0 && (
+                        <View style={styles.flexRow}>
+                            <Ionicons name="checkmark-done" size={14} color={theme.stepForwardIcon} />
+                            <Text style={{ fontSize: 10, color: theme.stepForwardText }}>
+                                {completedSteps[completedSteps.length - 1].name === '' ? 'Step ' + completedSteps[completedSteps.length - 1].index : completedSteps[completedSteps.length - 1].name}
+                            </Text>
+                        </View>
+                    )}
+                    {unCompletedSteps.length > 0 && (
+                        <View style={styles.flexRow}>
+                            <MaterialCommunityIcons name="chevron-double-right" size={14} color={theme.stepBackwardIcon} />
+                            <Text style={{ fontSize: 10, color: theme.stepBackwardText }}>
+                                {unCompletedSteps[0].name === '' ? 'Step ' + unCompletedSteps[0].index : unCompletedSteps[0].name}
+                            </Text>
+                        </View>
+                    )}
+
+                    <View style={[styles.flexRow, { alignItems: 'flex-start', marginTop: 6 }]}>
+                        <MaterialCommunityIcons name="clock-time-ten-outline" size={14} color={theme.time} />
+                        <View>
+                            <Text style={{ fontSize: 10, color: theme.time }}>Deadline {data.hasDeadline ? '1 day left' : 'Not Set'}</Text>
+                        </View>
                     </View>
-                )}
-                {unCompletedSteps.length > 0 && (
-                    <View style={styles.flexRow}>
-                        <MaterialCommunityIcons name="chevron-double-right" size={14} color={theme.stepBackwardIcon} />
-                        <Text style={{ fontSize: 10, color: theme.stepBackwardText }}>
-                            {unCompletedSteps[0].name === '' ? 'Step ' + unCompletedSteps[0].index : unCompletedSteps[0].name}
-                        </Text>
-                    </View>
-                )}
 
-                <View style={[styles.flexRow, { alignItems: 'flex-start', marginTop: 6 }]}>
-                    <MaterialCommunityIcons name="clock-time-ten-outline" size={14} color={theme.time} />
+                </View>
+
+                <View style={[styles.flexBetween, { marginTop: 'auto' }]}>
+
+                    <View style={[styles.flexRow, { alignSelf: 'flex-end' }]}>
+                        <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
+                            <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
+                        </View>
+                        <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
+                            <Text style={{ color: theme.labelText, fontSize: 10 }}>{label?.name ?? 'All'}</Text>
+                        </View>
+
+                    </View>
                     <View>
-                        <Text style={{ fontSize: 10, color: theme.time }}>Deadline {data.hasDeadline ? '1 day left' : 'Not Set'}</Text>
+                        <View style={[styles.circularProgressContainer, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
+                            <View style={[styles.circularProgressFill, { backgroundColor: theme.progressBgFill, height: completedSteps.length / steps.length * 100 + '%' }]}></View>
+                            <Text style={[styles.circularProgressText, { color: theme.labelText }]}>{Math.floor((completedSteps.length / steps.length) * 100)}</Text>
+                        </View>
+                        <Text style={[styles.stepsCount, { color: theme.labelText }]}>{completedSteps.length}/{steps.length}</Text>
                     </View>
                 </View>
-
-            </View>
-
-            <View style={[styles.flexBetween, { marginTop: 'auto' }]}>
-
-                <View style={[styles.flexRow, { alignSelf: 'flex-end' }]}>
-                    <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
-                        <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
-                    </View>
-                    <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                        <Text style={{ color: theme.labelText, fontSize: 10 }}>{label?.name ?? 'All'}</Text>
-                    </View>
-
-                </View>
-                <View>
-                    <View style={[styles.circularProgressContainer, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
-                        <View style={[styles.circularProgressFill, { backgroundColor: theme.progressBgFill, height: completedSteps.length / steps.length * 100 + '%' }]}></View>
-                        <Text style={[styles.circularProgressText, { color: theme.labelText }]}>{Math.floor((completedSteps.length / steps.length) * 100)}</Text>
-                    </View>
-                    <Text style={[styles.stepsCount, { color: theme.labelText }]}>{completedSteps.length}/{steps.length}</Text>
-                </View>
-            </View>
-
+            </Pressable>
         </GestureRecognizer>
     )
 }
