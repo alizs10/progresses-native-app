@@ -151,7 +151,9 @@ export default function Progress({ data }) {
             onSwipeRight={(state) => onSwipeRight()}
             onSwipeLeft={onSwipeLeft}
             style={[styles.container, { backgroundColor: theme.progressBg, borderColor: theme.border }]}>
-            <Pressable onPress={() => navigation.navigate('ViewData', { data: data })}>
+            <Pressable
+                style={{ flex: 1 }}
+                onPress={() => navigation.navigate('ViewData', { data: data })}>
 
                 <View style={[styles.bgProceed, { backgroundColor: theme.progressBgFill, width: (completedSteps.length / steps.length) * 100 + '%' }]}></View>
 

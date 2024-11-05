@@ -154,7 +154,9 @@ export default function MiniProgress({ data }) {
             onSwipeLeft={onSwipeLeft}
             style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: theme.border }]}>
 
-            <Pressable onPress={() => navigation.navigate('ViewData', { data: data })}>
+            <Pressable
+                style={{ flex: 1 }}
+                onPress={() => navigation.navigate('ViewData', { data: data })}>
 
 
                 <View style={styles.topContainer}>
