@@ -12,6 +12,7 @@ import RecordManual from './RecordManual/RecordManual';
 import MiniRecordManual from './MiniRecordManual/MiniRecordManual';
 
 import { useDataStore } from '../../../store/data-store';
+import { useAppStore } from '../../../store/app-store';
 
 export default function Progresses() {
 
@@ -22,9 +23,10 @@ export default function Progresses() {
         setDataViewMode(prevState => prevState === 0 ? 1 : 0)
     }
 
-    let data = useDataStore((state) => state.data)
-    data = data.filter(prg => prg.deletedAt === null)
+    let activeLabel = useAppStore((state) => state.activeLabel)
 
+    let data = useDataStore((state) => state.data)
+    data = data.filter(prg => (prg.deletedAt === null && prg.label === activeLabel))
 
     let pinnedData = data.filter(d => d.isPinned)
     let otherData = data.filter(d => !d.isPinned)

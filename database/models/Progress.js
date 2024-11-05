@@ -1,13 +1,13 @@
 class Progress {
 
-    constructor(name, isPinned, label, deadline, theme, importance, steps, hasDeadline = false) {
+    constructor(name, isPinned, labelId, deadline, theme, importance, steps, hasDeadline = false) {
         this.id = 'progress-' + Math.floor(Math.random() * 10000);
         this.name = name;
         this.isPinned = isPinned;
         this.deadline = deadline;
         this.hasDeadline = hasDeadline;
         this.theme = theme;
-        this.label = label;
+        this.label = labelId;
         this.importance = importance;
         this.steps = steps;
         this.createdAt = Date.now();
