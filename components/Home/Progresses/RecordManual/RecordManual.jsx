@@ -22,7 +22,7 @@ export default function RecordManual({ data }) {
             stepForwardText: Colors.gray700,
             stepBackwardText: Colors.gray700,
             time: Colors.gray700,
-            labelBg: Colors.gray300,
+            labelBg: 'white',
             labelText: Colors.gray700,
             plusBtnBg: Colors.gray300,
             plusBtnText: Colors.gray800,
@@ -62,7 +62,7 @@ export default function RecordManual({ data }) {
             labelText: 'white',
             plusBtnBg: Colors.blue800,
             plusBtnText: 'white',
-            highImportanceBg: Colors.red600,
+            highImportanceBg: Colors.red500,
             mediumImportanceBg: Colors.blue500,
             lowImportanceBg: Colors.green500,
         },
@@ -81,7 +81,7 @@ export default function RecordManual({ data }) {
             plusBtnBg: Colors.yellow700,
             plusBtnText: Colors.gray800,
             highImportanceBg: Colors.red600,
-            mediumImportanceBg: Colors.blue500,
+            mediumImportanceBg: Colors.blue600,
             lowImportanceBg: Colors.green500,
         },
         turquoise: {
@@ -103,9 +103,9 @@ export default function RecordManual({ data }) {
             lowImportanceBg: Colors.green500,
         },
         red: {
-            border: Colors.red600,
+            border: Colors.red900,
             progressBg: Colors.red700,
-            progressBgFill: Colors.red600,
+            progressBgFill: Colors.red900,
             title: 'white',
             recordNumber: Colors.red200,
             stepBackwardIcon: Colors.red500,
@@ -133,10 +133,10 @@ export default function RecordManual({ data }) {
         useShadowColorFromDataset: false // optional
     };
     const chartData = {
-        labels: data.valueHistory.map(hisVal => new Date(hisVal.date)), // optional,
+        labels: data.valueHistory.slice(-3).map(hisVal => new Date(hisVal.date)), // optional,
         datasets: [
             {
-                data: data.valueHistory.map(hisVal => hisVal.step),
+                data: data.valueHistory.slice(-3).map(hisVal => hisVal.step),
                 strokeWidth: 1.8 // optional
             }
         ],
@@ -178,28 +178,32 @@ export default function RecordManual({ data }) {
                         <Text style={{ fontSize: 24, color: theme.recordNumber }}>{data.value}</Text>
                     </View>
                     <View style={styles.flexRow}>
-                        <LineChart
-                            data={chartData}
-                            width={50}
-                            height={30}
-                            withHorizontalLabels={false}
-                            withVerticalLabels={false}
-                            chartConfig={chartConfig}
-                            withDots={false}
-                            withInnerLines={false}
-                            withOuterLines={false}
-                            withShadow={false}
-                            bezier
-                            style={{ paddingRight: 0, paddingTop: 1 }}
-                        />
+
+                        {data.valueHistory.length > 2 && (
+                            <LineChart
+                                data={chartData}
+                                width={50}
+                                height={30}
+                                withHorizontalLabels={false}
+                                withVerticalLabels={false}
+                                chartConfig={chartConfig}
+                                withDots={false}
+                                withInnerLines={false}
+                                withOuterLines={false}
+                                withShadow={false}
+                                bezier
+                                style={{ paddingRight: 0, paddingTop: 1 }}
+                            />
+                        )}
 
                         <View style={styles.flexRow}>
 
-                            <TextInput style={[styles.recordNumberInput, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]} defaultValue={data.step.toString()} keyboardType='number-pad' maxLength={4} />
+                            {/* <TextInput style={[styles.recordNumberInput, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]} defaultValue={data.step.toString()} keyboardType='number-pad' maxLength={4} /> */}
                             <Pressable
                                 onPress={handleAddValue}
-                                style={[styles.checkButton, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]}>
-                                <MaterialCommunityIcons name="plus" size={24} color={theme.plusBtnText} />
+                                style={[styles.checkButton, { backgroundColor: theme.plusBtnBg }]}>
+                                <MaterialCommunityIcons name="plus" size={22} color={theme.plusBtnText} />
+                                <Text style={[styles.stepValueText, { color: theme.plusBtnText }]}>{data.step}</Text>
                             </Pressable>
                         </View>
 
@@ -306,13 +310,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         elevation: 1
-    }
-    ,
+    },
     checkButton: {
-        alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        columnGap: 2,
+        // justifyContent: 'space-between',
+        alignItems: 'center',
+        columnGap: 1,
         backgroundColor: Colors.gray300,
         paddingVertical: 4,
         paddingHorizontal: 8,
@@ -339,5 +342,11 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         alignItems: 'center',
         elevation: 1
+    },
+    stepValueText: {
+        fontSize: 18,
+        fontWeight: 'semibold',
+        color: 'white',
+        paddingRight: 4,
     }
 })

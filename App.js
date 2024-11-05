@@ -91,6 +91,7 @@ function MyStack() {
   )
 }
 
+
 export default function App() {
 
   return (
@@ -111,7 +112,6 @@ export default function App() {
       </NavigationContainer>
       <StatusBar backgroundColor={'#0F1012'} barStyle="light-content" />
     </EventProvider>
-
   );
 }
 

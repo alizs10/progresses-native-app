@@ -75,9 +75,9 @@ export default function MiniRecordManual({ data }) {
             stepForwardText: Colors.gray800,
             stepBackwardText: Colors.gray800,
             time: Colors.gray800,
-            labelBg: Colors.yellow700,
+            labelBg: Colors.yellow800,
             labelText: Colors.gray800,
-            plusBtnBg: Colors.yellow700,
+            plusBtnBg: Colors.yellow800,
             plusBtnText: Colors.gray800,
             highImportanceBg: Colors.red600,
             mediumImportanceBg: Colors.blue500,
@@ -98,7 +98,7 @@ export default function MiniRecordManual({ data }) {
             plusBtnBg: Colors.turquoise700,
             plusBtnText: 'white',
             highImportanceBg: Colors.red600,
-            mediumImportanceBg: Colors.blue500,
+            mediumImportanceBg: Colors.blue600,
             lowImportanceBg: Colors.green500,
         },
         red: {
@@ -113,9 +113,9 @@ export default function MiniRecordManual({ data }) {
             time: 'white',
             labelBg: Colors.red700,
             labelText: 'white',
-            plusBtnBg: Colors.red700,
+            plusBtnBg: Colors.red800,
             plusBtnText: 'white',
-            highImportanceBg: Colors.red600,
+            highImportanceBg: Colors.red500,
             mediumImportanceBg: Colors.blue500,
             lowImportanceBg: Colors.green500,
         },
@@ -133,10 +133,10 @@ export default function MiniRecordManual({ data }) {
         useShadowColorFromDataset: false // optional
     };
     const chartData = {
-        labels: data.valueHistory.map(item => item.toString()), // optional,
+        labels: data.valueHistory.slice(-3).map(hisVal => new Date(hisVal.date)), // optional,
         datasets: [
             {
-                data: data.valueHistory,
+                data: data.valueHistory.slice(-3).map(hisVal => hisVal.step),
                 strokeWidth: 1.8 // optional
             }
         ],
@@ -175,33 +175,36 @@ export default function MiniRecordManual({ data }) {
                         <Text style={{ fontSize: 22, color: theme.recordNumber }}>{data.value}</Text>
                     </View>
 
-                    <LineChart
-                        data={chartData}
-                        width={40}
-                        height={20}
-                        withHorizontalLabels={false}
-                        withVerticalLabels={false}
-                        chartConfig={chartConfig}
-                        withDots={false}
-                        withInnerLines={false}
-                        withOuterLines={false}
-                        withShadow={false}
-                        bezier
-                        style={{ paddingRight: 0, paddingTop: 1 }}
-                    />
+
+                    {data.valueHistory.length > 2 && (
+                        <LineChart
+                            data={chartData}
+                            width={40}
+                            height={20}
+                            withHorizontalLabels={false}
+                            withVerticalLabels={false}
+                            chartConfig={chartConfig}
+                            withDots={false}
+                            withInnerLines={false}
+                            withOuterLines={false}
+                            withShadow={false}
+                            bezier
+                            style={{ paddingRight: 0, paddingTop: 1 }}
+                        />
+                    )}
                 </View>
 
-                <View style={styles.flexBetween}>
-                    <View style={styles.flexRow}>
-                        <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                            <Text style={{ color: theme.labelText, fontSize: 10 }}>{label?.name ?? 'All'}</Text>
-                        </View>
-                        <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
-                            <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
-                        </View>
+                <View style={styles.flexRow}>
+                    <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
+                        <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
                     </View>
-                    <TextInput style={[styles.recordNumberInput, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]} defaultValue='5' keyboardType='number-pad' maxLength={4} />
+                    <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
+                        <Text style={{ color: theme.labelText, fontSize: 10 }}>{label?.name ?? 'All'}</Text>
+                    </View>
                 </View>
+                {/* <View style={styles.flexBetween}> */}
+                {/* <TextInput style={[styles.recordNumberInput, { backgroundColor: theme.plusBtnBg, color: theme.plusBtnText }]} defaultValue='5' keyboardType='number-pad' maxLength={4} /> */}
+                {/* </View> */}
 
             </View>
 
@@ -215,6 +218,7 @@ export default function MiniRecordManual({ data }) {
                     onPress={handleAddValue}
                     style={[styles.checkButton, { backgroundColor: theme.plusBtnBg }]}>
                     <MaterialCommunityIcons name="plus" size={22} color={theme.plusBtnText} />
+                    <Text style={[styles.stepValueText, { color: theme.plusBtnText }]}>{data.step}</Text>
                 </Pressable>
             </View>
 
@@ -267,6 +271,7 @@ const styles = StyleSheet.create({
     checkButton: {
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: 'white',
         paddingVertical: 5,
         borderRadius: 100,
@@ -303,5 +308,10 @@ const styles = StyleSheet.create({
         fontSize: 12,
         textAlign: 'center',
         elevation: 1
+    },
+    stepValueText: {
+        fontSize: 18,
+        fontWeight: 'semibold',
+        color: 'white'
     }
 })

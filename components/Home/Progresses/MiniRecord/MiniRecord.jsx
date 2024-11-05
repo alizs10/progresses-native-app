@@ -60,7 +60,7 @@ export default function MiniRecord({ data }) {
             labelText: 'white',
             plusBtnBg: Colors.blue800,
             plusBtnText: 'white',
-            highImportanceBg: Colors.red600,
+            highImportanceBg: Colors.red500,
             mediumImportanceBg: Colors.blue500,
             lowImportanceBg: Colors.green500,
         },
@@ -74,9 +74,9 @@ export default function MiniRecord({ data }) {
             stepForwardText: Colors.gray800,
             stepBackwardText: Colors.gray800,
             time: Colors.gray800,
-            labelBg: Colors.yellow700,
+            labelBg: Colors.yellow800,
             labelText: Colors.gray800,
-            plusBtnBg: Colors.yellow700,
+            plusBtnBg: Colors.yellow800,
             plusBtnText: Colors.gray800,
             highImportanceBg: Colors.red600,
             mediumImportanceBg: Colors.blue500,
@@ -97,7 +97,7 @@ export default function MiniRecord({ data }) {
             plusBtnBg: Colors.turquoise700,
             plusBtnText: 'white',
             highImportanceBg: Colors.red600,
-            mediumImportanceBg: Colors.blue500,
+            mediumImportanceBg: Colors.blue600,
             lowImportanceBg: Colors.green500,
         },
         red: {
@@ -112,9 +112,9 @@ export default function MiniRecord({ data }) {
             time: 'white',
             labelBg: Colors.red700,
             labelText: 'white',
-            plusBtnBg: Colors.red700,
+            plusBtnBg: Colors.red800,
             plusBtnText: 'white',
-            highImportanceBg: Colors.red600,
+            highImportanceBg: Colors.red500,
             mediumImportanceBg: Colors.blue500,
             lowImportanceBg: Colors.green500,
         },
@@ -154,11 +154,11 @@ export default function MiniRecord({ data }) {
                     <Text style={{ fontSize: 22, color: theme.recordNumber }}>{data.value}</Text>
 
                     <View style={styles.flexRow}>
-                        <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
-                            <Text style={{ color: theme.labelText, fontSize: 10 }}>{label?.name ?? 'All'}</Text>
-                        </View>
                         <View style={[styles.importanceTag, { backgroundColor: data.importance === 0 ? theme.lowImportanceBg : data.importance === 1 ? theme.mediumImportanceBg : theme.highImportanceBg }]}>
                             <Text style={{ color: 'white', fontSize: 10 }}>{data.importance === 0 ? 'L' : data.importance === 1 ? 'M' : 'H'}</Text>
+                        </View>
+                        <View style={[styles.labelTag, { backgroundColor: theme.labelBg }]}>
+                            <Text style={{ color: theme.labelText, fontSize: 10 }}>{label?.name ?? 'All'}</Text>
                         </View>
                     </View>
 
