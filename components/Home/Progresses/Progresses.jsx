@@ -1,5 +1,5 @@
 import { View, StyleSheet, FlatList, Pressable, ScrollView, SafeAreaView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProgressesTitle from './ProgressesTitle'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -13,8 +13,14 @@ import MiniRecordManual from './MiniRecordManual/MiniRecordManual';
 
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
+import { useNavigationState } from '@react-navigation/native';
+import { isProgressCompleted } from '../../../helpers/data-helper';
 
 export default function Progresses() {
+
+    const routeIndex = useNavigationState(state => state.index);
+    const routeNames = useNavigationState(state => state.routeNames);
+    const currentRouteName = routeNames[routeIndex];
 
     // 0 -> List, 1-> Grid
     const [dataViewMode, setDataViewMode] = useState(0)
@@ -27,6 +33,16 @@ export default function Progresses() {
 
     let data = useDataStore((state) => state.data)
     data = data.filter(prg => (prg.deletedAt === null && prg.label === activeLabel))
+
+    if (currentRouteName === 'FinishedProgresses') {
+        data = data.filter(d => d.type === 0 && isProgressCompleted(d))
+    }
+    if (currentRouteName === 'UnfinishedProgresses') {
+        data = data.filter(d => d.type === 0 && !isProgressCompleted(d))
+    }
+    if (currentRouteName === 'Records') {
+        data = data.filter(d => [1, 2].includes(d.type))
+    }
 
     let pinnedData = data.filter(d => d.isPinned)
     let otherData = data.filter(d => !d.isPinned)

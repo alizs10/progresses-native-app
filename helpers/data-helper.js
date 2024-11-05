@@ -1,3 +1,3 @@
-export function isDataSelected(id, dataList) {
-    return dataList.includes(id)
+export function isProgressCompleted(progress) {
+    return !progress.steps.some(step => !step.isCompleted);
 }
