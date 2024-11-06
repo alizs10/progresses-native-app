@@ -2,8 +2,23 @@ import { View, StyleSheet, Text, Pressable } from 'react-native'
 import Colors from '../../../../consts/Colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useDataStore } from '../../../../store/data-store';
+import { isProgressCompleted } from '../../../../helpers/data-helper';
+import { useAppStore } from '../../../../store/app-store';
 
-export default function BottomBar({ state, descriptors, navigation }) {
+export default function BottomBar({ state, navigation }) {
+
+    const { activeLabel, searchMode } = useAppStore(state => state);
+    const { data, searchResults } = useDataStore(state => state);
+
+    let showData = searchMode ? searchResults : data;
+
+    showData = showData.filter(d => (d.deletedAt === null && d.label === activeLabel))
+    const ufpCount = data.filter(d => d.type === 0 && !isProgressCompleted(d)).length;
+    const fpCount = data.filter(d => d.type === 0 && isProgressCompleted(d)).length;
+    const rCount = data.filter(d => [1, 2].includes(d.type)).length;
+
+
 
     const stackNavigation = useNavigation();
 
@@ -37,7 +52,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                             <MaterialCommunityIcons name="progress-check" size={30} color={state.index === 1 ? Colors.green500 : Colors.gray400} />
 
                             <View style={styles.itemCountContainer}>
-                                <Text style={styles.itemCountText}>33</Text>
+                                <Text style={styles.itemCountText}>{fpCount}</Text>
                             </View>
                         </View>
                     </Pressable>
@@ -45,7 +60,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                         <View style={styles.itemContainer}>
                             <MaterialCommunityIcons name="progress-clock" size={30} color={state.index === 2 ? Colors.green500 : Colors.gray400} />
                             <View style={styles.itemCountContainer}>
-                                <Text style={styles.itemCountText}>2</Text>
+                                <Text style={styles.itemCountText}>{ufpCount}</Text>
                             </View>
                         </View>
                     </Pressable>
@@ -53,7 +68,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                         <View style={styles.itemContainer}>
                             <MaterialCommunityIcons name="star-shooting-outline" size={30} color={state.index === 3 ? Colors.green500 : Colors.gray400} />
                             <View style={styles.itemCountContainer}>
-                                <Text style={styles.itemCountText}>8</Text>
+                                <Text style={styles.itemCountText}>{rCount}</Text>
                             </View>
                         </View>
                     </Pressable>

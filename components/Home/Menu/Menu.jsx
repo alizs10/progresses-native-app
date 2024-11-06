@@ -5,6 +5,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useDataStore } from '../../../store/data-store';
+import { useAppStore } from '../../../store/app-store';
 
 export default function Menu() {
 
@@ -13,6 +15,17 @@ export default function Menu() {
     function goToScreen(screen) {
         navigation.navigate(screen)
     }
+
+    let { searchMode } = useAppStore(state => state)
+    let { data, searchResults } = useDataStore(state => state)
+
+    let showData = searchMode ? searchResults : data;
+
+    showData = showData.filter(prg => prg.deletedAt === null)
+
+    let highDataCount = showData.filter(item => item.importance === 2).length
+    let mediumDataCount = showData.filter(item => item.importance === 1).length
+    let lowDataCount = showData.filter(item => item.importance === 0).length
 
 
     return (
@@ -37,11 +50,11 @@ export default function Menu() {
 
                     <View style={styles.flexRow}>
                         <Entypo name="dot-single" size={28} color={Colors.red400} />
-                        <Text style={styles.importanceLabel}>Important</Text>
+                        <Text style={styles.importanceLabel}>High</Text>
                     </View>
 
                     <View style={styles.priorityCount}>
-                        <Text style={{ color: Colors.gray300, fontSize: 10 }}>10</Text>
+                        <Text style={{ color: Colors.gray300, fontSize: 10 }}>{highDataCount}</Text>
                     </View>
                 </View>
                 <View style={styles.flexBetween}>
@@ -50,7 +63,7 @@ export default function Menu() {
                         <Text style={styles.importanceLabel}>Medium</Text>
                     </View>
                     <View style={styles.priorityCount}>
-                        <Text style={{ color: Colors.gray300, fontSize: 10 }}>10</Text>
+                        <Text style={{ color: Colors.gray300, fontSize: 10 }}>{mediumDataCount}</Text>
                     </View>
                 </View>
                 <View style={styles.flexBetween}>
@@ -59,7 +72,7 @@ export default function Menu() {
                         <Text style={styles.importanceLabel}>Low</Text>
                     </View>
                     <View style={styles.priorityCount}>
-                        <Text style={{ color: Colors.gray300, fontSize: 10 }}>10</Text>
+                        <Text style={{ color: Colors.gray300, fontSize: 10 }}>{lowDataCount}</Text>
                     </View>
                 </View>
             </View>
