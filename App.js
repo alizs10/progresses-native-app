@@ -18,6 +18,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Menu from './components/Home/Menu/Menu';
 import SettingsScreen from './screens/SettingsScreen';
 import AboutScreen from './screens/AboutScreen';
+import CreateLabelScreen from './screens/CreateLabelScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -80,6 +81,11 @@ function MyStack() {
           component={ViewDataScreen}
           options={{ title: 'View Data' }}
         />
+        <Stack.Screen
+          name="CreateLabel"
+          component={CreateLabelScreen}
+          options={{ title: 'Create New Label' }}
+        />
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' }} />
         <Stack.Screen name="Goals" component={GoalsScreen} options={{ title: 'Goals' }} />
         <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
@@ -107,7 +113,7 @@ export default function App() {
           drawerContent={(props) => <Menu {...props} />}
         >
           <Drawer.Screen name="HomeWithDrawer" component={MyStack} />
-          {/* <Drawer.Screen name="Article" component={Article} /> */}
+
         </Drawer.Navigator>
       </NavigationContainer>
       <StatusBar
