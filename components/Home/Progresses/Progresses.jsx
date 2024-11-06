@@ -35,7 +35,7 @@ export default function Progresses() {
 
     let showData = searchMode ? searchResults : data;
 
-    showData = showData.filter(prg => (prg.deletedAt === null && prg.label === activeLabel))
+    showData = showData.filter(prg => (prg.deletedAt === null && (prg.label === activeLabel || activeLabel === 0)))
 
     if (currentRouteName === 'FinishedProgresses') {
         showData = showData.filter(d => d.type === 0 && isProgressCompleted(d))

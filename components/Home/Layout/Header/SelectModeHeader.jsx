@@ -7,8 +7,8 @@ import { useDataStore } from '../../../../store/data-store';
 import { useLabelStore } from '../../../../store/label-store';
 export default function SelectModeHeader() {
 
-    const { selectedData, selectModeDataType, closeSelectMode } = useAppStore(state => state)
-    const { data, groupPin, groupUnpin, groupDelete: groupDeleteData } = useDataStore(state => state)
+    const { selectedData, selectModeDataType, closeSelectMode, activeLabel, selectLabel } = useAppStore(state => state)
+    const { data, groupPin, groupUnpin, groupDelete: groupDeleteData, groupDeleteDataLabel } = useDataStore(state => state)
     const { groupDelete: groupDeleteLabels } = useLabelStore(state => state)
 
     const selectedDataList = data.filter(d => selectedData.includes(d.id))
@@ -29,7 +29,18 @@ export default function SelectModeHeader() {
 
     function handleDeleteButton() {
 
-        selectModeDataType === 0 ? groupDeleteData(selectedData) : groupDeleteLabels(selectedData)
+        if (selectModeDataType === 0) {
+            groupDeleteData(selectedData)
+        } else {
+            groupDeleteDataLabel(selectedData)
+
+            if (selectedData.includes(activeLabel)) {
+                selectLabel(0)
+            }
+
+            groupDeleteLabels(selectedData)
+        }
+
         closeSelectMode()
     }
 

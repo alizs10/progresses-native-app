@@ -121,4 +121,17 @@ export const useDataStore = create((set) => ({
         return { data: [...state.data] }
     }),
 
+    groupDeleteDataLabel: (labelList) => set((state) => {
+
+        let dataList = state.data.filter(d => labelList.includes(d.label))
+
+        for (let key in dataList) {
+            let id = dataList[key].id
+            let dataIndex = state.data.findIndex(d => d.id === id)
+            let selectedData = state.data[dataIndex]
+            selectedData.label = 0;
+        }
+
+        return { data: [...state.data] }
+    })
 }))
