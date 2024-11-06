@@ -5,6 +5,7 @@ import Progresses from '../components/Home/Progresses/Progresses'
 import Labels from '../components/Home/Layout/Labels/Labels'
 import { useAppStore } from '../store/app-store'
 import SelectModeHeader from '../components/Home/Layout/Header/SelectModeHeader'
+import { DataSelectModeProvider } from '../context/DataSelectModeContext'
 
 export default function HomeScreen() {
 
@@ -41,7 +42,9 @@ export default function HomeScreen() {
 
                 <Labels />
 
-                <Progresses />
+                <DataSelectModeProvider>
+                    <Progresses />
+                </DataSelectModeProvider>
 
             </ScrollView>
         </View>

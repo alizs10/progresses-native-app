@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import Colors from '../../../../consts/Colors'
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import { useLabelStore } from '../../../../store/label-store';
 import { useDataStore } from '../../../../store/data-store';
 import { useNavigation } from '@react-navigation/native';
 import { useAppStore } from '../../../../store/app-store';
+import { DataSelectModeContext } from '../../../../context/DataSelectModeContext';
 
 export default function Record({ data }) {
 
@@ -129,24 +130,24 @@ export default function Record({ data }) {
 
     const navigation = useNavigation()
 
-    const { selectedData, selectData, selectMode, unselectData } = useAppStore(state => state)
     const { addRecordValue } = useDataStore(state => state)
 
     function handleAddValue() {
         addRecordValue(data.id)
     }
 
+
+    const { selectedData } = useAppStore(state => state)
+    const { handlePressData, handleLongPressData, dataSelectMode } = useContext(DataSelectModeContext);
+
     function handlePress() {
-        if (selectMode) {
-            selectedData.includes(data.id) ? unselectData(data) : selectData(data)
-            return
-        }
-        navigation.navigate('ViewData', { data: data })
+        handlePressData(data.id, () => {
+            navigation.navigate('ViewData', { data: data })
+        })
     }
 
     function handleLongPress() {
-        if (selectMode) return
-        selectData(data)
+        handleLongPressData(data.id)
     }
 
 
@@ -154,7 +155,7 @@ export default function Record({ data }) {
         <Pressable
             onPress={handlePress}
             onLongPress={handleLongPress}
-            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: selectedData.includes(data.id) ? Colors.primary : theme.border, marginBottom: selectedData.includes(data.id) ? 8 : 4 }]}>
+            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: dataSelectMode && selectedData.includes(data.id) ? Colors.primary : theme.border, marginBottom: dataSelectMode && selectedData.includes(data.id) ? 8 : 4 }]}>
             <View style={styles.topContainer}>
                 <View style={styles.flexRow}>
                     <MaterialCommunityIcons name="star-shooting" size={22} color={theme.title} />

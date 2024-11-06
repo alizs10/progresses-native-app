@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import Colors from '../../../../consts/Colors'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,6 +10,7 @@ import { useDataStore } from '../../../../store/data-store';
 import { swipeConfig } from '../../../../lib/rn-swipe-gestures';
 import { useNavigation } from '@react-navigation/native';
 import { useAppStore } from '../../../../store/app-store';
+import { DataSelectModeContext } from '../../../../context/DataSelectModeContext';
 
 export default function Progress({ data }) {
 
@@ -146,28 +147,27 @@ export default function Progress({ data }) {
 
     const navigation = useNavigation()
 
+    const { selectedData } = useAppStore(state => state)
 
-    const { selectedData, selectData, selectMode, unselectData } = useAppStore(state => state)
+    const { handlePressData, handleLongPressData, dataSelectMode } = useContext(DataSelectModeContext);
 
     function handlePress() {
-        if (selectMode) {
-            selectedData.includes(data.id) ? unselectData(data) : selectData(data)
-            return
-        }
-        navigation.navigate('ViewData', { data: data })
+        handlePressData(data.id, () => {
+            navigation.navigate('ViewData', { data: data })
+        })
     }
 
     function handleLongPress() {
-        if (selectMode) return
-        selectData(data)
+        handleLongPressData(data.id)
     }
+
 
     return (
         <GestureRecognizer
             config={swipeConfig}
             onSwipeRight={(state) => onSwipeRight()}
             onSwipeLeft={onSwipeLeft}
-            style={[styles.container, { backgroundColor: theme.progressBg, borderColor: selectedData.includes(data.id) ? Colors.primary : theme.border, marginBottom: selectedData.includes(data.id) ? 8 : 4 }]}>
+            style={[styles.container, { backgroundColor: theme.progressBg, borderColor: dataSelectMode && selectedData.includes(data.id) ? Colors.primary : theme.border, marginBottom: dataSelectMode && selectedData.includes(data.id) ? 8 : 4 }]}>
             <Pressable
                 style={{ flex: 1 }}
                 onPress={handlePress}

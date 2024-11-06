@@ -4,13 +4,15 @@ import Colors from '../../../../consts/Colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useAppStore } from '../../../../store/app-store';
 import { useDataStore } from '../../../../store/data-store';
+import { useLabelStore } from '../../../../store/label-store';
 export default function SelectModeHeader() {
 
-    const { selectedData, closeSelectMode } = useAppStore(state => state)
-    const { data, groupPin, groupUnpin, groupDelete } = useDataStore(state => state)
+    const { selectedData, selectModeDataType, closeSelectMode } = useAppStore(state => state)
+    const { data, groupPin, groupUnpin, groupDelete: groupDeleteData } = useDataStore(state => state)
+    const { groupDelete: groupDeleteLabels } = useLabelStore(state => state)
 
     const selectedDataList = data.filter(d => selectedData.includes(d.id))
-    const hasUnpinned = selectedDataList.some(sd => !sd.isPinned)
+    const hasUnpinned = selectModeDataType === 0 && selectedDataList.some(sd => !sd.isPinned)
 
     function handleClose() {
         closeSelectMode()
@@ -27,7 +29,7 @@ export default function SelectModeHeader() {
 
     function handleDeleteButton() {
 
-        groupDelete(selectedData)
+        selectModeDataType === 0 ? groupDeleteData(selectedData) : groupDeleteLabels(selectedData)
         closeSelectMode()
     }
 
@@ -44,14 +46,16 @@ export default function SelectModeHeader() {
                 </View>
 
                 <View style={[styles.flexRow, { flex: 1, justifyContent: 'flex-end' }]}>
-                    <Pressable onPress={handlePinButton}>
-                        {/* <Feather name="pin" size={24} color={Colors.yellow200} /> */}
-                        {hasUnpinned ? (
-                            <MaterialCommunityIcons name="pin-outline" size={24} color="white" />
-                        ) : (
-                            <MaterialCommunityIcons name="pin" size={24} color="white" />
-                        )}
-                    </Pressable>
+                    {selectModeDataType === 0 && (
+                        <Pressable onPress={handlePinButton}>
+                            {/* <Feather name="pin" size={24} color={Colors.yellow200} /> */}
+                            {hasUnpinned ? (
+                                <MaterialCommunityIcons name="pin-outline" size={24} color="white" />
+                            ) : (
+                                <MaterialCommunityIcons name="pin" size={24} color="white" />
+                            )}
+                        </Pressable>
+                    )}
                     {selectedData.length === 1 && (
                         <Pressable onPress={() => { }}>
                             <MaterialCommunityIcons name="pencil" size={24} color="white" />

@@ -1,5 +1,5 @@
 import { View, StyleSheet, ScrollView, Pressable } from 'react-native';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Label from './Label';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLabelStore } from '../../../../store/label-store';
@@ -15,6 +15,13 @@ export default function Labels() {
         navigator.navigate('CreateLabel')
     }
 
+    const scrollViewRef = useRef(null);
+    useEffect(() => {
+        // Scroll to the beginning when data changes
+        if (scrollViewRef.current) {
+            scrollViewRef.current.scrollTo({ x: 0, animated: true });
+        }
+    }, [labels]);
     return (
         <View style={styles.container}>
 
@@ -23,6 +30,7 @@ export default function Labels() {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.scrollView}
                 decelerationRate={'fast'}
+                ref={scrollViewRef}
             >
 
                 <Pressable
@@ -30,6 +38,7 @@ export default function Labels() {
                     style={styles.plusButton}>
                     <MaterialCommunityIcons name="plus" size={18} color="white" />
                 </Pressable>
+
                 <Label key={'all'} name={'All'} labelId={0} />
 
                 {labels.map(label => (

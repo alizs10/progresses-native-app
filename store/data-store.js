@@ -80,7 +80,6 @@ export const useDataStore = create((set) => ({
         for (let key in dataList) {
 
             let id = dataList[key]
-            console.log(id)
             let dataIndex = state.data.findIndex(d => d.id === id)
             let pinData = state.data[dataIndex]
             pinData.isPinned = true

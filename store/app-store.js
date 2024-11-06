@@ -26,6 +26,8 @@ export const useAppStore = create((set) => ({
     ],
 
     selectMode: false,
+    selectModeDataType: 0, // 0 means progresses or records, 1 mean labels
+    setSelectModeDataType: (dataType) => set(() => ({ selectModeDataType: dataType })),
     selectedData: [],
 
     closeSelectMode: () => set(() => ({ selectMode: false, selectedData: [] })),

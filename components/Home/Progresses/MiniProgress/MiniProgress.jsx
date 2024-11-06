@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import Colors from '../../../../consts/Colors'
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,6 +10,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { swipeConfig } from '../../../../lib/rn-swipe-gestures';
 import { useNavigation } from '@react-navigation/native';
 import { useAppStore } from '../../../../store/app-store';
+import { DataSelectModeContext } from '../../../../context/DataSelectModeContext';
 
 export default function MiniProgress({ data }) {
 
@@ -148,19 +149,17 @@ export default function MiniProgress({ data }) {
 
     const navigation = useNavigation()
 
-    const { selectedData, selectData, selectMode, unselectData } = useAppStore(state => state)
+    const { selectedData } = useAppStore(state => state)
+    const { handlePressData, handleLongPressData, dataSelectMode } = useContext(DataSelectModeContext);
 
     function handlePress() {
-        if (selectMode) {
-            selectedData.includes(data.id) ? unselectData(data) : selectData(data)
-            return
-        }
-        navigation.navigate('ViewData', { data: data })
+        handlePressData(data.id, () => {
+            navigation.navigate('ViewData', { data: data })
+        })
     }
 
     function handleLongPress() {
-        if (selectMode) return
-        selectData(data)
+        handleLongPressData(data.id)
     }
 
 
@@ -169,7 +168,7 @@ export default function MiniProgress({ data }) {
             config={swipeConfig}
             onSwipeRight={onSwipeRight}
             onSwipeLeft={onSwipeLeft}
-            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: selectedData.includes(data.id) ? Colors.primary : theme.border }]}>
+            style={[styles.container, { backgroundColor: theme.progressBgFill, borderColor: dataSelectMode && selectedData.includes(data.id) ? Colors.primary : theme.border }]}>
 
             <Pressable
                 style={{ flex: 1 }}

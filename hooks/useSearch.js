@@ -11,8 +11,6 @@ export default function useSearch(handleSearch) {
             handleSearch(searchStr);
         }, 1000);
 
-        console.log('timer')
-
         return () => clearTimeout(timer);
     }, [searchStr]);
 
