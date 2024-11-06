@@ -7,6 +7,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
+import { isProgressCompleted } from '../../../helpers/data-helper';
 
 export default function Menu() {
 
@@ -22,6 +23,11 @@ export default function Menu() {
     let showData = searchMode ? searchResults : data;
 
     showData = showData.filter(prg => prg.deletedAt === null)
+
+    let inProgressCount = showData.filter(d => (d.type === 0 && !isProgressCompleted(d))).length;
+    let completedCount = showData.filter(d => (d.type === 0 && isProgressCompleted(d))).length;
+
+    let recordsCount = showData.filter(d => [1, 2].includes(d.type)).length;
 
     let highDataCount = showData.filter(item => item.importance === 2).length
     let mediumDataCount = showData.filter(item => item.importance === 1).length
@@ -43,6 +49,42 @@ export default function Menu() {
                 </View>
             </Pressable>
 
+            <View style={styles.menu}>
+                <Text style={styles.menuTitle}>Data Counts</Text>
+
+                <View style={styles.flexBetween}>
+
+                    <View style={[styles.flexRow, { gap: 12 }]}>
+                        <MaterialCommunityIcons name="progress-clock" size={18} color={Colors.gray300} />
+                        <Text style={styles.importanceLabel}>In progress</Text>
+                    </View>
+
+                    <View style={styles.priorityCount}>
+                        <Text style={{ color: Colors.gray300, fontSize: 10 }}>{inProgressCount}</Text>
+                    </View>
+                </View>
+                <View style={styles.flexBetween}>
+
+                    <View style={[styles.flexRow, { gap: 12 }]}>
+                        <MaterialCommunityIcons name="progress-check" size={18} color={Colors.gray300} />
+                        <Text style={styles.importanceLabel}>Completed</Text>
+                    </View>
+
+                    <View style={styles.priorityCount}>
+                        <Text style={{ color: Colors.gray300, fontSize: 10 }}>{completedCount}</Text>
+                    </View>
+                </View>
+                <View style={styles.flexBetween}>
+                    <View style={[styles.flexRow, { gap: 12 }]}>
+                        <MaterialCommunityIcons name="star-shooting-outline" size={18} color={Colors.gray300} />
+                        <Text style={styles.importanceLabel}>Records</Text>
+                    </View>
+                    <View style={styles.priorityCount}>
+                        <Text style={{ color: Colors.gray300, fontSize: 10 }}>{recordsCount}</Text>
+                    </View>
+                </View>
+
+            </View>
             <View style={styles.menu}>
                 <Text style={styles.menuTitle}>Priorities</Text>
 
@@ -135,14 +177,14 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: 'white',
         fontWeight: 'bold',
-        paddingVertical: 12,
+        paddingVertical: 20,
         paddingHorizontal: 20
     }
     ,
     menu: {
         gap: 18,
         borderTopWidth: 1,
-        borderColor: Colors.gray700,
+        borderColor: Colors.gray900,
         padding: 20
     },
     li: {
