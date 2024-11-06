@@ -86,7 +86,7 @@ export default function Progresses() {
     return (
         <View style={styles.container}>
             <View style={[styles.flexSpaceBetween, { marginBottom: 12 }]}>
-                <ProgressesTitle title={"All"} count={data.length} />
+                <ProgressesTitle title={"All"} count={showData.length} />
                 <Pressable onPress={toggleDataViewMode}>
                     <View style={{ padding: 5 }}>
                         {dataViewMode === 0 ? (
