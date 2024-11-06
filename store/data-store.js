@@ -7,6 +7,15 @@ export const useDataStore = create((set) => ({
     data: DATA,
     addData: (progress) => set((state) => ({ data: [...state.data, progress] })),
 
+    searchResults: [],
+    searchData: (searchStr) => set((state) => {
+
+        const results = state.data.filter(d => d.name.toLowerCase().includes(searchStr.toLowerCase()))
+
+        return { searchResults: results }
+    }),
+
+
     stepForward: (progressId, stepId) => set((state) => {
         const progress = state.data.find(progress => progress.id === progressId)
         const step = progress.steps.find(step => step.id === stepId)
@@ -95,7 +104,6 @@ export const useDataStore = create((set) => ({
     groupDelete: (dataList) => set((state) => {
 
         for (let key in dataList) {
-
             let id = dataList[key]
             let dataIndex = state.data.findIndex(d => d.id === id)
             let pinData = state.data[dataIndex]

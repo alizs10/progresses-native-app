@@ -40,4 +40,9 @@ export const useAppStore = create((set) => ({
         return { selectedData: filteredSelectedData, selectMode }
     }),
 
+    searchMode: false,
+    searchStr: '',
+    setSearchStr: (str) => set(() => ({ searchStr: str })),
+    setSearchMode: (mode) => set(() => ({ searchMode: mode })),
+
 }))

@@ -29,28 +29,31 @@ export default function Progresses() {
         setDataViewMode(prevState => prevState === 0 ? 1 : 0)
     }
 
-    let activeLabel = useAppStore((state) => state.activeLabel)
+    let { activeLabel, searchMode } = useAppStore((state) => state)
 
-    let data = useDataStore((state) => state.data)
-    data = data.filter(prg => (prg.deletedAt === null && prg.label === activeLabel))
+    let { data, searchResults } = useDataStore((state) => state)
+
+    let showData = searchMode ? searchResults : data;
+
+    showData = showData.filter(prg => (prg.deletedAt === null && prg.label === activeLabel))
 
     if (currentRouteName === 'FinishedProgresses') {
-        data = data.filter(d => d.type === 0 && isProgressCompleted(d))
+        showData = showData.filter(d => d.type === 0 && isProgressCompleted(d))
     }
     if (currentRouteName === 'UnfinishedProgresses') {
-        data = data.filter(d => d.type === 0 && !isProgressCompleted(d))
+        showData = showData.filter(d => d.type === 0 && !isProgressCompleted(d))
     }
     if (currentRouteName === 'Records') {
-        data = data.filter(d => [1, 2].includes(d.type))
+        showData = showData.filter(d => [1, 2].includes(d.type))
     }
 
-    let pinnedData = data.filter(d => d.isPinned)
-    let otherData = data.filter(d => !d.isPinned)
+    let pinnedData = showData.filter(d => d.isPinned)
+    let otherData = showData.filter(d => !d.isPinned)
     pinnedData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     otherData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
 
-    function showDataComp(data) {
+    function showDataComp(dataObj) {
         // 0 => progress
         // 1 => record
         // 2 => record manual
@@ -59,21 +62,21 @@ export default function Progresses() {
         // 5 => mini record manual
         let comp;
 
-        switch (data.type) {
+        switch (dataObj.type) {
             case 0:
-                comp = dataViewMode === 0 ? <Progress data={data} /> : <MiniProgress data={data} />
+                comp = dataViewMode === 0 ? <Progress data={dataObj} /> : <MiniProgress data={dataObj} />
                 break;
 
             case 1:
-                comp = dataViewMode === 0 ? <Record data={data} /> : <MiniRecord data={data} />
+                comp = dataViewMode === 0 ? <Record data={dataObj} /> : <MiniRecord data={dataObj} />
                 break;
 
             case 2:
-                comp = dataViewMode === 0 ? <RecordManual data={data} /> : <MiniRecordManual data={data} />
+                comp = dataViewMode === 0 ? <RecordManual data={dataObj} /> : <MiniRecordManual data={dataObj} />
                 break;
 
             default:
-                comp = dataViewMode === 0 ? <Progress data={data} /> : <MiniProgress data={data} />
+                comp = dataViewMode === 0 ? <Progress data={dataObj} /> : <MiniProgress data={dataObj} />
                 break;
         }
 
