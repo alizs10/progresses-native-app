@@ -7,6 +7,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Colors from '../../consts/Colors';
 import moment from 'moment';
 import { useDataStore } from '../../store/data-store';
+import Button from '../Common/Button';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function Record({ record }) {
@@ -18,7 +20,7 @@ export default function Record({ record }) {
     let label = labels.find(label => label.id === record.label)
 
 
-    const { addRecordValue, subRecordValue } = useDataStore(state => state)
+    const { addRecordValue, subRecordValue, deleteOne } = useDataStore(state => state)
 
     function onUp() {
         addRecordValue(record.id)
@@ -28,6 +30,13 @@ export default function Record({ record }) {
     }
 
     let disabled = record.value === 0 ? true : false;
+
+    const navigator = useNavigation()
+
+    function handleDelete() {
+        deleteOne(record.id)
+        navigator.goBack()
+    }
 
     return (
         <View style={styles.container}>
@@ -76,6 +85,15 @@ export default function Record({ record }) {
                 </Text>
                 <Text style={[styles.dateText, { color: ColorSchemes[record.theme].textColor }]}>{moment(record.createdAt).fromNow()}</Text>
             </View>
+
+            <Button
+                text={'Move to trash'}
+                textColor={Colors.red700}
+                textSize={16}
+                bgColor={Colors.red100}
+                icon={<MaterialCommunityIcons name='trash-can' color={Colors.red700} size={22} />}
+                onPress={handleDelete}
+            />
 
         </View>
     )

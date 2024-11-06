@@ -8,6 +8,8 @@ import Colors from '../../consts/Colors';
 import moment from 'moment';
 import { useDataStore } from '../../store/data-store';
 import { LineChart } from 'react-native-chart-kit';
+import Button from '../Common/Button';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function RecordManual({ record }) {
@@ -38,7 +40,7 @@ export default function RecordManual({ record }) {
     let label = labels.find(label => label.id === record.label)
 
 
-    const { addManualRecordValue, subManualRecordValue, addManualRecordStep, subManualRecordStep } = useDataStore(state => state)
+    const { addManualRecordValue, subManualRecordValue, addManualRecordStep, subManualRecordStep, deleteOne } = useDataStore(state => state)
 
     function onUp() {
         addManualRecordValue(record.id)
@@ -54,10 +56,15 @@ export default function RecordManual({ record }) {
         subManualRecordStep(record.id)
     }
 
-
-
     let disabled = record.value === 0 ? true : false;
     let stepCounterDisabled = record.step === 0 ? true : false;
+
+    const navigator = useNavigation()
+
+    function handleDelete() {
+        deleteOne(record.id)
+        navigator.goBack()
+    }
 
     return (
         <View style={styles.container}>
@@ -152,6 +159,14 @@ export default function RecordManual({ record }) {
                 </Text>
                 <Text style={[styles.dateText, { color: ColorSchemes[record.theme].textColor }]}>{moment(record.createdAt).fromNow()}</Text>
             </View>
+
+            <Button
+                text={'Move to trash'}
+                textColor={Colors.red700}
+                textSize={16}
+                bgColor={Colors.red100} icon={<MaterialCommunityIcons name='trash-can' color={Colors.red700} size={22} />}
+                onPress={handleDelete}
+            />
 
         </View>
     )

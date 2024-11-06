@@ -101,6 +101,15 @@ export const useDataStore = create((set) => ({
         return { data: [...state.data] }
     }),
 
+    deleteOne: (dataId) => set((state) => {
+
+        let dataIndex = state.data.findIndex(d => d.id === dataId)
+        let deletableData = state.data[dataIndex]
+        deletableData.deletedAt = Date.now()
+
+        return { data: [...state.data] }
+    }),
+
     groupDelete: (dataList) => set((state) => {
 
         for (let key in dataList) {

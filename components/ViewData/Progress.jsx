@@ -7,6 +7,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Timeline from '../Common/Timeline/Timeline';
 import moment from 'moment';
+import Button from '../Common/Button';
+import { useNavigation } from '@react-navigation/native';
+import { useDataStore } from '../../store/data-store';
 
 export default function Progress({ progress }) {
 
@@ -22,6 +25,14 @@ export default function Progress({ progress }) {
     const labels = useLabelStore(state => state.labels)
     let label = labels.find(label => label.id === progress.label)
 
+    const navigator = useNavigation()
+
+    const { deleteOne } = useDataStore(state => state)
+
+    function handleDelete() {
+        deleteOne(progress.id)
+        navigator.goBack()
+    }
 
     return (
         <View style={styles.container}>
@@ -102,6 +113,16 @@ export default function Progress({ progress }) {
                 </Text>
                 <Text style={[styles.dateText, { color: ColorSchemes[progress.theme].textColor }]}>{moment(progress.createdAt).fromNow()}</Text>
             </View>
+
+
+            <Button
+                text={'Move to trash'}
+                textColor={Colors.red700}
+                textSize={16}
+                bgColor={Colors.red100}
+                icon={<MaterialCommunityIcons name='trash-can' color={Colors.red700} size={22} />}
+                onPress={handleDelete}
+            />
 
         </View>
     )
