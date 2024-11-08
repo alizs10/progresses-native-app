@@ -19,6 +19,7 @@ import Menu from './components/Home/Menu/Menu';
 import SettingsScreen from './screens/SettingsScreen';
 import AboutScreen from './screens/AboutScreen';
 import CreateLabelScreen from './screens/CreateLabelScreen';
+import EditLabelScreen from './screens/EditLabelScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -85,6 +86,11 @@ function MyStack() {
           name="CreateLabel"
           component={CreateLabelScreen}
           options={{ title: 'Create New Label' }}
+        />
+        <Stack.Screen
+          name="EditLabel"
+          component={EditLabelScreen}
+          options={{ title: 'Edit Label' }}
         />
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' }} />
         <Stack.Screen name="Goals" component={GoalsScreen} options={{ title: 'Goals' }} />

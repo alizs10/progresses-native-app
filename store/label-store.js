@@ -8,6 +8,8 @@ export const useLabelStore = create((set) => ({
     labels: LABELS,
     addLabel: (label) => set((state) => ({ labels: [...state.labels, label] })),
 
+    updateLabel: (labelId, updatedLabel) => set((state) => ({ labels: state.labels.map(label => label.id === labelId ? updatedLabel : label) })),
+
     deleteOne: (labelId) => set((state) => ({ labels: state.labels.filter(label => label.id !== labelId) })),
 
     groupDelete: (labelList) => set((state) => ({ labels: state.labels.filter(label => !labelList.includes(label.id)) })),

@@ -5,14 +5,18 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useAppStore } from '../../../../store/app-store';
 import { useDataStore } from '../../../../store/data-store';
 import { useLabelStore } from '../../../../store/label-store';
+import { useNavigation } from '@react-navigation/native';
 export default function SelectModeHeader() {
 
     const { selectedData, selectModeDataType, closeSelectMode, activeLabel, selectLabel } = useAppStore(state => state)
     const { data, groupPin, groupUnpin, groupDelete: groupDeleteData, groupDeleteDataLabel } = useDataStore(state => state)
-    const { groupDelete: groupDeleteLabels } = useLabelStore(state => state)
+    const { labels, groupDelete: groupDeleteLabels } = useLabelStore(state => state)
 
-    const selectedDataList = data.filter(d => selectedData.includes(d.id))
+    let chosenData = selectModeDataType === 0 ? data : labels;
+    const selectedDataList = chosenData.filter(d => selectedData.includes(d.id))
     const hasUnpinned = selectModeDataType === 0 && selectedDataList.some(sd => !sd.isPinned)
+
+    const navigation = useNavigation()
 
     function handleClose() {
         closeSelectMode()
@@ -44,6 +48,21 @@ export default function SelectModeHeader() {
         closeSelectMode()
     }
 
+    function handleEditButton() {
+
+        if (selectedDataList.length > 1) return;
+        let editable = selectedDataList[0]
+
+        if (selectModeDataType === 0) {
+            navigation.navigate('EditData', { data: editable })
+        } else {
+            navigation.navigate('EditLabel', { data: editable })
+        }
+
+
+        closeSelectMode()
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -68,7 +87,7 @@ export default function SelectModeHeader() {
                         </Pressable>
                     )}
                     {selectedData.length === 1 && (
-                        <Pressable onPress={() => { }}>
+                        <Pressable onPress={handleEditButton}>
                             <MaterialCommunityIcons name="pencil" size={24} color="white" />
                         </Pressable>
                     )}
