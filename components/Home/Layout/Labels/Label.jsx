@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import Colors from '../../../../consts/Colors'
 import { useAppStore } from '../../../../store/app-store'
+import { useDataStore } from '../../../../store/data-store'
 
 export default function Label({ labelId, name }) {
 
@@ -39,13 +40,14 @@ export default function Label({ labelId, name }) {
         selectData({ id: labelId })
     }
 
-    // isActive ? { backgroundColor: Colors.green600 } : {}, labelsSelectMode && selectedData.includes(labelId) ? { borderColor: Colors.primary } : {}
-
     let labelDynamicStyles = {
         backgroundColor: isActive ? Colors.green600 : Colors.gray900,
         borderColor: labelsSelectMode && selectedData.includes(labelId) ? Colors.primary : Colors.gray900,
         marginHorizontal: labelsSelectMode && selectedData.includes(labelId) ? 2 : 0,
     }
+
+    const { data } = useDataStore(state => state)
+    let count = data.filter(item => item.label === labelId).length
 
     return (
         <Pressable
@@ -54,6 +56,9 @@ export default function Label({ labelId, name }) {
             onLongPress={handleLongPress}
         >
             <Text style={styles.labelText}>{name}</Text>
+            {count > 0 && (
+                <Text style={styles.countText}>{'('}{count}{')'}</Text>
+            )}
         </Pressable>
     )
 }
@@ -68,6 +73,9 @@ const styles = StyleSheet.create({
         elevation: 1,
         borderWidth: 1,
         borderColor: Colors.green400,
+        flexDirection: 'row',
+        gap: 4,
+        alignItems: 'center'
     },
     labelText: {
         fontSize: 12,
@@ -76,6 +84,10 @@ const styles = StyleSheet.create({
     labelInSelectMode: {
         borderWidth: 1,
         borderColor: Colors.primary
+    },
+    countText: {
+        fontSize: 10,
+        color: 'white'
     }
 
 })
