@@ -109,8 +109,8 @@ export default function RecordManual({ record }) {
 
             <View style={[styles.valueContainer, styles.flexBetween, { backgroundColor: ColorSchemes[record.theme].infoBoxBg }]}>
 
-                <Pressable onPress={onUp} style={[styles.buttonContainer, { borderColor: ColorSchemes[record.theme].textColor }]}>
-                    <MaterialCommunityIcons name="plus" size={24} color={ColorSchemes[record.theme].textColor} />
+                <Pressable onPress={onDown} style={[styles.buttonContainer, disabled ? styles.disabledBorder : { borderColor: ColorSchemes[record.theme].textColor }]}>
+                    <MaterialCommunityIcons name="arrow-bottom-left" size={24} color={!disabled ? ColorSchemes[record.theme].textColor : Colors.gray600} />
                 </Pressable>
 
                 <View style={styles.valueInsideContainer}>
@@ -121,16 +121,18 @@ export default function RecordManual({ record }) {
                     <Text style={[styles.valueText, { color: ColorSchemes[record.theme].textColor }]}>{record.value}</Text>
                 </View>
 
-                <Pressable onPress={onDown} style={[styles.buttonContainer, disabled ? styles.disabledBorder : { borderColor: ColorSchemes[record.theme].textColor }]}>
-                    <MaterialCommunityIcons name="minus" size={24} color={!disabled ? ColorSchemes[record.theme].textColor : Colors.gray600} />
-
+                <Pressable onPress={onUp} style={[styles.buttonContainer, { borderColor: ColorSchemes[record.theme].textColor }]}>
+                    <MaterialCommunityIcons name="arrow-top-right" size={24} color={ColorSchemes[record.theme].textColor} />
                 </Pressable>
+
             </View>
             <View style={[styles.valueContainer, styles.flexBetween, { backgroundColor: ColorSchemes[record.theme].infoBoxBg }]}>
 
-                <Pressable onPress={onStepUp} style={[styles.buttonContainer, { borderColor: ColorSchemes[record.theme].textColor }]}>
-                    <MaterialCommunityIcons name="plus" size={24} color={ColorSchemes[record.theme].textColor} />
+                <Pressable onPress={onStepDown} style={[styles.buttonContainer, stepCounterDisabled ? styles.disabledBorder : { borderColor: ColorSchemes[record.theme].textColor }]}>
+                    <MaterialCommunityIcons name="minus" size={24} color={!stepCounterDisabled ? ColorSchemes[record.theme].textColor : Colors.gray600} />
+
                 </Pressable>
+
 
                 <View style={styles.valueInsideContainer}>
                     <View style={styles.valueLabelContainer}>
@@ -140,9 +142,8 @@ export default function RecordManual({ record }) {
                     <Text style={[styles.valueText, { color: ColorSchemes[record.theme].textColor }]}>{record.step}</Text>
                 </View>
 
-                <Pressable onPress={onStepDown} style={[styles.buttonContainer, stepCounterDisabled ? styles.disabledBorder : { borderColor: ColorSchemes[record.theme].textColor }]}>
-                    <MaterialCommunityIcons name="minus" size={24} color={!stepCounterDisabled ? ColorSchemes[record.theme].textColor : Colors.gray600} />
-
+                <Pressable onPress={onStepUp} style={[styles.buttonContainer, { borderColor: ColorSchemes[record.theme].textColor }]}>
+                    <MaterialCommunityIcons name="plus" size={24} color={ColorSchemes[record.theme].textColor} />
                 </Pressable>
             </View>
 

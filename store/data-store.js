@@ -7,6 +7,8 @@ export const useDataStore = create((set) => ({
     data: DATA,
     addData: (progress) => set((state) => ({ data: [...state.data, progress] })),
 
+    updateData: (dataId, updatedData) => set((state) => ({ data: state.data.map(d => d.id === dataId ? updatedData : d) })),
+
     searchResults: [],
     searchData: (searchStr) => set((state) => {
 

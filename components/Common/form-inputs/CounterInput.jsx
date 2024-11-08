@@ -5,9 +5,9 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function CounterInput({ label, value, onUp, onDown, disabled }) {
     return (
         <View style={styles.container}>
+            <Pressable onPress={onDown} style={[styles.buttonContainer, disabled ? styles.disabledBorder : {}]}>
+                <MaterialCommunityIcons name="minus" size={24} color={!disabled ? Colors.gray300 : Colors.gray600} />
 
-            <Pressable onPress={onUp} style={[styles.buttonContainer, disabled ? styles.disabledBorder : {}]}>
-                <MaterialCommunityIcons name="plus" size={24} color={!disabled ? Colors.gray300 : Colors.gray600} />
             </Pressable>
             <View style={styles.inputContainer}>
                 <View style={styles.labelContainer}>
@@ -16,9 +16,8 @@ export default function CounterInput({ label, value, onUp, onDown, disabled }) {
 
                 <Text style={styles.value}>{value}</Text>
             </View>
-            <Pressable onPress={onDown} style={[styles.buttonContainer, disabled ? styles.disabledBorder : {}]}>
-                <MaterialCommunityIcons name="minus" size={24} color={!disabled ? Colors.gray300 : Colors.gray600} />
-
+            <Pressable onPress={onUp} style={[styles.buttonContainer, disabled ? styles.disabledBorder : {}]}>
+                <MaterialCommunityIcons name="plus" size={24} color={!disabled ? Colors.gray300 : Colors.gray600} />
             </Pressable>
 
         </View>

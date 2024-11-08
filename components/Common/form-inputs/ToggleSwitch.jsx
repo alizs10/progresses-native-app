@@ -4,21 +4,23 @@ import Colors from "../../../consts/Colors";
 
 export default function ToggleSwitch({ value, options, onChange }) {
 
+    // value is 0 or 1
+
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
-                <Pressable style={styles.switchButtonOuterContainer} onPress={() => onChange(options[0])}>
+                <Pressable style={styles.switchButtonOuterContainer} onPress={() => onChange(0)}>
                     <View style={styles.switchButtonContainer}>
-                        <Text style={[styles.switchButtonText, { color: value === options[0] ? 'black' : 'white' }]}>Progress</Text>
+                        <Text style={[styles.switchButtonText, { color: value === 0 ? 'black' : 'white' }]}>Progress</Text>
                     </View>
                 </Pressable>
                 <Pressable style={styles.switchButtonOuterContainer} onPress={() => onChange(options[1])}>
                     <View style={styles.switchButtonContainer}>
-                        <Text style={[styles.switchButtonText, { color: value === 'record' ? 'black' : 'white' }]}>Record</Text>
+                        <Text style={[styles.switchButtonText, { color: value === 0 ? 'white' : 'black' }]}>Record</Text>
                     </View>
                 </Pressable>
 
-                <View style={[styles.active, { left: value === options[0] ? 0 : "50%" }]}>
+                <View style={[styles.active, { left: value === 0 ? 0 : "50%" }]}>
 
                 </View>
             </View>

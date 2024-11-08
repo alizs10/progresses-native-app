@@ -6,11 +6,11 @@ export const progressSchema = z.object({
     importance: z.number({ message: "Importance is required" }),
     isStepsDefined: z.boolean(),
     steps: z.array(z.object({
-        id: z.number(),
+        id: z.string(),
         value: z.string()
     })).min(1, { message: "Steps are required" }),
     theme: z.enum(["white", "yellow", "blue", "turquoise", "red", "violet"]),
     isDeadlineSet: z.boolean(),
-    deadline: z.date({ message: "Deadline is required" }),
+    deadline: z.number({ message: "Deadline is required" }),
     isPinned: z.boolean(),
 })

@@ -1,20 +1,25 @@
-import { Dimensions, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import Progress from '../components/ViewData/Progress';
-import EditDataButton from '../components/Common/header/EditDataButton';
 import { ColorSchemes } from '../consts/ColorSchemes';
 import Record from '../components/ViewData/Record';
 import RecordManual from '../components/ViewData/RecordManual';
+import EditButton from '../components/Common/header/EditButton';
 
 export default function CreateDataScreen({ route, navigation }) {
 
     const { data } = route.params;
 
+    function handleEdit() {
+        navigation.navigate('EditData', { data })
+    }
+
+
     useLayoutEffect(() => {
 
         navigation.setOptions({
             headerRight: () => (
-                <EditDataButton />
+                <EditButton onPress={handleEdit} />
             ),
             title: `View ${data.type === 0 ? 'Progress' : 'Record'}`,
             headerStyle: {

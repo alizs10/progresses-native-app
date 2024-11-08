@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Colors from '../../../consts/Colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-export default function EditDataButton({ onPress }) {
+export default function EditButton({ onPress }) {
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>

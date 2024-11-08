@@ -20,6 +20,7 @@ import SettingsScreen from './screens/SettingsScreen';
 import AboutScreen from './screens/AboutScreen';
 import CreateLabelScreen from './screens/CreateLabelScreen';
 import EditLabelScreen from './screens/EditLabelScreen';
+import EditDataScreen from './screens/EditDataScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -76,6 +77,11 @@ function MyStack() {
           name="CreateData"
           component={CreateDataScreen}
           options={{ title: 'Create New Data' }}
+        />
+        <Stack.Screen
+          name="EditData"
+          component={EditDataScreen}
+          options={{ title: 'Edit Data' }}
         />
         <Stack.Screen
           name="ViewData"
