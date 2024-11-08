@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import Input from '../components/Common/form-inputs/Input'
 import Colors from '../consts/Colors'
-import CreateNewLabelButton from '../components/Common/header/CreateNewLabelButton';
+import CreateButton from '../components/Common/header/CreateButton';
 import { useLabelStore } from '../store/label-store';
 import { isLabelExists } from '../helpers/data-helper';
 import Label from '../database/models/Label';
@@ -12,7 +12,7 @@ export default function CreateLabelScreen({ navigation }) {
 
         navigation.setOptions({
             headerRight: () => (
-                <CreateNewLabelButton onPress={handleCreateNewLabel} />
+                <CreateButton onPress={handleCreateNewLabel} />
             )
         })
 
@@ -23,7 +23,7 @@ export default function CreateLabelScreen({ navigation }) {
 
         navigation.setOptions({
             headerRight: () => (
-                <CreateNewLabelButton onPress={handleCreateNewLabel} />
+                <CreateButton onPress={handleCreateNewLabel} />
             )
         })
 
