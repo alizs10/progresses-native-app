@@ -1,7 +1,6 @@
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native'
-import React from 'react'
-import Inputs from '../components/CreateData/Inputs'
-const screenHeight = Dimensions.get('window').height
+import { ScrollView, StyleSheet, View } from 'react-native'
+import FormData from '../components/Forms/DataForm';
+import { DataFormProvider } from '../context/DataFormContext';
 
 export default function CreateDataScreen({ navigation }) {
 
@@ -9,7 +8,9 @@ export default function CreateDataScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <Inputs navigation={navigation} />
+                <DataFormProvider>
+                    <FormData />
+                </DataFormProvider>
             </ScrollView>
         </View>
     )

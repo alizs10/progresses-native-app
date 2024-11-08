@@ -9,6 +9,9 @@ import { progressSchema } from "../database/validations/progress-validation";
 import { recordSchema } from "../database/validations/record-validation";
 import { zValidate } from "../helpers/validation-helper";
 import ProgressStep from "../database/models/ProgressStep";
+import Progress from "../database/models/Progress";
+import RecordManual from "../database/models/RecordManual";
+import Record from "../database/models/Record";
 
 
 export const DataFormContext = createContext({});
@@ -159,7 +162,7 @@ export function DataFormProvider({ children, mode, initState = null }) {
             return
         }
 
-        let dataInputsObj = dataType === 0 ? new Progress(dataInputs.name, dataInputs.isPinned, dataInputs.label, dataInputs.deadline, dataInputs.theme, dataInputs.importance, dataInputs.steps.map((step, index) => (new ProgressStep(step.value, false, index + 1)))) : !dataInputs.defineManualStep ? new Record(dataInputs.name, 0, dataInputs.isPinned, dataInputs.label, dataInputs.theme, dataInputs.importance) : new RecordManual(dataInputs.name, 0, [0], dataInputs.manualStep, dataInputs.isPinned, dataInputs.label, dataInputs.theme, dataInputs.importance)
+        let dataInputsObj = dataType === 0 ? new Progress(dataInputs.name, dataInputs.isPinned, dataInputs.label, dataInputs.deadline, dataInputs.theme, dataInputs.importance, dataInputs.steps.map((step, index) => (new ProgressStep(step.value, false, index + 1)))) : !dataInputs.defineManualStep ? new Record(dataInputs.name, 0, dataInputs.isPinned, dataInputs.label, dataInputs.theme, dataInputs.importance) : new RecordManual(dataInputs.name, [], dataInputs.manualStep, dataInputs.isPinned, dataInputs.label, dataInputs.theme, dataInputs.importance)
 
         addData(dataInputsObj)
         navigation.navigate('Home')

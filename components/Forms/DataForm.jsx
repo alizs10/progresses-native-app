@@ -49,18 +49,23 @@ export default function DataForm() {
 
     } = useContext(DataFormContext)
 
+
+    console.log(mode, dataType)
+
     return (
         <View style={styles.container}>
 
-            <ToggleSwitch
-                value={dataType === 2 ? 1 : dataType}
-                onChange={changeDataType}
-                options={['progress', 'record']}
-            />
+            {mode !== 'edit' && (
+                <ToggleSwitch
+                    value={dataType === 2 ? 1 : dataType}
+                    onChange={changeDataType}
+                    options={['progress', 'record']}
+                />
+            )}
 
             <Input
                 value={dataInputs.name}
-                label={`${dataType === 'progress' ? 'Progress' : 'Record'} name`}
+                label={`${dataType === 0 ? 'Progress' : 'Record'} name`}
                 onChange={val => setDataInputs(prevState => ({ ...prevState, name: val }))}
                 inputProps={{
                     placeholder: 'Name here',
@@ -84,7 +89,7 @@ export default function DataForm() {
                 />
             </View>
 
-            {dataType === 'progress' && (
+            {dataType === 0 && (
                 <CounterInput
                     label={'Steps'}
                     value={dataInputs.steps.length}
@@ -98,7 +103,7 @@ export default function DataForm() {
 
             <View style={styles.flexColumn}>
 
-                {dataType === 2 && (
+                {((mode !== 'edit' && [1, 2].includes(dataType)) || (mode === 'edit' && dataType === 2)) && (
                     <View style={styles.switchContainer}>
                         <Text style={styles.switchLabel}>Define Manual Step</Text>
                         <Switch
@@ -110,7 +115,7 @@ export default function DataForm() {
                     </View>
                 )}
 
-                {(dataType === 2 && dataInputs.defineManualStep) && (
+                {((mode !== 'edit' && [1, 2].includes(dataType) && dataInputs.defineManualStep) || (mode === 'edit' && dataType === 2 && dataInputs.defineManualStep)) && (
                     <CounterInput
                         label={'Step'}
                         value={dataInputs.manualStep}
@@ -120,7 +125,7 @@ export default function DataForm() {
                     />
                 )}
 
-                {dataType === 'progress' && (
+                {dataType === 0 && (
                     <View style={styles.switchContainer}>
                         <Text style={styles.switchLabel}>Set a deadline</Text>
                         <Switch
@@ -131,7 +136,7 @@ export default function DataForm() {
                         />
                     </View>
                 )}
-                {dataType === 'progress' && dataInputs.isDeadlineSet && (
+                {dataType === 0 && dataInputs.isDeadlineSet && (
                     <DatePicker
                         label={'Deadline'}
                         value={new Date(dataInputs.deadline)}
@@ -140,7 +145,7 @@ export default function DataForm() {
                     />
                 )}
 
-                {dataType === 'progress' && (
+                {dataType === 0 && (
                     <View style={styles.switchContainer}>
                         <Text style={styles.switchLabel}>Define Steps</Text>
                         <Switch
@@ -152,7 +157,7 @@ export default function DataForm() {
                     </View>
                 )}
 
-                {dataType === 'progress' && dataInputs.isStepsDefined && (
+                {dataType === 0 && dataInputs.isStepsDefined && (
                     <DynamicTextInputs
                         label={'Steps'}
                         onAddValue={handleAddStep}

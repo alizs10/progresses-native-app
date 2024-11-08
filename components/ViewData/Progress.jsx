@@ -84,7 +84,7 @@ export default function Progress({ progress }) {
 
                 <View style={styles.flexRow}>
                     <View style={[styles.stepsBoxContainer, { backgroundColor: ColorSchemes[progress.theme].bg }]}>
-                        <Text style={[styles.stepsBoxText, { color: progress.theme === 'yellow' ? 'white' : ColorSchemes[progress.theme].textColor }]}>{`${completedSteps.length} of ${steps.length} steps is completed`}</Text>
+                        <Text style={[styles.stepsBoxText, { color: progress.theme === 'yellow' ? 'white' : ColorSchemes[progress.theme].textColor }]}>{`${completedSteps.length} of ${steps.length} step${steps.length > 1 ? 's' : ''} ${steps.length > 1 ? 'are' : 'is'} completed`}</Text>
                     </View>
                     <Text style={[styles.stepsBoxText, { marginLeft: 'auto', color: ColorSchemes[progress.theme].textColor }]}>{steps.length - completedSteps.length} {`step${unCompletedSteps.length > 1 ? 's' : ''}`} left</Text>
                 </View>

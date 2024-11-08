@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import Colors from "../../../consts/Colors";
 
@@ -14,7 +13,7 @@ export default function ToggleSwitch({ value, options, onChange }) {
                         <Text style={[styles.switchButtonText, { color: value === 0 ? 'black' : 'white' }]}>Progress</Text>
                     </View>
                 </Pressable>
-                <Pressable style={styles.switchButtonOuterContainer} onPress={() => onChange(options[1])}>
+                <Pressable style={styles.switchButtonOuterContainer} onPress={() => onChange(1)}>
                     <View style={styles.switchButtonContainer}>
                         <Text style={[styles.switchButtonText, { color: value === 0 ? 'white' : 'black' }]}>Record</Text>
                     </View>
