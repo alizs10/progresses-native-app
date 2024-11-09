@@ -145,8 +145,20 @@ export const useDataStore = create((set) => ({
         return { data: [...state.data], prevDataString: newHistory }
     }),
 
-
     groupDelete: (dataList) => set((state) => ({ prevDataString: JSON.stringify(state.data), data: state.data.filter(d => !dataList.includes(d.id)) })),
+
+    restoreData: (dataList) => set((state) => {
+        const newHistory = JSON.stringify(state.data)
+
+        for (let key in dataList) {
+            let id = dataList[key]
+            let dataIndex = state.data.findIndex(d => d.id === id)
+            let restoredData = state.data[dataIndex]
+            restoredData.deletedAt = null
+        }
+
+        return { data: [...state.data], prevDataString: newHistory }
+    }),
 
     undo: () => set((state) => {
         if (state.prevDataString) {

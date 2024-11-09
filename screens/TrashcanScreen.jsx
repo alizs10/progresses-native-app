@@ -16,6 +16,7 @@ import RestoreButton from '../components/Common/header/RestoreButton';
 import { useAppStore } from '../store/app-store';
 import EmptyTrashButton from '../components/Common/header/EmptyTrashButton';
 import { HeaderBackButton } from '@react-navigation/elements';
+import useSnackbar from '../hooks/useSnackbar';
 
 function Header({ onDelete, onRestore }) {
 
@@ -31,10 +32,12 @@ function Header({ onDelete, onRestore }) {
 export default function TrashcanScreen({ navigation }) {
 
     let { selectMode, selectedData, closeSelectMode } = useAppStore((state) => state)
-    let { data, restoreData, groupDelete } = useDataStore((state) => state)
+    let { data, restoreData, groupDelete, undo: undoData } = useDataStore((state) => state)
 
     let deletedData = data.filter(d => d.deletedAt !== null)
     deletedData.sort((a, b) => new Date(b.deletedAt) - new Date(a.deletedAt));
+
+    const createSnackbar = useSnackbar()
 
     function showDataComp(dataObj) {
         // 0 => progress
@@ -74,41 +77,54 @@ export default function TrashcanScreen({ navigation }) {
     function handleRestoreData() {
         restoreData(selectedData)
         closeSelectMode()
+
+        createSnackbar({
+            text: `${selectedData.length} items restored`,
+            action: {
+                text: 'Undo',
+                cb: undo.bind(null, `${selectedData.length} items trashed`)
+            }
+        })
     }
 
     function handleEmptyTrash() {
         let deletedDataIds = deletedData.map(d => d.id)
         groupDelete(deletedDataIds)
+
+        createSnackbar({
+            text: `${deletedDataIds.length} items deleted`,
+            action: {
+                text: 'Undo',
+                cb: undo.bind(null, `${deletedDataIds.length} items trashed`)
+            }
+        })
+    }
+
+    function undo(message) {
+        undoData()
+
+        createSnackbar({
+            text: message,
+            action: null
+        })
     }
 
     function handleDeleteData() {
         groupDelete(selectedData)
         closeSelectMode()
+
+        createSnackbar({
+            text: `${selectedData.length} items deleted`,
+            action: {
+                text: 'Undo',
+                cb: undo.bind(null, `${selectedData.length} items trashed`)
+            }
+        })
     }
 
     function handleCloseSelectMode() {
         closeSelectMode()
     }
-
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         const onBackPress = () => {
-    //             if (selectMode) {
-    //                 handleCloseSelectMode();
-    //                 return true;
-    //             } else {
-    //                 return false;
-    //             }
-    //         };
-
-    //         const subscription = BackHandler.addEventListener(
-    //             'hardwareBackPress',
-    //             onBackPress
-    //         );
-
-    //         return () => subscription.remove();
-    //     }, [selectMode, handleCloseSelectMode])
-    // );
 
     useLayoutEffect(() => {
 
