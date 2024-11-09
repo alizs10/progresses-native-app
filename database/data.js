@@ -19,11 +19,12 @@ export const DATA = [
             date: Date.now(),
             step: 10
         },
-    ], 5, true, 0, 'white', 0),
+    ], 5, true, 0, 'black', 0),
     new Record('Days 3', 5, false, 0, 'white', 1),
+    new Record('Days 31', 5, false, 0, 'black', 1),
     new Record('Days 4', 15, true, 0, 'blue', 2),
     new Record('Days 5', 25, true, 0, 'red', 0),
-    new Progress('BH', true, 0, null, 'white', 2, [
+    new Progress('BH', true, 0, null, 'black', 2, [
         new ProgressStep('', false, 1),
         new ProgressStep('', false, 2),
         new ProgressStep('', false, 3),

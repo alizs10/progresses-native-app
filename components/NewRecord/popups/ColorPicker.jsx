@@ -16,6 +16,11 @@ export default function ColorPicker({ value, onChange, onClose }) {
             </View>
 
             <View style={styles.colorsContainer}>
+                <Pressable onPress={() => onChange('black')} style={[styles.color, { backgroundColor: 'black' }]}>
+                    {value === 'black' && (
+                        <Feather name="check" size={24} color="white" />
+                    )}
+                </Pressable>
                 <Pressable onPress={() => onChange('white')} style={[styles.color, { backgroundColor: 'white' }]}>
                     {value === 'white' && (
                         <Feather name="check" size={24} color="black" />

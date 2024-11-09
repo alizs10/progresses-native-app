@@ -1,5 +1,28 @@
 import Colors from "./Colors";
 
+
+const blackTheme = {
+    border: Colors.gray900,
+    progressBg: 'black',
+    progressBgFill: Colors.gray900,
+    title: 'white',
+    recordNumber: 'white',
+    stepForwardIcon: Colors.green600,
+    stepBackwardIcon: Colors.red500,
+    stepForwardText: 'white',
+    stepBackwardText: 'white',
+    time: 'white',
+    labelBg: Colors.gray700,
+    labelText: 'white',
+    plusBtnBg: Colors.gray700,
+    plusBtnText: 'white',
+    stepsRectBg: Colors.gray600,
+    stepsRectBgFill: Colors.green600,
+    highImportanceBg: Colors.red600,
+    mediumImportanceBg: Colors.blue500,
+    lowImportanceBg: Colors.green500,
+}
+
 export const progressesThemes = {
     white: {
         border: 'white',
@@ -109,6 +132,7 @@ export const progressesThemes = {
         mediumImportanceBg: Colors.blue500,
         lowImportanceBg: Colors.green500,
     },
+    black: blackTheme
 }
 
 export const recordsThemes = {
@@ -220,4 +244,5 @@ export const recordsThemes = {
         mediumImportanceBg: Colors.blue700,
         lowImportanceBg: Colors.green500,
     },
+    black: blackTheme
 }

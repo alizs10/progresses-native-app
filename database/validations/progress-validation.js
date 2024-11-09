@@ -9,7 +9,7 @@ export const progressSchema = z.object({
         id: z.string(),
         value: z.string()
     })).min(1, { message: "Steps are required" }),
-    theme: z.enum(["white", "yellow", "blue", "turquoise", "red", "violet"]),
+    theme: z.enum(["black", "white", "yellow", "blue", "turquoise", "red", "violet"]),
     isDeadlineSet: z.boolean(),
     deadline: z.number({ message: "Deadline is required" }),
     isPinned: z.boolean(),

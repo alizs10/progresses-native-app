@@ -6,6 +6,11 @@ import Colors from '../../../consts/Colors';
 export default function ThemeInput({ toggleThemePicker, selectedTheme }) {
 
     const themeColors = {
+        black: {
+            border: Colors.gray700,
+            bg: Colors.gray900,
+            text: 'white'
+        },
         white: {
             border: 'white',
             bg: Colors.gray300,

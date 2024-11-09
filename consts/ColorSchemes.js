@@ -1,5 +1,27 @@
 import Colors from "./Colors";
 
+const blackScheme = {
+    bg: Colors.gray900,
+    infoBoxBg: Colors.gray800,
+    textColor: 'white',
+    success: Colors.green500,
+    dangerous: Colors.red500,
+    importance: {
+        low: {
+            bg: Colors.green600,
+            text: 'white'
+        },
+        medium: {
+            bg: Colors.blue500,
+            text: 'white'
+        },
+        high: {
+            bg: Colors.red600,
+            text: 'white'
+        }
+    }
+}
+
 export const ColorSchemes = {
 
     yellow: {
@@ -127,6 +149,7 @@ export const ColorSchemes = {
                 text: 'white'
             }
         }
-    }
+    },
+    black: blackScheme
 
 }
