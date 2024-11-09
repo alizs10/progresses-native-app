@@ -6,6 +6,8 @@ import { useAppStore } from '../../../../store/app-store';
 import { useDataStore } from '../../../../store/data-store';
 import { useLabelStore } from '../../../../store/label-store';
 import { useNavigation } from '@react-navigation/native';
+import useSnackbar from '../../../../hooks/useSnackbar';
+
 export default function SelectModeHeader() {
 
     const { selectedData, selectModeDataType, closeSelectMode, activeLabel, selectLabel } = useAppStore(state => state)
@@ -31,6 +33,8 @@ export default function SelectModeHeader() {
         closeSelectMode()
     }
 
+    const createSnackbar = useSnackbar()
+
     function handleDeleteButton() {
 
         if (selectModeDataType === 0) {
@@ -45,6 +49,13 @@ export default function SelectModeHeader() {
             groupDeleteLabels(selectedData)
         }
 
+        createSnackbar({
+            text: `${selectedData.length} items moved to trash`,
+            action: {
+                text: 'Undo',
+                cb: () => { alert('undo') }
+            }
+        })
         closeSelectMode()
     }
 

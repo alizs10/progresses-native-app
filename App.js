@@ -22,6 +22,7 @@ import CreateLabelScreen from './screens/CreateLabelScreen';
 import EditLabelScreen from './screens/EditLabelScreen';
 import EditDataScreen from './screens/EditDataScreen';
 import TrashcanScreen from './screens/TrashcanScreen';
+import SnackbarContainer from './components/Common/Snackbar/SnackbarContainer';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -107,6 +108,8 @@ function MyStack() {
         {/* <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Settings" component={Settings} /> */}
       </Stack.Navigator>
+
+      <SnackbarContainer />
     </View>
   )
 }
@@ -144,6 +147,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: '#0F1012',
+    position: 'relative'
     // paddingTop: (Platform.OS === 'android' && Dimensions.get('window').width > 380) ? StatusBar.currentHeight : 0
   },
 });
