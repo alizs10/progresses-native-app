@@ -47,7 +47,7 @@ export default function Label({ labelId, name }) {
     }
 
     const { data } = useDataStore(state => state)
-    let count = data.filter(item => item.label === labelId).length
+    let count = data.filter(item => (item.label === labelId && item.deletedAt === null)).length
 
     return (
         <Pressable
