@@ -121,10 +121,12 @@ export default function Menu() {
 
             <View style={styles.menu}>
 
-                <View style={styles.li}>
+                <Pressable
+                    onPress={() => goToScreen('Trashcan')}
+                    style={styles.li}>
                     <MaterialCommunityIcons name="trash-can-outline" size={26} color="white" />
                     <Text style={styles.label}>Trash</Text>
-                </View>
+                </Pressable>
 
                 <Pressable onPress={() => goToScreen('Settings')}>
                     <View style={styles.li}>

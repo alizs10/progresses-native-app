@@ -21,6 +21,7 @@ import AboutScreen from './screens/AboutScreen';
 import CreateLabelScreen from './screens/CreateLabelScreen';
 import EditLabelScreen from './screens/EditLabelScreen';
 import EditDataScreen from './screens/EditDataScreen';
+import TrashcanScreen from './screens/TrashcanScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -102,6 +103,7 @@ function MyStack() {
         <Stack.Screen name="Goals" component={GoalsScreen} options={{ title: 'Goals' }} />
         <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
         <Stack.Screen name="About" component={AboutScreen} options={{ title: 'About' }} />
+        <Stack.Screen name="Trashcan" component={TrashcanScreen} options={{ title: 'Trashcan' }} />
         {/* <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Settings" component={Settings} /> */}
       </Stack.Navigator>

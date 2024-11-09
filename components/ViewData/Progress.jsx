@@ -27,10 +27,10 @@ export default function Progress({ progress }) {
 
     const navigator = useNavigation()
 
-    const { deleteOne } = useDataStore(state => state)
+    const { trashOne } = useDataStore(state => state)
 
     function handleDelete() {
-        deleteOne(progress.id)
+        trashOne(progress.id)
         navigator.goBack()
     }
 

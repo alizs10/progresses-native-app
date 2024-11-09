@@ -4,7 +4,7 @@ class RecordManual {
         this.id = 'record-manual-' + Math.floor(Math.random() * 10000);
         this.name = name;
         this.valueHistory = valueHistory;
-        this.value = valueHistory.reduce((prevValue, currentValue) => prevValue.step + currentValue.step, 0);
+        this.value = valueHistory.length ? valueHistory.reduce((prevValue, currentValue) => prevValue.step + currentValue.step) : 0;
         this.step = step;
         this.isPinned = isPinned;
         this.label = label;

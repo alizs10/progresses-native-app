@@ -14,6 +14,8 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function RecordManual({ record }) {
 
+    console.log(record)
+
     const chartConfig = {
         backgroundGradientFromOpacity: 0,
         backgroundGradientToOpacity: 0,
@@ -40,7 +42,7 @@ export default function RecordManual({ record }) {
     let label = labels.find(label => label.id === record.label)
 
 
-    const { addManualRecordValue, subManualRecordValue, addManualRecordStep, subManualRecordStep, deleteOne } = useDataStore(state => state)
+    const { addManualRecordValue, subManualRecordValue, addManualRecordStep, subManualRecordStep, trashOne } = useDataStore(state => state)
 
     function onUp() {
         addManualRecordValue(record.id)
@@ -62,7 +64,7 @@ export default function RecordManual({ record }) {
     const navigator = useNavigation()
 
     function handleDelete() {
-        deleteOne(record.id)
+        trashOne(record.id)
         navigator.goBack()
     }
 

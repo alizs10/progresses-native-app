@@ -1,11 +1,13 @@
-import { createContext } from "react";
+import { createContext, useCallback } from "react";
 import { useAppStore } from "../store/app-store";
+import { useFocusEffect } from "@react-navigation/native";
+import { BackHandler } from "react-native";
 
 export const DataSelectModeContext = createContext()
 
 export function DataSelectModeProvider({ children }) {
 
-    const { selectedData, selectModeDataType, setSelectModeDataType, selectData, selectMode, unselectData } = useAppStore(state => state)
+    const { selectedData, selectModeDataType, setSelectModeDataType, selectData, selectMode, unselectData, closeSelectMode } = useAppStore(state => state)
 
     const dataSelectMode = selectMode && selectModeDataType === 0;
 
@@ -30,6 +32,27 @@ export function DataSelectModeProvider({ children }) {
     function toggleSelect(id) {
         dataSelectMode && selectedData.includes(id) ? unselectData({ id }) : selectData({ id })
     }
+
+    useFocusEffect(
+        useCallback(() => {
+            const onBackPress = () => {
+                if (selectMode) {
+                    closeSelectMode();
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+
+            const subscription = BackHandler.addEventListener(
+                'hardwareBackPress',
+                onBackPress
+            );
+
+            return () => subscription.remove();
+        }, [selectMode, closeSelectMode])
+    );
+
 
     let values = {
         handlePressData: handlePress,

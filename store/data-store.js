@@ -102,7 +102,7 @@ export const useDataStore = create((set) => ({
         return { data: [...state.data] }
     }),
 
-    deleteOne: (dataId) => set((state) => {
+    trashOne: (dataId) => set((state) => {
 
         let dataIndex = state.data.findIndex(d => d.id === dataId)
         let deletableData = state.data[dataIndex]
@@ -111,7 +111,7 @@ export const useDataStore = create((set) => ({
         return { data: [...state.data] }
     }),
 
-    groupDelete: (dataList) => set((state) => {
+    groupTrash: (dataList) => set((state) => {
 
         for (let key in dataList) {
             let id = dataList[key]
@@ -135,5 +135,20 @@ export const useDataStore = create((set) => ({
         }
 
         return { data: [...state.data] }
-    })
+    }),
+
+
+    restoreData: (dataList) => set((state) => {
+        for (let key in dataList) {
+            let id = dataList[key]
+            let dataIndex = state.data.findIndex(d => d.id === id)
+            let restoredData = state.data[dataIndex]
+            restoredData.deletedAt = null
+        }
+
+        return { data: [...state.data] }
+    }),
+
+    groupDelete: (dataList) => set((state) => ({ data: state.data.filter(d => !dataList.includes(d.id)) })),
+
 }))

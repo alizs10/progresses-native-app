@@ -10,8 +10,8 @@ export const useLabelStore = create((set) => ({
 
     updateLabel: (labelId, updatedLabel) => set((state) => ({ labels: state.labels.map(label => label.id === labelId ? updatedLabel : label) })),
 
-    deleteOne: (labelId) => set((state) => ({ labels: state.labels.filter(label => label.id !== labelId) })),
+    trashOne: (labelId) => set((state) => ({ labels: state.labels.filter(label => label.id !== labelId) })),
 
-    groupDelete: (labelList) => set((state) => ({ labels: state.labels.filter(label => !labelList.includes(label.id)) })),
+    groupTrash: (labelList) => set((state) => ({ labels: state.labels.filter(label => !labelList.includes(label.id)) })),
 
 }))

@@ -20,7 +20,7 @@ export default function Record({ record }) {
     let label = labels.find(label => label.id === record.label)
 
 
-    const { addRecordValue, subRecordValue, deleteOne } = useDataStore(state => state)
+    const { addRecordValue, subRecordValue, trashOne } = useDataStore(state => state)
 
     function onUp() {
         addRecordValue(record.id)
@@ -34,7 +34,7 @@ export default function Record({ record }) {
     const navigator = useNavigation()
 
     function handleDelete() {
-        deleteOne(record.id)
+        trashOne(record.id)
         navigator.goBack()
     }
 

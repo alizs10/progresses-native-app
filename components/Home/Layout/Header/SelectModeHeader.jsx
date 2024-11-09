@@ -9,8 +9,8 @@ import { useNavigation } from '@react-navigation/native';
 export default function SelectModeHeader() {
 
     const { selectedData, selectModeDataType, closeSelectMode, activeLabel, selectLabel } = useAppStore(state => state)
-    const { data, groupPin, groupUnpin, groupDelete: groupDeleteData, groupDeleteDataLabel } = useDataStore(state => state)
-    const { labels, groupDelete: groupDeleteLabels } = useLabelStore(state => state)
+    const { data, groupPin, groupUnpin, groupTrash: groupDeleteData, groupDeleteDataLabel } = useDataStore(state => state)
+    const { labels, groupTrash: groupDeleteLabels } = useLabelStore(state => state)
 
     let chosenData = selectModeDataType === 0 ? data : labels;
     const selectedDataList = chosenData.filter(d => selectedData.includes(d.id))
