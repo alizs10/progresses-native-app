@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Dimensions, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native'
 import React, { useContext } from 'react'
 import Colors from '../../../../consts/Colors'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,121 +10,11 @@ import { useDataStore } from '../../../../store/data-store';
 import { useNavigation } from '@react-navigation/native';
 import { useAppStore } from '../../../../store/app-store';
 import { DataSelectModeContext } from '../../../../context/DataSelectModeContext';
+import { recordsThemes } from '../../../../consts/DataThemeColors';
 
 export default function MiniRecordManual({ data }) {
 
-    const themes = {
-        white: {
-            border: 'white',
-            progressBg: Colors.gray300,
-            progressBgFill: 'white',
-            title: Colors.gray700,
-            recordNumber: Colors.gray700,
-            stepBackwardIcon: Colors.red500,
-            stepForwardText: Colors.gray700,
-            stepBackwardText: Colors.gray700,
-            time: Colors.gray700,
-            labelBg: Colors.gray300,
-            labelText: Colors.gray700,
-            plusBtnBg: Colors.gray300,
-            plusBtnText: Colors.gray800,
-            highImportanceBg: Colors.red600,
-            mediumImportanceBg: Colors.blue500,
-            lowImportanceBg: Colors.green500,
-        },
-        violet: {
-            border: Colors.violet900,
-            progressBg: Colors.violet800,
-            progressBgFill: Colors.violet900,
-            title: 'white',
-            recordNumber: Colors.violet200,
-            stepBackwardIcon: Colors.red500,
-            stepForwardText: 'white',
-            stepBackwardText: 'white',
-            time: 'white',
-            labelBg: Colors.violet800,
-            labelText: 'white',
-            plusBtnBg: Colors.violet800,
-            plusBtnText: 'white',
-            highImportanceBg: Colors.red600,
-            mediumImportanceBg: Colors.blue500,
-            lowImportanceBg: Colors.green500,
-        },
-        blue: {
-            border: Colors.blue900,
-            progressBg: Colors.blue800,
-            progressBgFill: Colors.blue900,
-            title: 'white',
-            recordNumber: Colors.blue200,
-            stepBackwardIcon: Colors.red500,
-            stepForwardText: 'white',
-            stepBackwardText: 'white',
-            time: 'white',
-            labelBg: Colors.blue800,
-            labelText: 'white',
-            plusBtnBg: Colors.blue800,
-            plusBtnText: 'white',
-            highImportanceBg: Colors.red600,
-            mediumImportanceBg: Colors.blue500,
-            lowImportanceBg: Colors.green500,
-        },
-        yellow: {
-            border: Colors.yellow400,
-            progressBg: Colors.yellow900,
-            progressBgFill: Colors.yellow400,
-            title: Colors.gray800,
-            recordNumber: Colors.gray700,
-            stepBackwardIcon: Colors.red500,
-            stepForwardText: Colors.gray800,
-            stepBackwardText: Colors.gray800,
-            time: Colors.gray800,
-            labelBg: Colors.yellow800,
-            labelText: Colors.gray800,
-            plusBtnBg: Colors.yellow800,
-            plusBtnText: Colors.gray800,
-            highImportanceBg: Colors.red600,
-            mediumImportanceBg: Colors.blue500,
-            lowImportanceBg: Colors.green500,
-        },
-        turquoise: {
-            border: Colors.turquoise900,
-            progressBg: Colors.turquoise700,
-            progressBgFill: Colors.turquoise900,
-            title: 'white',
-            recordNumber: Colors.turquoise100,
-            stepBackwardIcon: Colors.red500,
-            stepForwardText: 'white',
-            stepBackwardText: 'white',
-            time: 'white',
-            labelBg: Colors.turquoise700,
-            labelText: 'white',
-            plusBtnBg: Colors.turquoise700,
-            plusBtnText: 'white',
-            highImportanceBg: Colors.red600,
-            mediumImportanceBg: Colors.blue600,
-            lowImportanceBg: Colors.green500,
-        },
-        red: {
-            border: Colors.red600,
-            progressBg: Colors.red700,
-            progressBgFill: Colors.red600,
-            title: 'white',
-            recordNumber: Colors.red200,
-            stepBackwardIcon: Colors.red500,
-            stepForwardText: 'white',
-            stepBackwardText: 'white',
-            time: 'white',
-            labelBg: Colors.red700,
-            labelText: 'white',
-            plusBtnBg: Colors.red800,
-            plusBtnText: 'white',
-            highImportanceBg: Colors.red500,
-            mediumImportanceBg: Colors.blue500,
-            lowImportanceBg: Colors.green500,
-        },
-    }
-
-    let theme = themes[data.theme]
+    let theme = recordsThemes[data.theme]
 
 
     const chartConfig = {
