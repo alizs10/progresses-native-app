@@ -11,29 +11,60 @@ import useSnackbar from '../../../../hooks/useSnackbar';
 export default function SelectModeHeader() {
 
     const { selectedData, selectModeDataType, closeSelectMode, activeLabel, selectLabel } = useAppStore(state => state)
-    const { data, groupPin, groupUnpin, groupTrash: groupDeleteData, groupDeleteDataLabel } = useDataStore(state => state)
-    const { labels, groupTrash: groupDeleteLabels } = useLabelStore(state => state)
+    const { data, groupPin, groupUnpin, groupTrash: groupDeleteData, groupDeleteDataLabel, undo: undoData } = useDataStore(state => state)
+    const { labels, groupTrash: groupDeleteLabels, undo: undoLabels } = useLabelStore(state => state)
 
     let chosenData = selectModeDataType === 0 ? data : labels;
     const selectedDataList = chosenData.filter(d => selectedData.includes(d.id))
     const hasUnpinned = selectModeDataType === 0 && selectedDataList.some(sd => !sd.isPinned)
 
     const navigation = useNavigation()
+    const createSnackbar = useSnackbar()
 
     function handleClose() {
         closeSelectMode()
     }
 
     function handlePinButton() {
+
+        let action;
+        let undoAction;
+
         if (hasUnpinned) {
             groupPin(selectedData)
+            action = 'pinned'
+            undoAction = 'unpinned'
         } else {
             groupUnpin(selectedData)
+            action = 'unpinned'
+            undoAction = 'pinned'
         }
+
+
+        createSnackbar({
+            text: `${selectedData.length} items ${action}`,
+            action: {
+                text: 'Undo',
+                cb: undo.bind(null, undoAction)
+            }
+        })
+
         closeSelectMode()
     }
 
-    const createSnackbar = useSnackbar()
+    function undo(action) {
+
+        undoData()
+
+        if (selectModeDataType === 1) {
+            undoLabels()
+        }
+
+        createSnackbar({
+            text: `${selectedData.length} items ${action}`,
+            action: null
+        })
+    }
 
     function handleDeleteButton() {
 
@@ -53,11 +84,12 @@ export default function SelectModeHeader() {
             text: `${selectedData.length} items moved to trash`,
             action: {
                 text: 'Undo',
-                cb: () => { alert('undo') }
+                cb: selectModeDataType === 0 ? undo.bind(null, 'restored') : undo.bind(null, 'restored'),
             }
         })
         closeSelectMode()
     }
+
 
     function handleEditButton() {
 

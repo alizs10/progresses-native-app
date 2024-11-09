@@ -4,10 +4,11 @@ import { DATA } from '../database/data'
 export const useDataStore = create((set) => ({
 
     // progresses: [],
+    prevDataString: JSON.stringify([]),
     data: DATA,
-    addData: (progress) => set((state) => ({ data: [...state.data, progress] })),
+    addData: (progress) => set((state) => ({ prevDataString: JSON.stringify(state.data), data: [...state.data, progress] })),
 
-    updateData: (dataId, updatedData) => set((state) => ({ data: state.data.map(d => d.id === dataId ? updatedData : d) })),
+    updateData: (dataId, updatedData) => set((state) => ({ prevDataString: JSON.stringify(state.data), data: state.data.map(d => d.id === dataId ? updatedData : d) })),
 
     searchResults: [],
     searchData: (searchStr) => set((state) => {
@@ -79,17 +80,21 @@ export const useDataStore = create((set) => ({
 
     groupPin: (dataList) => set((state) => {
 
-        for (let key in dataList) {
+        let dataIns = [...state.data]
+        const newHistory = JSON.stringify(state.data)
 
+        for (let key in dataList) {
             let id = dataList[key]
-            let dataIndex = state.data.findIndex(d => d.id === id)
-            let pinData = state.data[dataIndex]
+            let dataIndex = dataIns.findIndex(d => d.id === id)
+            let pinData = dataIns[dataIndex]
             pinData.isPinned = true
         }
 
-        return { data: [...state.data] }
+        return { data: dataIns, prevDataString: newHistory }
     }),
     groupUnpin: (dataList) => set((state) => {
+
+        const newHistory = JSON.stringify(state.data)
 
         for (let key in dataList) {
 
@@ -99,31 +104,34 @@ export const useDataStore = create((set) => ({
             pinData.isPinned = false
         }
 
-        return { data: [...state.data] }
+        return { data: [...state.data], prevDataString: newHistory }
     }),
 
     trashOne: (dataId) => set((state) => {
+        const newHistory = JSON.stringify(state.data)
 
         let dataIndex = state.data.findIndex(d => d.id === dataId)
         let deletableData = state.data[dataIndex]
         deletableData.deletedAt = Date.now()
 
-        return { data: [...state.data] }
+        return { data: [...state.data], prevDataString: newHistory }
     }),
 
     groupTrash: (dataList) => set((state) => {
+        const newHistory = JSON.stringify(state.data)
 
         for (let key in dataList) {
             let id = dataList[key]
             let dataIndex = state.data.findIndex(d => d.id === id)
-            let pinData = state.data[dataIndex]
-            pinData.deletedAt = Date.now()
+            let trashData = state.data[dataIndex]
+            trashData.deletedAt = Date.now()
         }
 
-        return { data: [...state.data] }
+        return { data: [...state.data], prevDataString: newHistory }
     }),
 
     groupDeleteDataLabel: (labelList) => set((state) => {
+        const newHistory = JSON.stringify(state.data)
 
         let dataList = state.data.filter(d => labelList.includes(d.label))
 
@@ -134,21 +142,18 @@ export const useDataStore = create((set) => ({
             selectedData.label = 0;
         }
 
-        return { data: [...state.data] }
+        return { data: [...state.data], prevDataString: newHistory }
     }),
 
 
-    restoreData: (dataList) => set((state) => {
-        for (let key in dataList) {
-            let id = dataList[key]
-            let dataIndex = state.data.findIndex(d => d.id === id)
-            let restoredData = state.data[dataIndex]
-            restoredData.deletedAt = null
+    groupDelete: (dataList) => set((state) => ({ prevDataString: JSON.stringify(state.data), data: state.data.filter(d => !dataList.includes(d.id)) })),
+
+    undo: () => set((state) => {
+        if (state.prevDataString) {
+            return { data: JSON.parse(state.prevDataString) }
         }
 
         return { data: [...state.data] }
-    }),
-
-    groupDelete: (dataList) => set((state) => ({ data: state.data.filter(d => !dataList.includes(d.id)) })),
+    })
 
 }))

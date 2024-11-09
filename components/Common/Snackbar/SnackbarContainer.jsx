@@ -1,6 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Colors from '../../../consts/Colors'
-import useSnackbar from '../../../hooks/useSnackbar'
 import { useEffect } from 'react';
 import { useSnackStore } from '../../../store/snack-store';
 
@@ -10,24 +9,31 @@ export default function SnackbarContainer() {
     const { snack, visible, remove } = useSnackStore(state => state)
 
     useEffect(() => {
+        let timer;
 
         if (visible) {
-            setTimeout(() => {
+            timer = setTimeout(() => {
                 remove()
             }, 5000)
         }
 
-    }, [visible])
-
+        return () => {
+            if (timer) {
+                clearTimeout(timer)
+            }
+        }
+    }, [visible, snack])
 
     return (
         <View style={styles.container}>
             {visible && (
                 <View style={styles.snackbarContainer}>
                     <Text style={styles.snackbarText}>{snack.text}</Text>
-                    <TouchableOpacity onPress={snack.action.cb} style={styles.snackbarButton}>
-                        <Text style={styles.snackbarButtonText}>{snack.action.text}</Text>
-                    </TouchableOpacity>
+                    {snack.action && (
+                        <TouchableOpacity onPress={snack.action.cb} style={styles.snackbarButton}>
+                            <Text style={styles.snackbarButtonText}>{snack.action.text}</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
             )}
         </View>
@@ -57,10 +63,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
+        padding: 10,
     },
     snackbarButton: {
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 50,
     },
     snackbarButtonText: {
         color: Colors.primary,

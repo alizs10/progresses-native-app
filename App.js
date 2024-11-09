@@ -117,6 +117,7 @@ function MyStack() {
 
 export default function App() {
 
+
   return (
     <EventProvider>
       <NavigationContainer>
