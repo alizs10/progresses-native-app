@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList, Pressable, ScrollView, SafeAreaView } from 'react-native'
+import { View, StyleSheet, FlatList, Pressable, ScrollView, SafeAreaView, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ProgressesTitle from './ProgressesTitle'
 import { Ionicons } from '@expo/vector-icons';
@@ -15,6 +15,7 @@ import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import { useNavigationState } from '@react-navigation/native';
 import { isProgressCompleted } from '../../../helpers/data-helper';
+import Colors from '../../../consts/Colors';
 
 export default function Progresses() {
 
@@ -124,6 +125,12 @@ export default function Progresses() {
                 </SafeAreaView>
             )}
 
+            {showData.length === 0 && (
+                <View style={styles.emptyDataContainer}>
+                    <Text style={styles.emptyText}>Add your first progress...</Text>
+                </View>
+            )}
+
         </View>
     )
 }
@@ -143,5 +150,16 @@ const styles = StyleSheet.create({
     },
     progressesRowWrapper: {
         gap: 8,
+    },
+    emptyDataContainer: {
+        height: 300,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    emptyText: {
+        fontSize: 14,
+        fontWeight: 'semibold',
+        color: Colors.gray300,
+
     }
 })
