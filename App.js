@@ -23,7 +23,6 @@ import EditLabelScreen from './screens/EditLabelScreen';
 import EditDataScreen from './screens/EditDataScreen';
 import TrashcanScreen from './screens/TrashcanScreen';
 import SnackbarContainer from './components/Common/Snackbar/SnackbarContainer';
-import { useEffect, useState } from 'react';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -60,7 +59,7 @@ function MyTabs() {
   )
 }
 
-function MyStack() {
+function MyStack({ navigation }) {
 
   return (
     <View style={styles.root}>
@@ -79,7 +78,7 @@ function MyStack() {
         <Stack.Screen
           name="CreateData"
           component={CreateDataScreen}
-          options={{ title: 'Create New Data' }}
+          options={{ title: 'Create New Data', gestureEnabled: false }}
         />
         <Stack.Screen
           name="EditData"
@@ -106,8 +105,7 @@ function MyStack() {
         <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
         <Stack.Screen name="About" component={AboutScreen} options={{ title: 'About' }} />
         <Stack.Screen name="Trashcan" component={TrashcanScreen} options={{ title: 'Trashcan' }} />
-        {/* <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="Settings" component={Settings} /> */}
+
       </Stack.Navigator>
 
       <SnackbarContainer />
@@ -118,37 +116,10 @@ function MyStack() {
 
 export default function App() {
 
-  const [backPressedOnce, setBackPressedOnce] = useState(false);
-
-  useEffect(() => {
-
-    const backAction = () => {
-
-      if (backPressedOnce) {
-        BackHandler.exitApp()
-      } else {
-
-        setBackPressedOnce(true)
-        ToastAndroid.show('Press back again to exit', ToastAndroid.SHORT)
-
-        setTimeout(() => {
-          setBackPressedOnce(false)
-        }, 2000)
-
-      }
-
-      return true
-    }
-
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
-
-    return () => backHandler.remove()
-
-  }, [backPressedOnce])
-
   return (
     <EventProvider>
       <NavigationContainer>
+
         <Drawer.Navigator
           screenOptions={{
             headerShown: false,
@@ -161,6 +132,7 @@ export default function App() {
           <Drawer.Screen name="HomeWithDrawer" component={MyStack} />
 
         </Drawer.Navigator>
+
       </NavigationContainer>
       <StatusBar
         backgroundColor="transparent"

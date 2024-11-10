@@ -1,13 +1,14 @@
-import { View, StyleSheet, ScrollView } from 'react-native'
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import { View, StyleSheet, ScrollView, BackHandler, ToastAndroid } from 'react-native'
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import Header from '../components/Home/Layout/Header/Header'
 import Progresses from '../components/Home/Progresses/Progresses'
 import Labels from '../components/Home/Layout/Labels/Labels'
 import { useAppStore } from '../store/app-store'
 import SelectModeHeader from '../components/Home/Layout/Header/SelectModeHeader'
 import { DataSelectModeProvider } from '../context/DataSelectModeContext'
+import { useFocusEffect } from '@react-navigation/native'
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
 
     const { selectMode } = useAppStore(state => state)
 
@@ -28,6 +29,38 @@ export default function HomeScreen() {
         console.log(scrollDirection)
 
     }, [scrollDirection])
+
+
+
+    useFocusEffect(
+        useCallback(() => {
+            let backPressedOnce = false;
+
+            const backAction = () => {
+
+                if (backPressedOnce) {
+                    BackHandler.exitApp()
+
+                } else {
+                    backPressedOnce = true;
+                    ToastAndroid.show('Press back again to exit', ToastAndroid.SHORT)
+
+                    setTimeout(() => {
+                        backPressedOnce = false;
+                    }, 2000)
+                }
+
+                return true;
+            }
+
+            const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
+
+            return () => {
+                backHandler.remove()
+            };
+        }, [])
+    );
+
 
     return (
 
