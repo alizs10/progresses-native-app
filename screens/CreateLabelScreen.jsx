@@ -34,17 +34,30 @@ export default function CreateLabelScreen({ navigation }) {
 
     function handleCreateNewLabel() {
 
-        if (name.trim() === '') return;
+        if (name.trim() === '') {
+            setErrors(prevState => ({ ...prevState, name: 'Label name is required' }))
+            return
+        }
+
 
         if (isLabelExists(labels, name.trim())) {
-            console.log('Label already exists')
+            setErrors(prevState => ({ ...prevState, name: 'Label already exists' }))
             return;
         };
+
+        // clear all errors
+        setErrors(initErrors)
 
         let newLabelObj = new Label(name.trim())
         addLabel(newLabelObj)
         navigation.goBack()
     }
+
+    const initErrors = {
+        name: ''
+    }
+    const [errors, setErrors] = useState(initErrors)
+
     return (
         <View style={styles.container}>
             <Input
@@ -55,6 +68,7 @@ export default function CreateLabelScreen({ navigation }) {
                     placeholder: 'Label Name here',
                     placeholderTextColor: Colors.gray300
                 }}
+                error={errors.name}
             />
         </View>
     )
