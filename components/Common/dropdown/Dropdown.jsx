@@ -21,27 +21,30 @@ export default function Dropdown({ label, options, onSelect, value, error, value
 
 
     return (
-        <View style={styles.outerContainer}>
-            <Pressable onPress={toggleOptions} style={[styles.container, error ? { borderColor: Colors.red500 } : {}]}>
+        <>
+            <View style={styles.outerContainer}>
+                <Pressable onPress={toggleOptions} style={[styles.container, error ? { borderColor: Colors.red500 } : {}]}>
 
-                <View style={styles.labelContainer}>
-                    <Text style={[styles.label, error ? { color: Colors.red500 } : {}]}>{label}</Text>
-                </View>
-                <View style={styles.dropdownContainer}>
-                    <Text style={[styles.dropdownTextValue, error ? { color: Colors.red500 } : {}]}>{valueInText}</Text>
-                    <View style={styles.dropdownIconContainer}>
-                        <MaterialCommunityIcons name="chevron-down" size={24} color={error ? Colors.red500 : Colors.gray300} />
+                    <View style={styles.labelContainer}>
+                        <Text style={[styles.label, error ? { color: Colors.red500 } : {}]}>{label}</Text>
                     </View>
-                </View>
+                    <View style={styles.dropdownContainer}>
+                        <Text style={[styles.dropdownTextValue, error ? { color: Colors.red500 } : {}]}>{valueInText}</Text>
+                        <View style={styles.dropdownIconContainer}>
+                            <MaterialCommunityIcons name="chevron-down" size={24} color={error ? Colors.red500 : Colors.gray300} />
+                        </View>
+                    </View>
 
-            </Pressable>
+                </Pressable>
 
-            {error && (
-                <View style={styles.displayErrorContainer}>
-                    <Entypo name="dot-single" size={18} color={Colors.red500} />
-                    <Text style={styles.errorText}>{error}</Text>
-                </View>
-            )}
+                {error && (
+                    <View style={styles.displayErrorContainer}>
+                        <Entypo name="dot-single" size={18} color={Colors.red500} />
+                        <Text style={styles.errorText}>{error}</Text>
+                    </View>
+                )}
+
+            </View>
 
             {optionsVis && (
                 <DropdownOptions
@@ -52,16 +55,15 @@ export default function Dropdown({ label, options, onSelect, value, error, value
                     value={value}
                 />
             )}
-        </View>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
     outerContainer: {
-        flex: 1
+        flex: 1,
     },
     container: {
-        position: 'relative',
         borderWidth: 2,
         borderColor: Colors.gray300,
         borderRadius: 25,
