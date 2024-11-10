@@ -23,6 +23,7 @@ import EditLabelScreen from './screens/EditLabelScreen';
 import EditDataScreen from './screens/EditDataScreen';
 import TrashcanScreen from './screens/TrashcanScreen';
 import SnackbarContainer from './components/Common/Snackbar/SnackbarContainer';
+import { useEffect } from 'react';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -61,6 +62,14 @@ function MyTabs() {
 
 function MyStack({ navigation }) {
 
+  useEffect(() => {
+
+    navigation.setOptions({
+      swipeEnabled: false
+    })
+
+  }, [navigation])
+
   return (
     <View style={styles.root}>
       <Stack.Navigator
@@ -75,10 +84,11 @@ function MyStack({ navigation }) {
 
       >
         <Stack.Screen name="HomeWithTabs" component={MyTabs} options={{ headerShown: false }} />
+
         <Stack.Screen
           name="CreateData"
           component={CreateDataScreen}
-          options={{ title: 'Create New Data', gestureEnabled: false }}
+          options={{ title: 'Create New Data' }}
         />
         <Stack.Screen
           name="EditData"
@@ -102,13 +112,8 @@ function MyStack({ navigation }) {
         />
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' }} />
         <Stack.Screen name="Goals" component={GoalsScreen} options={{ title: 'Goals' }} />
-        <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
-        <Stack.Screen name="About" component={AboutScreen} options={{ title: 'About' }} />
-        <Stack.Screen name="Trashcan" component={TrashcanScreen} options={{ title: 'Trashcan' }} />
 
       </Stack.Navigator>
-
-      <SnackbarContainer />
     </View>
   )
 }
@@ -130,6 +135,8 @@ export default function App() {
           drawerContent={(props) => <Menu {...props} />}
         >
           <Drawer.Screen name="HomeWithDrawer" component={MyStack} />
+          <Drawer.Screen name="About" component={AboutScreen} />
+          <Drawer.Screen name="Trashcan" component={TrashcanScreen} />
 
         </Drawer.Navigator>
 
@@ -140,6 +147,8 @@ export default function App() {
         translucent={true}
         animated={true}
       />
+      <SnackbarContainer />
+
     </EventProvider>
   );
 }

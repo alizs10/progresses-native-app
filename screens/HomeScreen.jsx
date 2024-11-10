@@ -1,5 +1,5 @@
 import { View, StyleSheet, ScrollView, BackHandler, ToastAndroid } from 'react-native'
-import React, { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Header from '../components/Home/Layout/Header/Header'
 import Progresses from '../components/Home/Progresses/Progresses'
 import Labels from '../components/Home/Layout/Labels/Labels'
@@ -29,8 +29,6 @@ export default function HomeScreen({ navigation }) {
         console.log(scrollDirection)
 
     }, [scrollDirection])
-
-
 
     useFocusEffect(
         useCallback(() => {

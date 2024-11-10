@@ -2,8 +2,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import FormData from '../components/Forms/DataForm';
 import { DataFormProvider } from '../context/DataFormContext';
 
-export default function CreateDataScreen({ navigation }) {
-
+export default function CreateDataScreen() {
 
     return (
         <View style={styles.container}>

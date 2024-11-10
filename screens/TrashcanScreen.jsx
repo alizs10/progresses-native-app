@@ -10,13 +10,15 @@ import MiniRecordManual from '../components/Home/Progresses/MiniRecordManual/Min
 import RecordManual from '../components/Home/Progresses/RecordManual/RecordManual';
 import Record from '../components/Home/Progresses/Record/Record';
 import { DataSelectModeProvider } from '../context/DataSelectModeContext';
-import { useEffect, useLayoutEffect, useCallback } from 'react';
+import { useEffect, useLayoutEffect, useCallback, useState } from 'react';
 import DeleteButton from '../components/Common/header/DeleteButton';
 import RestoreButton from '../components/Common/header/RestoreButton';
 import { useAppStore } from '../store/app-store';
 import EmptyTrashButton from '../components/Common/header/EmptyTrashButton';
 import { HeaderBackButton } from '@react-navigation/elements';
 import useSnackbar from '../hooks/useSnackbar';
+import DrawerHeader from '../components/Common/DrawerHeader';
+import Colors from '../consts/Colors';
 
 function Header({ onDelete, onRestore }) {
 
@@ -30,6 +32,14 @@ function Header({ onDelete, onRestore }) {
 
 
 export default function TrashcanScreen({ navigation }) {
+
+    const initHeaderOptions = {
+        title: '',
+        headerRight: () => <Header />,
+        headerLeft: null,
+    }
+    const [headerOptions, setHeaderOptions] = useState(initHeaderOptions)
+
 
     let { selectMode, selectedData, closeSelectMode } = useAppStore((state) => state)
     let { data, restoreData, groupDelete, undo: undoData } = useDataStore((state) => state)
@@ -126,71 +136,56 @@ export default function TrashcanScreen({ navigation }) {
         closeSelectMode()
     }
 
-    useLayoutEffect(() => {
-
-        if (selectMode) {
-            navigation.setOptions({
-                headerRight: () => (
-                    <Header onDelete={handleDeleteData} onRestore={handleRestoreData} />
-                ),
-                headerLeft: (props) => (
-                    <HeaderBackButton {...props} backImage={() => <MaterialCommunityIcons name="close" size={24} color="white" />} onPress={handleCloseSelectMode} />
-                )
-            })
-        } else {
-            navigation.setOptions({
-                headerRight: () => (
-                    deletedData.length > 0 ? <EmptyTrashButton onPress={handleEmptyTrash} /> : null
-                ),
-                headerLeft: (props) => (
-                    <HeaderBackButton  {...props} onPress={handleBackButton} />
-                )
-            })
-        }
-
-    }, [selectMode, selectedData])
-
 
     useEffect(() => {
 
         if (selectMode && selectedData.length > 0) {
-            navigation.setOptions({
-                title: `${selectedData.length} items`
-                // header: ({options, route, back}) => ()
-
-            })
+            setHeaderOptions(prevState => ({ ...prevState, title: `${selectedData.length} items` }))
         } else {
-            navigation.setOptions({
-                title: "Trashcan"
-            })
+            setHeaderOptions(prevState => ({ ...prevState, title: 'Trashcan' }))
         }
 
     }, [selectedData])
 
+    function HeaderRight() {
+        return selectMode ? (<Header onDelete={handleDeleteData} onRestore={handleRestoreData} />) : deletedData.length > 0 ? (<EmptyTrashButton onPress={handleEmptyTrash} />) : null
+    }
+
     return (
         <DataSelectModeProvider>
-            <ScrollView style={styles.container}>
+            <View style={{ flex: 1 }}>
 
-                {deletedData.length === 0 && (
-                    <View style={styles.emptyContainer}>
-                        <Text style={styles.text}>No trashed data</Text>
-                    </View>
-                )}
+                <DrawerHeader
+                    title={headerOptions.title}
+                    headerLeftIcon={selectMode ? <MaterialCommunityIcons name="close" size={28} color="white" /> : null}
+                    headerLeftPress={selectMode ? handleCloseSelectMode : null}
+                    headerRight={HeaderRight}
+                />
 
-                {deletedData.length > 0 && (
-                    <SafeAreaView style={{ flex: 1, paddingBottom: 100 }}>
-                        <ProgressesTitle title={"Trashed data"} count={deletedData.length} />
-                        <FlatList data={deletedData} numColumns={1}
-                            key={'deleted-data-flat-list'}
-                            scrollEnabled={false}
-                            // columnWrapperStyle={dataViewMode === 0 ? null : styles.progressesRowWrapper}
-                            keyExtractor={(item => item.id)}
-                            renderItem={({ index, item }) => showDataComp(item)}
-                        />
-                    </SafeAreaView>
-                )}
+                <ScrollView style={styles.container}>
 
-            </ScrollView>
+                    {deletedData.length === 0 && (
+                        <View style={styles.emptyContainer}>
+                            <MaterialCommunityIcons name="trash-can-outline" size={60} color={Colors.gray300} />
+                            <Text style={styles.noTrashText}>No trashed data</Text>
+                        </View>
+                    )}
+
+                    {deletedData.length > 0 && (
+                        <SafeAreaView style={{ flex: 1, paddingBottom: 100 }}>
+                            <ProgressesTitle title={"Trashed data"} count={deletedData.length} />
+                            <FlatList data={deletedData} numColumns={1}
+                                key={'deleted-data-flat-list'}
+                                scrollEnabled={false}
+                                // columnWrapperStyle={dataViewMode === 0 ? null : styles.progressesRowWrapper}
+                                keyExtractor={(item => item.id)}
+                                renderItem={({ index, item }) => showDataComp(item)}
+                            />
+                        </SafeAreaView>
+                    )}
+
+                </ScrollView>
+            </View>
         </DataSelectModeProvider>
     )
 }
@@ -213,10 +208,22 @@ const styles = StyleSheet.create({
         textAlign: 'justify',
         lineHeight: 28,
     },
+    noTrashText: {
+        color: Colors.gray300,
+        fontSize: 18,
+        fontWeight: 'semibold',
+        textAlign: 'justify',
+        lineHeight: 28,
+        marginTop: 10
+    },
     emptyContainer: {
-        flex: 1,
+        // flex: 1,
+        height: 500,
+        // backgroundColor: 'red',
+        marginTop: 'auto',
         alignItems: 'center',
         justifyContent: 'center',
+        alignSelf: 'center'
     },
     flexRow: {
         flexDirection: 'row',
