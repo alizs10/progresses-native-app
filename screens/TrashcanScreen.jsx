@@ -166,7 +166,7 @@ export default function TrashcanScreen({ navigation }) {
 
                     {deletedData.length === 0 && (
                         <View style={styles.emptyContainer}>
-                            <MaterialCommunityIcons name="trash-can-outline" size={60} color={Colors.gray300} />
+                            <MaterialCommunityIcons name="trash-can-outline" size={120} color={Colors.gray700} />
                             <Text style={styles.noTrashText}>No trashed data</Text>
                         </View>
                     )}
@@ -209,12 +209,12 @@ const styles = StyleSheet.create({
         lineHeight: 28,
     },
     noTrashText: {
-        color: Colors.gray300,
-        fontSize: 18,
+        color: Colors.gray600,
+        fontSize: 14,
         fontWeight: 'semibold',
         textAlign: 'justify',
         lineHeight: 28,
-        marginTop: 10
+        marginTop: 20
     },
     emptyContainer: {
         // flex: 1,

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Pressable, Keyboard } from 'react-native'
+import { View, StyleSheet, TextInput, Pressable, Keyboard } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Colors from '../../../../consts/Colors'
 import { Ionicons } from '@expo/vector-icons';

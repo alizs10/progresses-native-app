@@ -125,11 +125,15 @@ export default function Progresses() {
                 </SafeAreaView>
             )}
 
-            {showData.length === 0 && (
+            {showData.length === 0 && (searchMode ? (
                 <View style={styles.emptyDataContainer}>
-                    <Text style={styles.emptyText}>Add your first progress...</Text>
+                    <MaterialCommunityIcons name="magnify" size={120} color={Colors.gray700} />
+                    <Text style={styles.emptyText}>No matching data</Text>
                 </View>
-            )}
+            ) : (<View style={styles.emptyDataContainer}>
+                <MaterialCommunityIcons name="progress-pencil" size={120} color={Colors.gray700} />
+                <Text style={styles.emptyText}>Add your first progress/record</Text>
+            </View>))}
 
         </View>
     )
@@ -152,14 +156,23 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     emptyDataContainer: {
-        height: 300,
+        height: 400,
         justifyContent: 'center',
         alignItems: 'center'
     },
     emptyText: {
         fontSize: 14,
         fontWeight: 'semibold',
-        color: Colors.gray300,
-
-    }
+        color: Colors.gray600,
+        marginTop: 20
+    },
+    emptyContainer: {
+        // flex: 1,
+        height: 500,
+        // backgroundColor: 'red',
+        marginTop: 'auto',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
 })
