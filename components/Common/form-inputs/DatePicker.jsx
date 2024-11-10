@@ -1,8 +1,10 @@
 import { Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import RNDateTimePicker from '@react-native-community/datetimepicker'
+import Entypo from '@expo/vector-icons/Entypo';
+import Colors from '../../../consts/Colors';
 
-export default function DatePicker({ label, value, handleChange, datePickerProps }) {
+export default function DatePicker({ label, value, handleChange, datePickerProps, error }) {
 
     const [showDatePicker, setShowDatePicker] = useState(false)
 
@@ -24,29 +26,38 @@ export default function DatePicker({ label, value, handleChange, datePickerProps
     }
 
     return (
-        <Pressable
-            onPress={toggleDatePicker}
-            style={styles.inputContainer}>
-            <TextInput
-                style={styles.input}
-                value={value.toLocaleDateString()}
-                editable={false}
-            />
-            <View style={styles.labelContainer}>
-                <Text style={styles.label}>{label}</Text>
-            </View>
-            {showDatePicker && (
-                <RNDateTimePicker
-                    mode="date"
-                    value={value}
-                    onChange={onChange}
-                    {...datePickerProps}
-                // positiveButton={{ label: 'SET', textColor: 'green' }}
-                // neutralButton={{ label: 'Cancel', textColor: 'grey' }}
-                />
+        <View>
 
+            <Pressable
+                onPress={toggleDatePicker}
+                style={styles.inputContainer}>
+                <TextInput
+                    style={[styles.input, error ? { borderColor: Colors.red500, color: Colors.red500 } : {}]}
+                    value={value.toLocaleDateString()}
+                    editable={false}
+                />
+                <View style={styles.labelContainer}>
+                    <Text style={[styles.label, error ? { color: Colors.red500 } : {}]}>{label}</Text>
+                </View>
+                {showDatePicker && (
+                    <RNDateTimePicker
+                        mode="date"
+                        value={value}
+                        onChange={onChange}
+                        {...datePickerProps}
+                    // positiveButton={{ label: 'SET', textColor: 'green' }}
+                    // neutralButton={{ label: 'Cancel', textColor: 'grey' }}
+                    />
+
+                )}
+            </Pressable>
+            {error && (
+                <View style={styles.displayErrorContainer}>
+                    <Entypo name="dot-single" size={18} color={Colors.red500} />
+                    <Text style={styles.errorText}>{error}</Text>
+                </View>
             )}
-        </Pressable>
+        </View>
     )
 }
 
@@ -72,7 +83,6 @@ const styles = StyleSheet.create({
         left: 16,
         transform: [{ translateY: -10 }],
     },
-
     label: {
         backgroundColor: Colors.gray800,
         color: Colors.gray300,
@@ -81,4 +91,15 @@ const styles = StyleSheet.create({
         fontSize: 12,
         paddingHorizontal: 6
     },
+    displayErrorContainer: {
+        flexDirection: 'row',
+        gap: 8,
+        alignItems: 'center',
+        marginTop: 5,
+        marginLeft: 16,
+    },
+    errorText: {
+        color: Colors.red500,
+        fontSize: 14,
+    }
 })

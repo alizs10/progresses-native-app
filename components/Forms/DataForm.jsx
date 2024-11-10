@@ -12,6 +12,7 @@ import { useContext } from 'react';
 import { DataFormContext } from '../../context/DataFormContext';
 import { useLabelStore } from '../../store/label-store';
 import { useAppStore } from '../../store/app-store';
+import Entypo from '@expo/vector-icons/Entypo';
 
 
 
@@ -45,12 +46,9 @@ export default function DataForm() {
         handleManualStepSwitch,
         handleCountUpManualStep,
         handleCountDownManualStep,
-        mode
-
+        mode,
+        errors
     } = useContext(DataFormContext)
-
-
-    console.log(mode, dataType)
 
     return (
         <View style={styles.container}>
@@ -71,7 +69,9 @@ export default function DataForm() {
                     placeholder: 'Name here',
                     placeholderTextColor: Colors.gray300
                 }}
+                error={errors.name}
             />
+
             <View style={{ flexDirection: 'row', gap: 10 }}>
                 <Dropdown
                     label={'Label'}
@@ -79,6 +79,7 @@ export default function DataForm() {
                     onSelect={onSelectLabel}
                     value={dataInputs.label}
                     valueInText={selectedLabelName}
+                    error={errors.label}
                 />
                 <Dropdown
                     label={'Importance'}
@@ -86,6 +87,7 @@ export default function DataForm() {
                     onSelect={onSelectImportance}
                     value={dataInputs.importance}
                     valueInText={selectedImportanceName}
+                    error={errors.importance}
                 />
             </View>
 
@@ -96,6 +98,7 @@ export default function DataForm() {
                     onUp={handleCountUpStep}
                     onDown={handleCountDownStep}
                     disabled={dataInputs.isStepsDefined}
+                    error={errors.steps}
                 />
             )}
 
@@ -122,6 +125,7 @@ export default function DataForm() {
                         onUp={handleCountUpManualStep}
                         onDown={handleCountDownManualStep}
                         disabled={false}
+                        error={errors.manualStep}
                     />
                 )}
 
@@ -142,18 +146,27 @@ export default function DataForm() {
                         value={new Date(dataInputs.deadline)}
                         handleChange={handleDeadlineChange}
                         datePickerProps={{ minimumDate: new Date(minDate) }}
+                        error={errors.deadline}
                     />
                 )}
 
                 {dataType === 0 && (
-                    <View style={styles.switchContainer}>
-                        <Text style={styles.switchLabel}>Define Steps</Text>
-                        <Switch
-                            trackColor={{ false: 'white', true: Colors.green600 }}
-                            thumbColor={dataInputs.isStepsDefined ? Colors.green500 : Colors.gray300}
-                            onValueChange={toggleStepsSwitch}
-                            value={dataInputs.isStepsDefined}
-                        />
+                    <View>
+                        <View style={styles.switchContainer}>
+                            <Text style={[styles.switchLabel, dataInputs.isStepsDefined && errors.steps ? { color: Colors.red500 } : {}]}>Define Steps</Text>
+                            <Switch
+                                trackColor={{ false: 'white', true: Colors.green600 }}
+                                thumbColor={dataInputs.isStepsDefined ? Colors.green500 : Colors.gray300}
+                                onValueChange={toggleStepsSwitch}
+                                value={dataInputs.isStepsDefined}
+                            />
+                        </View>
+                        {dataInputs.isStepsDefined && errors.steps && (
+                            <View style={styles.displayErrorContainer}>
+                                <Entypo name="dot-single" size={18} color={Colors.red500} />
+                                <Text style={styles.errorText}>{errors.steps}</Text>
+                            </View>
+                        )}
                     </View>
                 )}
 
@@ -252,5 +265,16 @@ const styles = StyleSheet.create({
         // backgroundColor: 'blue',
         flexDirection: 'column',
         gap: 18
+    },
+    displayErrorContainer: {
+        flexDirection: 'row',
+        gap: 8,
+        alignItems: 'center',
+        marginTop: 5,
+        marginLeft: 16,
+    },
+    errorText: {
+        color: Colors.red500,
+        fontSize: 14,
     }
 })

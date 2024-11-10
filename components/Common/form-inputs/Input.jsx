@@ -3,7 +3,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 
 export default function Input({ label, value, inputProps, onChange, error = null }) {
     return (
-        <>
+        <View>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={[styles.input, error ? { borderColor: Colors.red500, color: Colors.red500 } : null]}
@@ -22,7 +22,7 @@ export default function Input({ label, value, inputProps, onChange, error = null
                     <Text style={styles.errorText}>{error}</Text>
                 </View>
             )}
-        </>
+        </View>
     )
 }
 

@@ -2,24 +2,33 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Colors from '../../../consts/Colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-export default function CounterInput({ label, value, onUp, onDown, disabled }) {
+import Entypo from '@expo/vector-icons/Entypo';
+
+export default function CounterInput({ label, value, onUp, onDown, disabled, error }) {
     return (
-        <View style={styles.container}>
-            <Pressable onPress={onDown} style={[styles.buttonContainer, disabled ? styles.disabledBorder : {}]}>
-                <MaterialCommunityIcons name="minus" size={24} color={!disabled ? Colors.gray300 : Colors.gray600} />
+        <View>
+            <View style={styles.container}>
+                <Pressable onPress={onDown} style={[styles.buttonContainer, disabled ? styles.disabledBorder : error ? { borderColor: Colors.red500 } : {}]}>
+                    <MaterialCommunityIcons name="minus" size={24} color={!disabled ? error ? Colors.red500 : Colors.gray300 : Colors.gray600} />
 
-            </Pressable>
-            <View style={styles.inputContainer}>
-                <View style={styles.labelContainer}>
-                    <Text style={styles.label}>{label}</Text>
+                </Pressable>
+                <View style={[styles.inputContainer, !disabled && error ? { borderColor: Colors.red500 } : null]}>
+                    <View style={styles.labelContainer}>
+                        <Text style={[styles.label, !disabled && error ? { color: Colors.red500 } : null]}>{label}</Text>
+                    </View>
+
+                    <Text style={[styles.value, !disabled && error ? { color: Colors.red500 } : null]}>{value}</Text>
                 </View>
-
-                <Text style={styles.value}>{value}</Text>
+                <Pressable onPress={onUp} style={[styles.buttonContainer, disabled ? styles.disabledBorder : error ? { borderColor: Colors.red500 } : {}]}>
+                    <MaterialCommunityIcons name="plus" size={24} color={!disabled ? error ? Colors.red500 : Colors.gray300 : Colors.gray600} />
+                </Pressable>
             </View>
-            <Pressable onPress={onUp} style={[styles.buttonContainer, disabled ? styles.disabledBorder : {}]}>
-                <MaterialCommunityIcons name="plus" size={24} color={!disabled ? Colors.gray300 : Colors.gray600} />
-            </Pressable>
-
+            {!disabled && error && (
+                <View style={styles.displayErrorContainer}>
+                    <Entypo name="dot-single" size={18} color={Colors.red500} />
+                    <Text style={styles.errorText}>{error}</Text>
+                </View>
+            )}
         </View>
     )
 }
@@ -83,5 +92,16 @@ const styles = StyleSheet.create({
     },
     disabledText: {
         color: Colors.gray600,
+    },
+    displayErrorContainer: {
+        flexDirection: 'row',
+        gap: 8,
+        alignItems: 'center',
+        marginTop: 10,
+        marginLeft: 16,
+    },
+    errorText: {
+        color: Colors.red500,
+        fontSize: 14,
     }
 })

@@ -18,6 +18,16 @@ export const DataFormContext = createContext({});
 
 export function DataFormProvider({ children, mode, initState = null }) {
 
+    const initErrors = {
+        name: '',
+        label: '',
+        importance: '',
+        steps: '',
+        manualStep: '',
+        deadline: ''
+    }
+    const [errors, setErrors] = useState(initErrors)
+
     const { addData, updateData } = useDataStore(state => state)
 
     const navigation = useNavigation()
@@ -47,6 +57,12 @@ export function DataFormProvider({ children, mode, initState = null }) {
     }
 
     const [dataType, setDataType] = useState(initState?.type ?? 0);
+
+    useEffect(() => {
+
+        setErrors(initErrors)
+
+    }, [dataType])
 
     function changeDataType(value) {
 
@@ -158,9 +174,14 @@ export function DataFormProvider({ children, mode, initState = null }) {
         const { hasError, errors } = zValidate(validationSchema, dataInputs)
 
         if (hasError) {
+            setErrors(errors)
             console.log(errors)
             return
         }
+
+
+        // clear errors
+        setErrors(initErrors)
 
         let dataInputsObj = dataType === 0 ? new Progress(dataInputs.name, dataInputs.isPinned, dataInputs.label, dataInputs.deadline, dataInputs.theme, dataInputs.importance, dataInputs.steps.map((step, index) => (new ProgressStep(step.value, false, index + 1)))) : !dataInputs.defineManualStep ? new Record(dataInputs.name, 0, dataInputs.isPinned, dataInputs.label, dataInputs.theme, dataInputs.importance) : new RecordManual(dataInputs.name, [], dataInputs.manualStep, dataInputs.isPinned, dataInputs.label, dataInputs.theme, dataInputs.importance)
 
@@ -176,9 +197,12 @@ export function DataFormProvider({ children, mode, initState = null }) {
         const { hasError, errors } = zValidate(validationSchema, dataInputs)
 
         if (hasError) {
-            console.log(errors)
+            setErrors(errors)
             return
         }
+
+        // clear errors
+        setErrors(initErrors)
 
         let updatedData = {
             ...initState,
@@ -235,7 +259,8 @@ export function DataFormProvider({ children, mode, initState = null }) {
         handleCountUpManualStep,
         handleCountDownManualStep,
         handleCreateNewData,
-        mode
+        mode,
+        errors
     }
 
     return (
