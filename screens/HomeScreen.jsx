@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView, StatusBar } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import Header from '../components/Home/Layout/Header/Header'
 import Progresses from '../components/Home/Progresses/Progresses'

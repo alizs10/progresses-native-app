@@ -11,6 +11,6 @@ export const progressSchema = z.object({
     })).min(1, { message: "Progress should have at least 1 step" }),
     theme: z.enum(["black", "white", "yellow", "blue", "turquoise", "red", "violet"]),
     isDeadlineSet: z.boolean(),
-    deadline: z.number({ message: "Deadline is required" }),
+    deadline: z.date({ message: "Deadline is required" }),
     isPinned: z.boolean(),
 })

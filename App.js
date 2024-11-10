@@ -1,14 +1,14 @@
 // Only import react-native-gesture-handler on native platforms
 import 'react-native-gesture-handler';
 
-import { StyleSheet, StatusBar, Platform, View, Dimensions, Text } from 'react-native';
+import { StyleSheet, StatusBar, View, BackHandler, ToastAndroid } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import GoalsScreen from './screens/GoalsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import BottomBar from './components/Home/Layout/BottomBar/BottomBar';
 
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { EventProvider } from 'react-native-outside-press';
@@ -23,6 +23,7 @@ import EditLabelScreen from './screens/EditLabelScreen';
 import EditDataScreen from './screens/EditDataScreen';
 import TrashcanScreen from './screens/TrashcanScreen';
 import SnackbarContainer from './components/Common/Snackbar/SnackbarContainer';
+import { useEffect, useState } from 'react';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -117,6 +118,33 @@ function MyStack() {
 
 export default function App() {
 
+  const [backPressedOnce, setBackPressedOnce] = useState(false);
+
+  useEffect(() => {
+
+    const backAction = () => {
+
+      if (backPressedOnce) {
+        BackHandler.exitApp()
+      } else {
+
+        setBackPressedOnce(true)
+        ToastAndroid.show('Press back again to exit', ToastAndroid.SHORT)
+
+        setTimeout(() => {
+          setBackPressedOnce(false)
+        }, 2000)
+
+      }
+
+      return true
+    }
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
+
+    return () => backHandler.remove()
+
+  }, [backPressedOnce])
 
   return (
     <EventProvider>

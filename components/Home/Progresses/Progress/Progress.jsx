@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useAppStore } from '../../../../store/app-store';
 import { DataSelectModeContext } from '../../../../context/DataSelectModeContext';
 import { progressesThemes } from '../../../../consts/DataThemeColors';
+import moment from 'moment';
 
 export default function Progress({ data }) {
 
@@ -100,7 +101,7 @@ export default function Progress({ data }) {
                                 <View style={styles.flexBetween}>
                                     <View style={styles.flexRow}>
                                         <MaterialCommunityIcons name="clock-time-ten-outline" size={16} color={theme.time} />
-                                        <Text style={{ fontSize: 12, color: theme.time }}>{data.hasDeadline ? '1 day left' : 'Not Set'}</Text>
+                                        <Text style={{ fontSize: 12, color: theme.time }}>{data.hasDeadline ? `${moment(new Date(data.deadline)).fromNow(true)} left` : 'Not Set'}</Text>
 
                                     </View>
                                     <View style={styles.flexRow}>

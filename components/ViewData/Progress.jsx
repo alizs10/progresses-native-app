@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { useLabelStore } from '../../store/label-store';
 import { ColorSchemes } from '../../consts/ColorSchemes';
 import { useAppStore } from '../../store/app-store';
@@ -47,7 +47,9 @@ export default function Progress({ progress }) {
                 </View>
             </View>
             <View style={[styles.deadlineContainer, { backgroundColor: ColorSchemes[progress.theme].infoBoxBg }]}>
-                <Text style={[styles.deadlineText, { color: ColorSchemes[progress.theme].textColor }]}>{progress.hasDeadline ? progress.deadline : 'No Deadline'}</Text>
+
+                <Text style={[styles.deadlineDate, { color: ColorSchemes[progress.theme].textColor }]}>{progress.hasDeadline ? `${moment(new Date(progress.deadline)).format("MMMM Do YYYY")}` : 'No Deadline'}</Text>
+
             </View>
 
             <View style={[styles.processContainer, { backgroundColor: ColorSchemes[progress.theme].infoBoxBg }]}>
@@ -164,14 +166,21 @@ const styles = StyleSheet.create({
     deadlineContainer: {
         // padding: 3,
         borderRadius: 20,
+        paddingVertical: 14,
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'row',
+        gap: 8
+    },
+    deadlineDate: {
+        fontSize: 13,
+        color: 'white',
     },
     deadlineText: {
-        fontSize: 18,
+        fontSize: 14,
         color: 'white',
-        paddingVertical: 10,
+        fontWeight: 'semibold'
     },
     dateContainer: {
         // padding: 3,

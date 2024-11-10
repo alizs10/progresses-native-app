@@ -42,6 +42,13 @@ export function DataFormProvider({ children, mode, initState = null }) {
 
     }, [navigation]);
 
+    let todayDeadline = new Date(Date.now())
+    todayDeadline.setHours(23)
+    todayDeadline.setMinutes(59)
+    todayDeadline.setSeconds(59)
+    todayDeadline.setMilliseconds(999)
+
+
     const initialDataState = {
         name: initState?.name ?? '',
         label: initState?.label ?? 0,
@@ -50,11 +57,13 @@ export function DataFormProvider({ children, mode, initState = null }) {
         importance: initState?.importance ?? 0,
         theme: initState?.theme ?? 'white',
         isDeadlineSet: initState?.hasDeadline ?? false,
-        deadline: mode === 'edit' ? initState.deadline ?? Date.now() : Date.now(),
+        deadline: mode === 'edit' ? initState.deadline ?? todayDeadline : todayDeadline,
         isPinned: initState?.isPinned ?? false,
         defineManualStep: mode === 'edit' ? initState.type === 2 : false,
         manualStep: initState?.step ?? 1,
     }
+
+
 
     const [dataType, setDataType] = useState(initState?.type ?? 0);
 
@@ -122,7 +131,14 @@ export function DataFormProvider({ children, mode, initState = null }) {
 
 
     function handleDeadlineChange({ type }, dateValue) {
-        setDataInputs(prevState => ({ ...prevState, deadline: dateValue }))
+
+        let dateValueDeadline = new Date(dateValue)
+        dateValueDeadline.setHours(23)
+        dateValueDeadline.setMinutes(59)
+        dateValueDeadline.setSeconds(59)
+        dateValueDeadline.setMilliseconds(999)
+
+        setDataInputs(prevState => ({ ...prevState, deadline: dateValueDeadline }))
     }
 
     let minDate;
@@ -213,7 +229,6 @@ export function DataFormProvider({ children, mode, initState = null }) {
             theme: dataInputs.theme,
             updatedAt: Date.now(),
         }
-
 
         if (initState.type === 0) {
             updatedData['deadline'] = dataInputs.deadline
