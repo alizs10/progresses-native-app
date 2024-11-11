@@ -14,9 +14,10 @@ export default function BottomBar({ state, navigation }) {
     let showData = searchMode ? searchResults : data;
 
     showData = showData.filter(d => (d.deletedAt === null && d.label === activeLabel))
-    const ufpCount = data.filter(d => d.type === 0 && !isProgressCompleted(d)).length;
-    const fpCount = data.filter(d => d.type === 0 && isProgressCompleted(d)).length;
-    const rCount = data.filter(d => [1, 2].includes(d.type)).length;
+
+    const ufpCount = showData.filter(d => d.type === 0 && !isProgressCompleted(d)).length;
+    const fpCount = showData.filter(d => d.type === 0 && isProgressCompleted(d)).length;
+    const rCount = showData.filter(d => [1, 2].includes(d.type)).length;
 
 
 
