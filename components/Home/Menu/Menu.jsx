@@ -50,7 +50,7 @@ export default function Menu() {
             </Pressable>
 
             <View style={styles.menu}>
-                <Text style={styles.menuTitle}>Data Counts</Text>
+                <Text style={styles.menuTitle}>Data Stats</Text>
 
                 <View style={styles.flexBetween}>
 
